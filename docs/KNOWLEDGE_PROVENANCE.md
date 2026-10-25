@@ -60,7 +60,7 @@ For public manufacturer/government guidance:
 
 ## Draft sources
 
-Draft documents must be marked `draft` and cannot be the sole authority for a production safety rule if a final applicable source exists.
+Draft documents are not retained in the active production registry unless they directly support an implemented case and are clearly marked `draft`. The current active registry contains no draft sources.
 
 ## Safety boundary
 
