@@ -64,13 +64,13 @@ def test_real_library_loads_and_is_source_traceable():
     source_ids = load_source_ids(REGISTRY)
 
     assert len(library.cases) == 90
-    assert library.version == "1.0.0"
+    assert library.version == "2.0.0"
     assert all(case.source_ids for case in library.cases)
     assert all(not case.physical_action_authorized for case in library.cases)
 
     coverage = source_coverage(library, source_ids)
     assert coverage["unknown"] == ()
-    assert "DUPONT_RO_MANUAL_V20_2026" in coverage["used"]
+    assert "DUPONT_RO_MANUAL_R19_2026" in coverage["used"]
     assert "TORAY_RO_HANDLING_MANUAL_2025" in coverage["used"]
 
 

@@ -1,25 +1,42 @@
 {
-  "registry_version": "1.1.0",
+  "registry_version": "2.0.0",
   "project": "AquaMind AI - Autonomous Desalination Operations Agent",
-  "generated_for": "AquaMind authoritative source-grounded case library",
+  "verified_on": "2026-10-25",
   "policy": {
     "diagnostic_rule_requires_source": true,
     "prefer_current_primary_sources": true,
     "manufacturer_limits_are_product_specific": true,
     "do_not_invent_universal_engineering_thresholds": true,
-    "paid_standards": "Store metadata, scope, identifiers, and legitimately accessed notes only. Do not reproduce copyrighted full text.",
-    "draft_sources": "May inform future work but must not be represented as final requirements.",
-    "physical_control": "Knowledge sources never authorize autonomous physical plant actuation."
+    "paid_standards": "Store public metadata/scope and lawfully accessed notes only; do not redistribute paid full text.",
+    "draft_sources": "Drafts may inform future work but cannot be the sole authority for production safety requirements when a final applicable source exists.",
+    "physical_control": "Knowledge retrieval never authorizes autonomous physical plant actuation.",
+    "synthetic_data": "Synthetic scenarios must never be represented as real plant telemetry."
+  },
+  "aliases": {
+    "DUPONT_RO_MANUAL_V20_2026": "DUPONT_RO_MANUAL_R19_2026",
+    "DUPONT_TROUBLESHOOTING_GRID_2022": "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
+    "DUPONT_CLEANING_2022": "DUPONT_CLEANING_R13_2026",
+    "DUPONT_CHLORINATION_2026": "DUPONT_CHLORINATION_R11_2026",
+    "DUPONT_FTNORM_PRO_2026": "DUPONT_FTNORM_PRO_R0_2022",
+    "DUPONT_OPERATION_LIMITS_2026": "DUPONT_OPERATION_LIMITS_R1_2025",
+    "HYDRANAUTICS_TSB107_2026": "HYDRANAUTICS_TSB107_28_2025",
+    "HYDRANAUTICS_TSB113": "HYDRANAUTICS_TSB113_04_2016",
+    "HYDRANAUTICS_TSB118": "HYDRANAUTICS_TSB118_16_2019",
+    "AWWA_M46": "AWWA_M46_3E"
   },
   "sources": [
     {
-      "id": "DUPONT_RO_MANUAL_V20_2026",
+      "id": "DUPONT_RO_MANUAL_R19_2026",
       "organization": "DuPont Water Solutions",
-      "title": "FilmTec Reverse Osmosis Membranes Technical Manual",
-      "version_or_date": "Version 20, August 2026",
+      "title": "FilmTec Reverse Osmosis/Nanofiltration Membranes Technical Manual",
+      "version_or_date": "Rev. 19, February 2026",
       "source_type": "official_manufacturer_manual",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Manual-45-D01504-en.pdf",
       "topics": [
         "RO fundamentals",
         "water chemistry",
@@ -27,62 +44,74 @@
         "design",
         "startup",
         "shutdown",
-        "operating data",
+        "recordkeeping",
         "normalization",
         "cleaning",
         "troubleshooting"
       ],
-      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Manual-45-D01504-en.pdf",
-      "usage_note": "Primary engineering reference. Use plant-specific limits and current manufacturer limits where applicable; do not treat example values as universal shutdown limits."
+      "copyright_handling": "public_reference",
+      "usage_note": "Primary engineering reference. Plant- and product-specific limits take precedence; example values are not universal shutdown limits."
     },
     {
-      "id": "DUPONT_TROUBLESHOOTING_GRID_2022",
+      "id": "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
       "organization": "DuPont Water Solutions",
       "title": "FilmTec RO/NF Troubleshooting Grid - Technical Manual Excerpt",
       "version_or_date": "Rev. 10, February 2022",
       "source_type": "official_manufacturer_technical_excerpt",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Troubleshooting-Grid-Manual-Exc-45-D01653-en.pdf",
       "topics": [
         "scaling",
         "colloidal fouling",
         "biofouling",
         "organic fouling",
         "oxidation damage",
-        "membrane leaks",
-        "O-ring leaks",
-        "product tube leaks",
+        "membrane leak",
+        "O-ring leak",
+        "product tube leak",
         "compaction"
       ],
-      "url": "https://www.dupont.com/content/dam/dupont/amer/us/en/water-solutions/public/documents/en/RO-NF-FilmTec-Troubleshooting-Grid-Manual-Exc-45-D01653-en.pdf",
-      "usage_note": "Core qualitative pattern source for diagnostic hypotheses. Symptoms can overlap; findings remain hypotheses until verified."
+      "copyright_handling": "public_reference",
+      "usage_note": "Core directional-pattern source. DuPont explicitly notes that symptoms can overlap; AquaMind therefore treats outputs as hypotheses."
     },
     {
-      "id": "DUPONT_CLEANING_2022",
+      "id": "DUPONT_CLEANING_R13_2026",
       "organization": "DuPont Water Solutions",
-      "title": "FilmTec Cleaning Procedures - Technical Manual Excerpt",
-      "version_or_date": "Rev. 12, June 2022",
+      "title": "Cleaning Procedures for FilmTec Elements",
+      "version_or_date": "Rev. 13, February 2026",
       "source_type": "official_manufacturer_technical_excerpt",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Cleaning-Procedures-Manual-Exc-45-D01696-en.pdf",
       "topics": [
         "normalized permeate flow",
         "normalized salt passage",
         "normalized pressure drop",
-        "cleaning triggers",
+        "cleaning",
         "fouling"
       ],
-      "url": "https://www.dupont.com/content/dam/dupont/amer/us/en/water-solutions/public/documents/en/RO-NF-FilmTec-Cleaning-Procedures-Manual-Exc-45-D01696-en.pdf",
-      "usage_note": "Use cleaning thresholds as manufacturer guidance, not universal safety/shutdown limits."
+      "copyright_handling": "public_reference",
+      "usage_note": "Cleaning criteria are manufacturer guidance and are not universal safety or shutdown thresholds."
     },
     {
-      "id": "DUPONT_CHLORINATION_2026",
+      "id": "DUPONT_CHLORINATION_R11_2026",
       "organization": "DuPont Water Solutions",
-      "title": "Water Chemistry and Pretreatment - Biological Fouling Prevention / Chlorination-Dechlorination",
-      "version_or_date": "2026",
+      "title": "FilmTec Chlorination - Dechlorination Technical Manual Excerpt",
+      "version_or_date": "Rev. 11, February 2026",
       "source_type": "official_manufacturer_technical_excerpt",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Chlorination-Dechlorination-Manual-Exc-45-D01569-en.pdf",
       "topics": [
         "chlorine",
         "dechlorination",
@@ -90,170 +119,292 @@
         "biofouling prevention",
         "pretreatment"
       ],
-      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Chlorination-Dechlorination-Manual-Exc-45-D01569-en.pdf",
-      "usage_note": "Ground oxidation-risk and dechlorination reasoning. Never auto-authorize chemical dosing or plant control."
+      "copyright_handling": "public_reference",
+      "usage_note": "Grounds oxidant exposure and dechlorination reasoning. Never authorizes automatic chemical dosing."
     },
     {
-      "id": "DUPONT_FTNORM_PRO_2026",
+      "id": "DUPONT_FTNORM_PRO_R0_2022",
       "organization": "DuPont Water Solutions",
       "title": "FT-Norm PRO Technical Manual",
-      "version_or_date": "Version 1, September 2026",
+      "version_or_date": "Rev. 0, January 2022",
       "source_type": "official_manufacturer_manual",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-FT-Norm-Pro-Manual-45-D03917-en.pdf",
       "topics": [
         "RO normalization",
         "NF normalization",
         "performance deviation",
-        "fouling",
-        "scaling",
-        "plant monitoring"
+        "differential-pressure normalization"
       ],
-      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-FT-Norm-Pro-Manual-45-D03917-en.pdf",
-      "usage_note": "Primary source for future formal normalization layer."
+      "copyright_handling": "public_reference",
+      "usage_note": "Manual metadata verified from the official PDF; current tool availability is tracked separately."
     },
     {
-      "id": "DUPONT_OPERATION_LIMITS_2026",
+      "id": "DUPONT_FTNORM_TOOL_CURRENT",
       "organization": "DuPont Water Solutions",
-      "title": "FilmTec Reverse Osmosis / Nanofiltration Elements Operation Excellence and Limiting Conditions",
-      "version_or_date": "2026",
-      "source_type": "official_manufacturer_technical_fact",
+      "title": "FT-Norm PRO online normalization tool",
+      "version_or_date": "Current official online tool, verified October 2026",
+      "source_type": "official_manufacturer_tool",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://watertools-qa.dupont.com/en/tool/ft-norm-pro",
       "topics": [
-        "operating limits",
-        "membrane protection",
-        "operational excellence"
+        "RO normalization",
+        "feed temperature",
+        "feed salinity",
+        "pump pressure",
+        "performance monitoring"
       ],
-      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Operation-Excellence-Limiting-Conditions-TechFact-45-D04388-en.pdf",
-      "usage_note": "Use only for applicable FilmTec products; product-specific limits must not be generalized to all membranes."
+      "copyright_handling": "public_reference",
+      "usage_note": "Current DuPont tool page confirms that normalization compensates for feedwater temperature, salinity, and pump-pressure effects."
     },
     {
-      "id": "HYDRANAUTICS_TSB107_2026",
+      "id": "DUPONT_OPERATION_LIMITS_R1_2025",
+      "organization": "DuPont Water Solutions",
+      "title": "FilmTec RO/NF Elements Operation Excellence and Limiting Conditions",
+      "version_or_date": "Rev. 1, June 2025",
+      "source_type": "official_manufacturer_tech_fact",
+      "authority_tier": "A",
+      "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Operation-Excellence-Limiting-Conditions-TechFact-45-D04388-en.pdf",
+      "topics": [
+        "operating limits",
+        "recordkeeping",
+        "oxidant protection",
+        "SDI",
+        "membrane protection"
+      ],
+      "copyright_handling": "public_reference",
+      "usage_note": "Product-family guidance only. Values must not be generalized to membranes outside the applicable FilmTec scope."
+    },
+    {
+      "id": "HYDRANAUTICS_TSB107_28_2025",
       "organization": "Hydranautics / Nitto",
       "title": "Foulants and Cleaning Procedures for Composite Polyamide RO/NF Membrane Elements",
-      "version_or_date": "TSB107.30, April 2026",
+      "version_or_date": "TSB107.28, April 2025",
       "source_type": "official_manufacturer_bulletin",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://membranes.com/wp-content/uploads/Documents/TSB/TSB107.pdf",
       "topics": [
-        "scaling",
+        "carbonate scale",
+        "sulfate scale",
         "metal oxides",
         "silica",
         "colloids",
         "organic fouling",
         "biofouling",
-        "cleaning",
-        "normalization"
+        "cleaning"
       ],
-      "url": "https://membranes.com/wp-content/uploads/Documents/TSB/TSB107.pdf",
-      "usage_note": "Independent manufacturer cross-check for foulant classes and cleaning/normalization concepts."
+      "copyright_handling": "public_reference",
+      "usage_note": "Independent manufacturer cross-check for foulant classes and cleaning selection."
     },
     {
-      "id": "HYDRANAUTICS_TSB113",
+      "id": "HYDRANAUTICS_TSB113_04_2016",
       "organization": "Hydranautics / Nitto",
       "title": "Procedure for Measuring Silt Density Index (SDI)",
       "version_or_date": "TSB113.04, December 2016",
       "source_type": "official_manufacturer_bulletin",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://membranes.com/wp-content/uploads/2014/12/TSB113.pdf",
       "topics": [
         "SDI",
         "feedwater quality",
         "colloidal fouling",
         "pretreatment"
       ],
-      "url": "https://membranes.com/wp-content/uploads/2014/12/TSB113.pdf",
-      "usage_note": "Cross-check with ASTM D4189 when interpreting SDI."
+      "copyright_handling": "public_reference",
+      "usage_note": "Use SDI as a fouling-potential indicator, not proof of a specific foulant."
     },
     {
-      "id": "HYDRANAUTICS_TSB118",
+      "id": "HYDRANAUTICS_TSB118_16_2019",
       "organization": "Hydranautics / Nitto",
       "title": "Membrane Start-up, Shutdown, and Preservative Flushing Guidelines",
       "version_or_date": "TSB118.16, October 2019",
       "source_type": "official_manufacturer_bulletin",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://membranes.com/wp-content/uploads/Documents/TSB/TSB118.pdf",
       "topics": [
         "startup",
         "shutdown",
         "flushing",
-        "water hammer",
         "pressurization",
-        "preservation"
+        "preservation",
+        "water hammer"
       ],
-      "url": "https://membranes.com/wp-content/uploads/Documents/TSB/TSB118.pdf",
-      "usage_note": "Supports startup/shutdown and water-hammer scenarios; AquaMind remains advisory only."
+      "copyright_handling": "public_reference",
+      "usage_note": "Supports startup/shutdown and hydraulic-shock scenarios; AquaMind remains advisory only."
     },
     {
-      "id": "LG_TSB109_FLUSHING",
+      "id": "HYDRANAUTICS_TAB110",
+      "organization": "Hydranautics / Nitto",
+      "title": "Chlorination in RO Seawater Supply Lines and Pretreatment Processes",
+      "version_or_date": "Official current PDF; date not asserted by registry",
+      "source_type": "official_manufacturer_application_bulletin",
+      "authority_tier": "A",
+      "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://membranes.com/wp-content/uploads/Documents/application-report/TAB110.pdf",
+      "topics": [
+        "seawater RO",
+        "chlorination",
+        "dechlorination",
+        "biofouling",
+        "pretreatment"
+      ],
+      "copyright_handling": "public_reference",
+      "usage_note": "Site-specific selection of chlorination/dechlorination strategy is required."
+    },
+    {
+      "id": "HYDRANAUTICS_TAB111_2022",
+      "organization": "Hydranautics / Nitto",
+      "title": "Chemical Pretreatment for RO and NF",
+      "version_or_date": "February 2022, TAB111",
+      "source_type": "official_manufacturer_application_bulletin",
+      "authority_tier": "A",
+      "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://membranes.com/wp-content/uploads/Documents/application-report/TAB111.pdf",
+      "topics": [
+        "acid dosing",
+        "dechlorination",
+        "antiscalants",
+        "dispersants",
+        "scale control"
+      ],
+      "copyright_handling": "public_reference",
+      "usage_note": "Pretreatment chemistry is site-specific; AquaMind does not auto-dose chemicals."
+    },
+    {
+      "id": "HYDRANAUTICS_TAB116_2022",
+      "organization": "Hydranautics / Nitto",
+      "title": "RO/NF Polyamide Membrane Feedwater Requirements",
+      "version_or_date": "February 2022, TAB116",
+      "source_type": "official_manufacturer_application_bulletin",
+      "authority_tier": "A",
+      "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://membranes.com/wp-content/uploads/Documents/application-report/TAB116.pdf",
+      "topics": [
+        "feedwater quality",
+        "mechanical damage",
+        "abrasion",
+        "prefiltration",
+        "scale control"
+      ],
+      "copyright_handling": "public_reference",
+      "usage_note": "Strong cross-check for feedwater conditions that can damage polyamide membranes."
+    },
+    {
+      "id": "LG_TSB109_FLUSHING_V2_4_1",
       "organization": "LG Water Solutions",
       "title": "Technical Service Bulletin 109 - Membrane Element Flushing",
       "version_or_date": "Version 2.4.1",
       "source_type": "official_manufacturer_bulletin",
       "authority_tier": "B",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.lgwatersolutions.com/wp-content/uploads/2025/07/109.-Membrane-Element-Flushing.pdf",
       "topics": [
         "startup flushing",
         "shutdown flushing",
         "water hammer",
-        "pressurization",
-        "membrane protection"
+        "pressurization"
       ],
-      "url": "https://www.lgwatersolutions.com/wp-content/uploads/2025/07/109.-Membrane-Element-Flushing.pdf",
-      "usage_note": "Manufacturer cross-check. Product-specific values are not universal limits."
+      "copyright_handling": "public_reference",
+      "usage_note": "Independent manufacturer cross-check; product-specific values are not universal."
     },
     {
-      "id": "AWWA_M46",
+      "id": "AWWA_M46_3E",
       "organization": "American Water Works Association",
-      "title": "M46 Reverse Osmosis and Nanofiltration",
-      "version_or_date": "current catalog entry",
+      "title": "M46 Nanofiltration and Reverse Osmosis, Third Edition",
+      "version_or_date": "Third Edition; current AWWA catalog entry",
       "source_type": "professional_manual",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.awwa.org/resource/membrane-processes/",
       "topics": [
         "RO",
         "NF",
-        "selection",
+        "design",
         "installation",
         "operation",
         "maintenance"
       ],
-      "url": "https://www.awwa.org/resource/membrane-processes/",
-      "usage_note": "Reference metadata and legitimately accessed knowledge only; do not reproduce copyrighted manual text."
+      "copyright_handling": "metadata_and_lawfully_accessed_notes_only",
+      "usage_note": "Do not redistribute copyrighted manual text."
     },
     {
       "id": "AWWA_M61",
       "organization": "American Water Works Association",
       "title": "M61 Desalination of Seawater",
-      "version_or_date": "current catalog entry",
+      "version_or_date": "Current AWWA catalog entry",
       "source_type": "professional_manual",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.awwa.org/resource/desalination/",
       "topics": [
         "seawater desalination",
         "planning",
         "design",
         "operations"
       ],
-      "url": "https://www.awwa.org/resource/membrane-processes/",
-      "usage_note": "Reference metadata and legitimately accessed knowledge only."
+      "copyright_handling": "metadata_and_lawfully_accessed_notes_only",
+      "usage_note": "Do not redistribute copyrighted manual text."
     },
     {
       "id": "AWWA_M69",
       "organization": "American Water Works Association",
       "title": "M69 Inland Desalination and Concentrate Management",
-      "version_or_date": "current catalog entry",
+      "version_or_date": "Current AWWA catalog entry",
       "source_type": "professional_manual",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.awwa.org/resource/desalination/",
       "topics": [
         "inland desalination",
-        "concentrate management",
-        "disposal"
+        "concentrate management"
       ],
-      "url": "https://www.awwa.org/manuals/manuals-list/",
-      "usage_note": "Useful for concentrate-management scope; not a substitute for site permits/regulations."
+      "copyright_handling": "metadata_and_lawfully_accessed_notes_only",
+      "usage_note": "Concentrate-management reference; site permits and regulation remain authoritative."
     },
     {
       "id": "AWWA_B114_22",
@@ -263,14 +414,18 @@
       "source_type": "consensus_standard",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.awwa.org/standards/standards-list/",
       "topics": [
         "RO systems",
         "NF systems",
         "minimum requirements",
         "water treatment"
       ],
-      "url": "https://www.awwa.org/standards/standards-list",
-      "usage_note": "Use standard metadata and legitimately accessed requirements only; do not copy paid standard text."
+      "copyright_handling": "metadata_and_lawfully_accessed_notes_only",
+      "usage_note": "Do not reproduce paid standard text."
     },
     {
       "id": "WHO_GDWQ_2026",
@@ -280,14 +435,18 @@
       "source_type": "international_health_guideline",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.who.int/publications/i/item/9789240121225",
       "topics": [
         "drinking-water safety",
         "health-based targets",
         "risk management",
         "surveillance"
       ],
-      "url": "https://www.who.int/publications/i/item/9789240121225",
-      "usage_note": "Primary public-health reference. AquaMind must not invent potable-water limits where WHO or local regulation should govern."
+      "copyright_handling": "public_reference",
+      "usage_note": "Primary health-risk framework. Local regulations may be more specific and must be applied where relevant."
     },
     {
       "id": "WHO_DESALINATION_2011",
@@ -297,57 +456,75 @@
       "source_type": "international_health_guideline",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.who.int/publications/i/item/WHO-HSE-WSH-11.03",
       "topics": [
         "desalinated drinking-water",
         "risk assessment",
         "risk management",
-        "water safety"
+        "source water",
+        "blending"
       ],
-      "url": "https://www.who.int/publications/i/item/WHO-HSE-WSH-11.03",
+      "copyright_handling": "public_reference",
       "usage_note": "Desalination-specific public-health grounding."
     },
     {
       "id": "ASTM_D4194_23",
       "organization": "ASTM International",
       "title": "D4194-23 Standard Test Methods for Operating Characteristics of Reverse Osmosis and Nanofiltration Devices",
-      "version_or_date": "2023",
+      "version_or_date": "2023; active",
       "source_type": "consensus_standard",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://store.astm.org/d4194-23.html",
       "topics": [
         "RO operating characteristics",
         "NF operating characteristics",
         "standard test conditions"
       ],
-      "url": "https://store.astm.org/d4194-23.html",
-      "usage_note": "Metadata/scope can be cited publicly. Do not reproduce paid standard text."
+      "copyright_handling": "public_scope_and_metadata_only",
+      "usage_note": "Public scope/metadata only unless lawfully licensed.",
+      "doi": "10.1520/D4194-23"
     },
     {
       "id": "ASTM_D3923_23",
       "organization": "ASTM International",
       "title": "D3923-23 Standard Practices for Detecting Leaks in Reverse Osmosis and Nanofiltration Devices",
-      "version_or_date": "2023",
+      "version_or_date": "2023; active",
       "source_type": "consensus_standard",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://store.astm.org/d3923-23.html",
       "topics": [
         "membrane leaks",
-        "O-ring leaks",
-        "mechanical integrity",
+        "integrity",
         "RO",
         "NF"
       ],
-      "url": "https://store.astm.org/d3923-23.html",
-      "usage_note": "Supports leak/integrity scenario taxonomy; do not reproduce paid procedures."
+      "copyright_handling": "public_scope_and_metadata_only",
+      "usage_note": "Supports leak/integrity taxonomy; do not reproduce paid procedures.",
+      "doi": "10.1520/D3923-23"
     },
     {
       "id": "ASTM_D4195_23",
       "organization": "ASTM International",
       "title": "D4195-23 Standard Guide for Water Analysis for Reverse Osmosis and Nanofiltration Application",
-      "version_or_date": "2023",
+      "version_or_date": "2023; active",
       "source_type": "consensus_standard",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://store.astm.org/d4195-23.html",
       "topics": [
         "feedwater analysis",
         "recovery",
@@ -355,51 +532,66 @@
         "salt rejection",
         "permeate flow"
       ],
-      "url": "https://store.astm.org/d4195-23.html",
-      "usage_note": "Grounds which feedwater variables matter for RO/NF evaluation."
+      "copyright_handling": "public_scope_and_metadata_only",
+      "usage_note": "Grounds feedwater variables relevant to RO/NF evaluation.",
+      "doi": "10.1520/D4195-23"
     },
     {
       "id": "ASTM_D4189_23",
       "organization": "ASTM International",
       "title": "D4189-23 Standard Test Method for Silt Density Index (SDI) of Water",
-      "version_or_date": "2023",
+      "version_or_date": "2023; active",
       "source_type": "consensus_standard",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://store.astm.org/d4189-23.html",
       "topics": [
         "SDI",
         "particulate matter",
         "fouling tendency",
         "pretreatment"
       ],
-      "url": "https://store.astm.org/d4189-23.html",
-      "usage_note": "Use for SDI interpretation; SDI is an indicator, not a complete fouling diagnosis."
+      "copyright_handling": "public_scope_and_metadata_only",
+      "usage_note": "SDI is an indicator, not an absolute measurement of particulate quantity or a root-cause diagnosis.",
+      "doi": "10.1520/D4189-23"
     },
     {
       "id": "ASTM_D4472_23",
       "organization": "ASTM International",
       "title": "D4472-23 Standard Guide for Recordkeeping for Reverse Osmosis and Nanofiltration Systems",
-      "version_or_date": "2023",
+      "version_or_date": "2023; active",
       "source_type": "consensus_standard",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://store.astm.org/d4472-23.html",
       "topics": [
         "operating records",
         "pretreatment records",
         "maintenance logs",
         "performance evaluation"
       ],
-      "url": "https://store.astm.org/d4472-23.html",
-      "usage_note": "Strong grounding for AquaMind audit/telemetry record requirements."
+      "copyright_handling": "public_scope_and_metadata_only",
+      "usage_note": "Strong grounding for operating-data and maintenance record requirements.",
+      "doi": "10.1520/D4472-23"
     },
     {
       "id": "ASTM_D4516_19A",
       "organization": "ASTM International",
       "title": "D4516-19a Standard Practice for Standardizing Reverse Osmosis Performance Data",
-      "version_or_date": "2019",
+      "version_or_date": "2019; active",
       "source_type": "consensus_standard",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://store.astm.org/standards/d4516",
       "topics": [
         "RO standardization",
         "temperature",
@@ -409,33 +601,43 @@
         "salt passage",
         "permeate flow"
       ],
-      "url": "https://store.astm.org/standards/d4516",
-      "usage_note": "Key source for distinguishing true degradation from changes caused by operating conditions."
+      "copyright_handling": "public_scope_and_metadata_only",
+      "usage_note": "Critical normalization reference: operating conditions can change apparent permeate flow and salt passage.",
+      "doi": "10.1520/D4516-19A"
     },
     {
       "id": "ASTM_D4582_23",
       "organization": "ASTM International",
       "title": "D4582-23 Standard Practice for Calculation and Adjustment of the Stiff and Davis Stability Index for Reverse Osmosis",
-      "version_or_date": "2023",
+      "version_or_date": "2023; active",
       "source_type": "consensus_standard",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://store.astm.org/d4582-23.html",
       "topics": [
         "scaling",
         "Stiff and Davis Stability Index",
         "high-TDS concentrate"
       ],
-      "url": "https://store.astm.org/d4582-23.html",
-      "usage_note": "Applicable to its stated high-TDS scope; do not generalize beyond scope."
+      "copyright_handling": "public_scope_and_metadata_only",
+      "usage_note": "Apply only within the standard's scope.",
+      "doi": "10.1520/D4582-23"
     },
     {
       "id": "ASTM_D6908_25",
       "organization": "ASTM International",
       "title": "D6908-25 Standard Practice for Integrity Testing of Water Filtration Membrane Systems",
-      "version_or_date": "2025",
+      "version_or_date": "2025; active",
       "source_type": "consensus_standard",
       "authority_tier": "A",
       "access": "paid_or_restricted",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://store.astm.org/standards/d6908",
       "topics": [
         "membrane integrity",
         "RO",
@@ -443,35 +645,46 @@
         "UF",
         "integrity testing"
       ],
-      "url": "https://store.astm.org/standards/d6908",
-      "usage_note": "Supports integrity-testing concepts; do not reproduce paid procedures."
+      "copyright_handling": "public_scope_and_metadata_only",
+      "usage_note": "Supports integrity-testing concepts; do not reproduce paid procedures.",
+      "doi": "10.1520/D6908-25"
     },
     {
       "id": "USBR_DWPR",
       "organization": "U.S. Bureau of Reclamation",
       "title": "Desalination and Water Purification Research Program",
-      "version_or_date": "current program",
+      "version_or_date": "Current program; verified October 2026",
       "source_type": "government_research_program",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.usbr.gov/research/dwpr/index.html",
       "topics": [
         "desalination research",
         "water purification",
         "energy",
         "cost",
-        "technology validation"
+        "monitoring",
+        "sensors",
+        "concentrate management"
       ],
-      "url": "https://www.usbr.gov/research/dwpr/index.html",
-      "usage_note": "Government research grounding and future source for validated case studies."
+      "copyright_handling": "public_reference",
+      "usage_note": "Government R&D grounding and source for future validated case studies."
     },
     {
       "id": "NIST_SP800_82_R3",
       "organization": "National Institute of Standards and Technology",
       "title": "SP 800-82 Rev. 3 Guide to Operational Technology (OT) Security",
-      "version_or_date": "September 2023, final",
+      "version_or_date": "Final, September 2023",
       "source_type": "government_cybersecurity_guidance",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://csrc.nist.gov/pubs/sp/800/82/r3/final",
       "topics": [
         "OT security",
         "ICS",
@@ -480,17 +693,21 @@
         "risk management",
         "security controls"
       ],
-      "url": "https://csrc.nist.gov/pubs/sp/800/82/r3/final",
-      "usage_note": "Primary final OT-security reference for AquaMind safety boundaries."
+      "copyright_handling": "public_reference",
+      "usage_note": "Primary final OT-security reference while Rev. 4 remains draft."
     },
     {
       "id": "NIST_SP800_82_R4_IPD_2026",
       "organization": "National Institute of Standards and Technology",
       "title": "SP 800-82 Rev. 4 Guide to Operational Technology (OT) Security",
-      "version_or_date": "September 2026, initial public draft",
+      "version_or_date": "Initial Public Draft, 21 September 2026",
       "source_type": "government_draft_guidance",
       "authority_tier": "B",
       "access": "public",
+      "publication_status": "draft",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://csrc.nist.gov/pubs/sp/800/82/r4/ipd",
       "topics": [
         "OT security",
         "water systems",
@@ -498,17 +715,22 @@
         "zero trust",
         "CSF 2.0"
       ],
-      "url": "https://csrc.nist.gov/pubs/sp/800/82/r4/ipd",
-      "usage_note": "Track for future updates. Do not present draft content as a final standard."
+      "copyright_handling": "public_reference",
+      "usage_note": "Track for future changes. Draft content must not be presented as a final requirement.",
+      "doi": "10.6028/NIST.SP.800-82r4.ipd"
     },
     {
       "id": "NIST_SP1800_45_2026",
       "organization": "National Institute of Standards and Technology",
-      "title": "SP 1800-45 Cybersecurity for the Water and Wastewater Sector: Build Architecture (Operational Technology Remote Access)",
-      "version_or_date": "June 2026, final",
+      "title": "SP 1800-45 Cybersecurity for the Water and Wastewater Sector: Build Architecture",
+      "version_or_date": "Final, June 2026",
       "source_type": "government_sector_guidance",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://csrc.nist.gov/pubs/sp/1800/45/final",
       "topics": [
         "water sector",
         "OT remote access",
@@ -516,34 +738,44 @@
         "authentication",
         "access control"
       ],
-      "url": "https://csrc.nist.gov/pubs/sp/1800/45/final",
-      "usage_note": "Sector-specific cybersecurity grounding."
+      "copyright_handling": "public_reference",
+      "usage_note": "Water-sector-specific cybersecurity grounding."
     },
     {
       "id": "NIST_AI_RMF_1_0",
       "organization": "National Institute of Standards and Technology",
       "title": "Artificial Intelligence Risk Management Framework (AI RMF 1.0)",
-      "version_or_date": "January 2023",
+      "version_or_date": "26 January 2023",
       "source_type": "government_ai_risk_framework",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10",
       "topics": [
         "AI governance",
         "trustworthiness",
         "risk management",
-        "evaluation"
+        "evaluation",
+        "monitoring"
       ],
-      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
-      "usage_note": "Grounds governance, uncertainty, evaluation, monitoring, and human oversight."
+      "copyright_handling": "public_reference",
+      "usage_note": "Grounds governance, evaluation, uncertainty and human oversight.",
+      "doi": "10.6028/NIST.AI.100-1"
     },
     {
       "id": "NIST_AI_600_1",
       "organization": "National Institute of Standards and Technology",
       "title": "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile",
-      "version_or_date": "July 2024",
+      "version_or_date": "26 July 2024",
       "source_type": "government_ai_risk_framework",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
       "topics": [
         "generative AI",
         "AI risk",
@@ -551,36 +783,45 @@
         "governance",
         "monitoring"
       ],
-      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
-      "usage_note": "Companion source for GenAI-specific risks."
+      "copyright_handling": "public_reference",
+      "usage_note": "Companion source for GenAI-specific risks.",
+      "doi": "10.6028/NIST.AI.600-1"
     },
     {
       "id": "OWASP_LLM_PROMPT_INJECTION",
       "organization": "OWASP Foundation",
       "title": "LLM Prompt Injection Prevention Cheat Sheet",
-      "version_or_date": "current online guidance",
+      "version_or_date": "Current online guidance; verified October 2026",
       "source_type": "security_best_practice",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html",
       "topics": [
         "prompt injection",
         "least privilege",
         "tool validation",
         "human approval",
         "monitoring",
-        "agent security"
+        "security evaluation"
       ],
-      "url": "https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html",
-      "usage_note": "Grounds AquaMind injection tests and tool permission defenses."
+      "copyright_handling": "public_reference",
+      "usage_note": "Use as best-practice guidance and smoke-test inspiration, not as a population-level security benchmark."
     },
     {
       "id": "CISA_EPA_FBI_WATER_CYBER_2024",
       "organization": "CISA / U.S. EPA / FBI",
       "title": "Top Cyber Actions for Securing Water Systems",
-      "version_or_date": "February 2024",
+      "version_or_date": "21 February 2024",
       "source_type": "joint_government_cybersecurity_guidance",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.cisa.gov/news-events/alerts/2024/02/21/cisa-epa-and-fbi-release-top-cyber-actions-securing-water-systems",
       "topics": [
         "water cybersecurity",
         "OT asset inventory",
@@ -589,34 +830,42 @@
         "backups",
         "training"
       ],
-      "url": "https://www.cisa.gov/news-events/alerts/2024/02/21/cisa-epa-and-fbi-release-top-cyber-actions-securing-water-systems",
-      "usage_note": "Water-sector cyber hygiene and resilience grounding."
+      "copyright_handling": "public_reference",
+      "usage_note": "Practical water-sector cyber resilience guidance."
     },
     {
       "id": "EPA_WATER_CYBER_ASSESSMENTS",
       "organization": "U.S. Environmental Protection Agency",
       "title": "Cybersecurity Assessments for Water Systems",
-      "version_or_date": "current resource",
+      "version_or_date": "Current official resource; verified October 2026",
       "source_type": "government_sector_guidance",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.epa.gov/cyberwater/cybersecurity-assessments",
       "topics": [
         "water cybersecurity",
         "risk assessment",
         "OT identification",
         "vulnerability assessment"
       ],
-      "url": "https://www.epa.gov/cyberwater/cybersecurity-assessments",
-      "usage_note": "Supports water-sector security assessment and governance."
+      "copyright_handling": "public_reference",
+      "usage_note": "Supports water-sector cyber assessment and governance."
     },
     {
       "id": "TORAY_RO_HANDLING_MANUAL_2025",
       "organization": "Toray Industries, Inc.",
       "title": "TorayRO Operation, Maintenance, and Handling Manual",
-      "version_or_date": "Document code 06-G-MB1-250728(EN), 2025",
+      "version_or_date": "Last updated July 2025; 06-G-MB1-250728(EN)",
       "source_type": "official_manufacturer_manual",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.water.toray/knowledge/manual/pdf/TorayRO_HandlingManual.pdf",
       "topics": [
         "RO operation",
         "startup",
@@ -625,44 +874,55 @@
         "SDI",
         "conductivity",
         "differential pressure",
+        "normalization",
         "water hammer"
       ],
-      "url": "https://www.water.toray/knowledge/manual/pdf/TorayRO_HandlingManual.pdf",
-      "usage_note": "Independent manufacturer cross-check for RO operating records, startup, monitoring and water-hammer prevention. Product-specific limits must not be generalized."
+      "copyright_handling": "public_reference",
+      "usage_note": "Independent manufacturer cross-check for monitoring, normalization and safe operation."
     },
     {
       "id": "TORAY_TRAK",
       "organization": "Toray Industries, Inc.",
       "title": "TORAY TRAK - Reverse Osmosis Operation Data Normalization",
-      "version_or_date": "current official online tool/documentation",
+      "version_or_date": "Version 3.1.5, October 2019; current official download page",
       "source_type": "official_manufacturer_tool",
       "authority_tier": "A",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.water.toray/knowledge/tool/trak/",
       "topics": [
         "RO normalization",
         "temperature correction",
         "performance monitoring",
-        "ASTM D4516"
+        "ASTM D4516",
+        "SCADA integration"
       ],
-      "url": "https://www.water.toray/knowledge/tool/trak/",
-      "usage_note": "Independent normalization cross-check. Toray states that the tool is based on ASTM D4516 with Toray-specific calculations."
+      "copyright_handling": "public_reference",
+      "usage_note": "Official Toray normalization tool based on ASTM D4516 with Toray-specific calculations."
     },
     {
       "id": "TORAY_MBFR",
       "organization": "Toray Industries, Inc.",
       "title": "mBFR - Membrane Biofilm Formation Rate",
-      "version_or_date": "current official online technical resource",
+      "version_or_date": "Current official technical resource; verified October 2026",
       "source_type": "official_manufacturer_technical_resource",
       "authority_tier": "B",
       "access": "public",
+      "publication_status": "final",
+      "verification_status": "verified_official_source",
+      "verified_on": "2026-10-25",
+      "url": "https://www.water.toray/knowledge/mBFR/",
       "topics": [
         "biofouling",
         "biofilm",
         "pressure loss",
-        "permeate flow"
+        "permeate flow",
+        "biofouling potential"
       ],
-      "url": "https://www.water.toray/knowledge/mBFR/",
-      "usage_note": "Supplemental manufacturer cross-check for biofouling potential. Do not treat mBFR as a universal requirement for non-Toray systems."
+      "copyright_handling": "public_reference",
+      "usage_note": "Supplemental manufacturer cross-check for biofouling potential; not a universal requirement."
     }
   ]
 }

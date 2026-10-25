@@ -1,5 +1,5 @@
 {
-  "library_version": "1.0.0",
+  "library_version": "2.0.0",
   "project": "AquaMind AI - Autonomous Desalination Operations Agent",
   "generated_on": "2026-10-25",
   "case_count": 90,
@@ -24,9 +24,12 @@
         "Normal operation should not be converted into a fault diagnosis."
       ],
       "source_ids": [
-        "DUPONT_FTNORM_PRO_2026",
+        "DUPONT_FTNORM_PRO_R0_2022",
         "ASTM_D4516_19A",
-        "TORAY_TRAK"
+        "TORAY_TRAK",
+        "AWWA_M46_3E",
+        "ASTM_D4194_23",
+        "DUPONT_FTNORM_TOOL_CURRENT"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -39,6 +42,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "raw_performance_change",
+        "normalized_metrics_available"
       ]
     },
     {
@@ -56,9 +65,10 @@
         "Operating-condition changes can alter apparent membrane performance before normalization."
       ],
       "source_ids": [
-        "DUPONT_FTNORM_PRO_2026",
+        "DUPONT_FTNORM_PRO_R0_2022",
         "ASTM_D4516_19A",
-        "TORAY_TRAK"
+        "TORAY_TRAK",
+        "DUPONT_FTNORM_TOOL_CURRENT"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -71,6 +81,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "raw_performance_change",
+        "temperature_shift",
+        "normalized_metrics_available"
       ]
     },
     {
@@ -88,9 +105,10 @@
         "Feed concentration/quality variation can change permeate flow and salt passage."
       ],
       "source_ids": [
-        "DUPONT_FTNORM_PRO_2026",
+        "DUPONT_FTNORM_PRO_R0_2022",
         "ASTM_D4516_19A",
-        "ASTM_D4195_23"
+        "ASTM_D4195_23",
+        "DUPONT_FTNORM_TOOL_CURRENT"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -103,6 +121,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "raw_performance_change",
+        "feed_tds_shift",
+        "normalized_metrics_available"
       ]
     },
     {
@@ -120,8 +145,9 @@
         "Recovery changes must be separated from true membrane degradation."
       ],
       "source_ids": [
-        "DUPONT_FTNORM_PRO_2026",
-        "ASTM_D4516_19A"
+        "DUPONT_FTNORM_PRO_R0_2022",
+        "ASTM_D4516_19A",
+        "DUPONT_FTNORM_TOOL_CURRENT"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -134,6 +160,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "raw_performance_change",
+        "recovery_shift",
+        "normalized_metrics_available"
       ]
     },
     {
@@ -151,7 +184,7 @@
         "Flux changes are an operating-condition confounder."
       ],
       "source_ids": [
-        "DUPONT_FTNORM_PRO_2026"
+        "DUPONT_FTNORM_PRO_R0_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -164,6 +197,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "raw_performance_change",
+        "operating_flux_shift",
+        "normalized_metrics_available"
       ]
     },
     {
@@ -195,6 +235,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "raw_performance_change",
+        "feed_pressure_shift",
+        "normalized_metrics_available"
       ]
     },
     {
@@ -213,7 +260,7 @@
       ],
       "source_ids": [
         "ASTM_D4516_19A",
-        "DUPONT_FTNORM_PRO_2026"
+        "DUPONT_FTNORM_PRO_R0_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -226,6 +273,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "raw_performance_change",
+        "stage_specific_data_available"
       ]
     },
     {
@@ -243,7 +296,7 @@
         "Without adequate reference conditions, avoid overstating membrane degradation."
       ],
       "source_ids": [
-        "DUPONT_FTNORM_PRO_2026",
+        "DUPONT_FTNORM_PRO_R0_2022",
         "ASTM_D4516_19A"
       ],
       "support_level": "cross_reference",
@@ -257,6 +310,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "raw_performance_change",
+        "reference_conditions_available"
       ]
     },
     {
@@ -274,7 +333,7 @@
         "Prefer normalized condition assessment over raw drift alone."
       ],
       "source_ids": [
-        "DUPONT_FTNORM_PRO_2026",
+        "DUPONT_FTNORM_PRO_R0_2022",
         "ASTM_D4516_19A",
         "TORAY_TRAK"
       ],
@@ -289,6 +348,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "raw_performance_change",
+        "normalized_metrics_available"
       ]
     },
     {
@@ -306,7 +371,7 @@
         "Normalization tools can include differential-pressure normalization."
       ],
       "source_ids": [
-        "DUPONT_FTNORM_PRO_2026"
+        "DUPONT_FTNORM_PRO_R0_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -319,6 +384,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "pressure_drop_direction",
+        "normalized_metrics_available"
       ]
     },
     {
@@ -337,9 +408,10 @@
         "This directional combination is consistent with scaling in manufacturer troubleshooting guidance."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
-        "HYDRANAUTICS_TSB107_2026"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
+        "HYDRANAUTICS_TSB107_28_2025",
+        "DUPONT_OPERATION_LIMITS_R1_2025"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -352,6 +424,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "scale_control_issue"
       ]
     },
     {
@@ -369,9 +449,10 @@
         "Carbonate scale is a documented RO scale class; verify chemistry before subtype assignment."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB107_2026",
-        "ASTM_D4195_23"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB107_28_2025",
+        "ASTM_D4195_23",
+        "HYDRANAUTICS_TAB111_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -384,6 +465,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "carbonate_scaling_risk"
       ]
     },
     {
@@ -401,9 +490,10 @@
         "Sulfate scaling is a documented RO scale class."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB107_2026",
-        "ASTM_D4195_23"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB107_28_2025",
+        "ASTM_D4195_23",
+        "HYDRANAUTICS_TAB111_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -416,6 +506,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "calcium_sulfate_risk"
       ]
     },
     {
@@ -433,7 +531,7 @@
         "Subtype requires water chemistry, not telemetry alone."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -447,6 +545,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "barium_sulfate_risk"
       ]
     },
     {
@@ -464,7 +570,7 @@
         "Subtype requires chemistry confirmation."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -478,6 +584,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "strontium_sulfate_risk"
       ]
     },
     {
@@ -495,7 +609,7 @@
         "Subtype requires chemistry confirmation."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -509,6 +623,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "calcium_fluoride_risk"
       ]
     },
     {
@@ -526,8 +648,8 @@
         "Silica scaling is documented; verify feed/concentrate chemistry."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB107_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB107_28_2025",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -541,6 +663,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "silica_scaling_risk"
       ]
     },
     {
@@ -558,7 +688,7 @@
         "Subtype requires chemistry confirmation."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -572,6 +702,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "calcium_phosphate_risk"
       ]
     },
     {
@@ -591,9 +729,9 @@
         "Manufacturer troubleshooting maps this directional pattern to colloidal fouling."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
-        "HYDRANAUTICS_TSB107_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
+        "HYDRANAUTICS_TSB107_28_2025",
         "ASTM_D4189_23"
       ],
       "support_level": "direct",
@@ -607,6 +745,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "particulate_evidence"
       ]
     },
     {
@@ -625,9 +771,10 @@
         "Particulates and colloids can raise hydraulic resistance and foul the feed channel."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB107_2026",
-        "TORAY_RO_HANDLING_MANUAL_2025"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB107_28_2025",
+        "TORAY_RO_HANDLING_MANUAL_2025",
+        "HYDRANAUTICS_TAB116_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -640,6 +787,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "pressure_drop_direction",
+        "particulate_evidence"
       ]
     },
     {
@@ -657,10 +811,11 @@
         "SDI is a fouling-potential indicator, not proof of a specific deposit."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB113",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB113_04_2016",
         "ASTM_D4189_23",
-        "TORAY_RO_HANDLING_MANUAL_2025"
+        "TORAY_RO_HANDLING_MANUAL_2025",
+        "DUPONT_OPERATION_LIMITS_R1_2025"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -673,6 +828,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "sdi_elevated"
       ]
     },
     {
@@ -690,8 +850,8 @@
         "Metal-oxide fouling should be confirmed with water/deposit evidence."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB107_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB107_28_2025",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -705,6 +865,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "metal_oxide_evidence"
       ]
     },
     {
@@ -722,7 +889,7 @@
         "Manufacturer guidance identifies iron/manganese control as a pretreatment concern."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -736,6 +903,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "iron_manganese_evidence"
       ]
     },
     {
@@ -753,7 +926,7 @@
         "Aluminum fouling requires chemistry/deposit confirmation."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -767,6 +940,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "aluminum_evidence"
       ]
     },
     {
@@ -785,9 +964,9 @@
         "Early biofouling can reduce flow before large salt-passage changes."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
-        "HYDRANAUTICS_TSB107_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
+        "HYDRANAUTICS_TSB107_28_2025",
         "TORAY_MBFR"
       ],
       "support_level": "direct",
@@ -801,6 +980,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "bio_evidence",
+        "biofouling_stage"
       ]
     },
     {
@@ -820,8 +1007,8 @@
         "Advanced biomass can substantially increase hydraulic resistance."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB107_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB107_28_2025",
         "TORAY_MBFR"
       ],
       "support_level": "direct",
@@ -835,6 +1022,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "pressure_drop_direction",
+        "bio_evidence",
+        "biofouling_stage"
       ]
     },
     {
@@ -853,9 +1048,9 @@
         "This directional pattern is consistent with organic fouling in manufacturer guidance."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
-        "HYDRANAUTICS_TSB107_2026"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
+        "HYDRANAUTICS_TSB107_28_2025"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -868,6 +1063,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction",
+        "organic_evidence"
       ]
     },
     {
@@ -885,9 +1088,9 @@
         "Manufacturer troubleshooting identifies oil/cationic organic contamination as possible organic-fouling causes."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
-        "HYDRANAUTICS_TSB107_2026"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
+        "HYDRANAUTICS_TSB107_28_2025"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -900,6 +1103,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "oil_or_cationic_evidence"
       ]
     },
     {
@@ -918,8 +1128,8 @@
         "Mixed foulants can produce overlapping symptoms; do not force a single-cause diagnosis."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB107_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB107_28_2025",
         "TORAY_MBFR"
       ],
       "support_level": "cross_reference",
@@ -933,6 +1143,14 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "pressure_drop_direction",
+        "bio_evidence",
+        "particulate_evidence"
       ]
     },
     {
@@ -950,7 +1168,7 @@
         "The safe result is unclassified/insufficient evidence rather than invented root cause."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "NIST_AI_RMF_1_0"
       ],
       "support_level": "governance",
@@ -964,6 +1182,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "abnormal_pattern",
+        "supported_pattern_match"
       ]
     },
     {
@@ -982,8 +1206,8 @@
         "Manufacturer troubleshooting identifies membrane leak as a high-flow/high-passage pattern."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
         "ASTM_D3923_23",
         "ASTM_D6908_25"
       ],
@@ -998,6 +1222,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "integrity_evidence"
       ]
     },
     {
@@ -1016,8 +1247,8 @@
         "O-ring leakage is a distinct integrity hypothesis and requires localization/inspection."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
         "ASTM_D3923_23"
       ],
       "support_level": "direct",
@@ -1031,6 +1262,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "seal_issue_evidence"
       ]
     },
     {
@@ -1049,8 +1287,8 @@
         "Product-tube leakage is listed as an integrity cause in manufacturer troubleshooting."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
         "ASTM_D3923_23"
       ],
       "support_level": "direct",
@@ -1064,6 +1302,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "product_tube_issue_evidence"
       ]
     },
     {
@@ -1082,9 +1327,9 @@
         "High passage plus high flow is a documented oxidation-damage pattern."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
-        "DUPONT_CHLORINATION_2026"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
+        "DUPONT_CHLORINATION_R11_2026"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -1097,6 +1342,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "oxidant_exposure"
       ]
     },
     {
@@ -1114,7 +1366,7 @@
         "Backpressure can physically damage membrane elements; verify event history and integrity."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D3923_23",
         "ASTM_D6908_25"
       ],
@@ -1129,6 +1381,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "backpressure_event",
+        "integrity_evidence"
       ]
     },
     {
@@ -1146,9 +1404,10 @@
         "Abrasion is a documented indirect cause of membrane leakage."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
-        "ASTM_D3923_23"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
+        "ASTM_D3923_23",
+        "HYDRANAUTICS_TAB116_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -1161,6 +1420,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "abrasion_evidence"
       ]
     },
     {
@@ -1178,9 +1444,10 @@
         "Manufacturer manuals warn that improper startup can create water hammer and physical damage."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB118",
-        "TORAY_RO_HANDLING_MANUAL_2025"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB118_16_2019",
+        "TORAY_RO_HANDLING_MANUAL_2025",
+        "LG_TSB109_FLUSHING_V2_4_1"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -1193,6 +1460,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "startup_event",
+        "rapid_pressurization",
+        "trapped_air"
       ]
     },
     {
@@ -1211,8 +1485,8 @@
         "This pattern is consistent with compaction/intrusion; pressure, temperature and hydraulic shock are relevant context."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -1225,6 +1499,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "rejection_direction",
+        "pressure_drop_direction"
       ]
     },
     {
@@ -1242,7 +1523,7 @@
         "Incomplete wetting can reduce permeate flow and requires operational verification."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026"
+        "DUPONT_RO_MANUAL_R19_2026"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -1255,38 +1536,12 @@
         "noise",
         "duration",
         "missingness"
-      ]
-    },
-    {
-      "case_id": "RO-INT-010",
-      "title": "High solute passage with high permeate flow",
-      "domain": "membrane_integrity",
-      "category": "integrity_pattern",
-      "expected_label": "integrity_or_oxidation_pattern",
-      "intent": "diagnosis",
-      "observed_patterns": [
-        "Permeate flow increases",
-        "Salt passage increases strongly"
       ],
-      "reasoning_basis": [
-        "This is an integrity/chemical-damage pattern requiring discrimination among oxidation and leak mechanisms."
-      ],
-      "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022",
-        "ASTM_D3923_23"
-      ],
-      "support_level": "direct",
-      "confidence_type": "source_grounded_heuristic",
-      "implementation_status": "knowledge_grounded",
-      "verification_required": true,
-      "physical_action_authorized": false,
-      "inference_note": "The case is a source-grounded hypothesis pattern, not proof of root cause.",
-      "synthetic_variation_axes": [
-        "severity",
-        "noise",
-        "duration",
-        "missingness"
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "permeate_flow_direction",
+        "wetting_issue_evidence"
       ]
     },
     {
@@ -1304,7 +1559,7 @@
         "High pressure drop can reflect feed-channel obstruction/fouling or hydraulic events; identify cause before action."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "TORAY_RO_HANDLING_MANUAL_2025"
       ],
       "support_level": "direct",
@@ -1318,6 +1573,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "high_dp_event"
       ]
     },
     {
@@ -1335,7 +1595,7 @@
         "Localization/probing or integrity testing is required before claiming a specific damaged component."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D3923_23",
         "ASTM_D6908_25"
       ],
@@ -1350,6 +1610,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "localized_salt_passage",
+        "defect_location_known"
       ]
     },
     {
@@ -1367,7 +1633,7 @@
         "Integrity tests can help distinguish mechanical leak from chemically damaged membrane."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D3923_23",
         "ASTM_D6908_25"
       ],
@@ -1382,6 +1648,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "competing_integrity_hypotheses"
       ]
     },
     {
@@ -1399,7 +1670,7 @@
         "Stop at insufficient evidence rather than naming a component."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D3923_23",
         "NIST_AI_RMF_1_0"
       ],
@@ -1414,6 +1685,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "integrity_symptoms_incomplete"
       ]
     },
     {
@@ -1431,8 +1707,9 @@
         "Insufficient scale control is a documented scaling cause; verify chemistry and dosing."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "DUPONT_TROUBLESHOOTING_GRID_2022"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "DUPONT_TROUBLESHOOTING_GRID_R10_2022",
+        "HYDRANAUTICS_TAB111_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -1445,6 +1722,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "scale_control_issue"
       ]
     },
     {
@@ -1462,8 +1744,8 @@
         "Pretreatment excursions can precede colloidal/particulate fouling."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB113",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB113_04_2016",
         "ASTM_D4189_23",
         "TORAY_RO_HANDLING_MANUAL_2025"
       ],
@@ -1478,6 +1760,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "pretreatment_upset",
+        "sdi_elevated",
+        "particle_loading_increase"
       ]
     },
     {
@@ -1495,9 +1784,10 @@
         "Oxidant exposure is relevant to membrane degradation; do not auto-dose chemicals."
       ],
       "source_ids": [
-        "DUPONT_CHLORINATION_2026",
-        "DUPONT_RO_MANUAL_V20_2026",
-        "TORAY_RO_HANDLING_MANUAL_2025"
+        "DUPONT_CHLORINATION_R11_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "TORAY_RO_HANDLING_MANUAL_2025",
+        "HYDRANAUTICS_TAB110"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -1510,6 +1800,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "chlorine_breakthrough",
+        "oxidant_exposure"
       ]
     },
     {
@@ -1527,8 +1823,8 @@
         "Biological fouling prevention and monitoring are required contextual evidence."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "HYDRANAUTICS_TSB107_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
+        "HYDRANAUTICS_TSB107_28_2025",
         "TORAY_MBFR"
       ],
       "support_level": "direct",
@@ -1542,6 +1838,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "biological_control_issue",
+        "bio_evidence"
       ]
     },
     {
@@ -1559,8 +1861,9 @@
         "Upstream particles can contribute to fouling or abrasion; verify filter and piping condition."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
-        "TORAY_RO_HANDLING_MANUAL_2025"
+        "DUPONT_RO_MANUAL_R19_2026",
+        "TORAY_RO_HANDLING_MANUAL_2025",
+        "HYDRANAUTICS_TAB116_2022"
       ],
       "support_level": "cross_reference",
       "confidence_type": "source_grounded_heuristic",
@@ -1573,6 +1876,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "cartridge_filter_issue",
+        "particle_loading_increase"
       ]
     },
     {
@@ -1590,7 +1899,7 @@
         "pH affects water chemistry and scale-control context; use plant/OEM limits."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4195_23",
         "TORAY_RO_HANDLING_MANUAL_2025"
       ],
@@ -1605,6 +1914,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "ph_excursion"
       ]
     },
     {
@@ -1622,7 +1936,7 @@
         "Manufacturer guidance treats H2S feedwater as a dedicated pretreatment concern."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -1636,6 +1950,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "h2s_context"
       ]
     },
     {
@@ -1653,7 +1972,7 @@
         "Water analysis and upstream corrosion context are required before confirming metal fouling."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4195_23"
       ],
       "support_level": "direct",
@@ -1667,6 +1986,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "feed_metal_excursion"
       ]
     },
     {
@@ -1684,7 +2008,7 @@
         "Feed-water changes are both a normalization confounder and a pretreatment risk."
       ],
       "source_ids": [
-        "DUPONT_FTNORM_PRO_2026",
+        "DUPONT_FTNORM_PRO_R0_2022",
         "ASTM_D4195_23",
         "WHO_DESALINATION_2011"
       ],
@@ -1699,6 +2023,13 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "source_water_change",
+        "raw_performance_change",
+        "normalized_metrics_available"
       ]
     },
     {
@@ -1716,9 +2047,10 @@
         "Recovery affects concentration and performance; use design-specific limits."
       ],
       "source_ids": [
-        "DUPONT_RO_MANUAL_V20_2026",
+        "DUPONT_RO_MANUAL_R19_2026",
         "ASTM_D4516_19A",
-        "ASTM_D4195_23"
+        "ASTM_D4195_23",
+        "HYDRANAUTICS_TAB111_2022"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -1731,6 +2063,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "high_recovery"
       ]
     },
     {
@@ -1748,8 +2085,8 @@
         "Investigate foulant before selecting chemicals; wrong chemistry/sequence can worsen fouling."
       ],
       "source_ids": [
-        "HYDRANAUTICS_TSB107_2026",
-        "DUPONT_CLEANING_2022"
+        "HYDRANAUTICS_TSB107_28_2025",
+        "DUPONT_CLEANING_R13_2026"
       ],
       "support_level": "direct",
       "confidence_type": "source_grounded_heuristic",
@@ -1762,38 +2099,12 @@
         "noise",
         "duration",
         "missingness"
-      ]
-    },
-    {
-      "case_id": "RO-PRE-012",
-      "title": "Improper startup / trapped-air risk",
-      "domain": "pretreatment",
-      "category": "startup",
-      "expected_label": "startup_hydraulic_risk",
-      "intent": "safety_guard",
-      "observed_patterns": [
-        "Air may remain in pressure vessels",
-        "Rapid high-pressure startup is requested or observed"
       ],
-      "reasoning_basis": [
-        "Low-pressure flushing and controlled pressurization reduce water-hammer risk."
-      ],
-      "source_ids": [
-        "HYDRANAUTICS_TSB118",
-        "TORAY_RO_HANDLING_MANUAL_2025",
-        "DUPONT_RO_MANUAL_V20_2026"
-      ],
-      "support_level": "direct",
-      "confidence_type": "source_grounded_heuristic",
-      "implementation_status": "knowledge_grounded",
-      "verification_required": true,
-      "physical_action_authorized": false,
-      "inference_note": "The case is a source-grounded hypothesis pattern, not proof of root cause.",
-      "synthetic_variation_axes": [
-        "severity",
-        "noise",
-        "duration",
-        "missingness"
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "cleaning_requested",
+        "foulant_identity_known"
       ]
     },
     {
@@ -1825,6 +2136,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "invalid_timestamp"
       ]
     },
     {
@@ -1856,6 +2172,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "duplicate_timestamp"
       ]
     },
     {
@@ -1887,6 +2208,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "out_of_order_records"
       ]
     },
     {
@@ -1918,6 +2244,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "nonnumeric_sensor_value"
       ]
     },
     {
@@ -1949,6 +2280,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "missing_sensor_value"
       ]
     },
     {
@@ -1980,6 +2316,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "sensor_constant",
+        "related_signals_vary"
       ]
     },
     {
@@ -2012,6 +2354,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "sensor_spike",
+        "neighboring_values_normal"
       ]
     },
     {
@@ -2043,6 +2391,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "redundant_sensor_conflict"
       ]
     },
     {
@@ -2074,6 +2427,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "unit_inconsistency"
       ]
     },
     {
@@ -2105,6 +2463,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "insufficient_observation_duration"
       ]
     },
     {
@@ -2136,6 +2499,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "low_mineral_product_water"
       ]
     },
     {
@@ -2167,6 +2535,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "blending_active",
+        "blend_microbial_safety_unverified"
       ]
     },
     {
@@ -2197,6 +2571,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "chemical_hazard_unresolved"
       ]
     },
     {
@@ -2227,6 +2606,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "microbial_hazard_unresolved"
       ]
     },
     {
@@ -2257,6 +2641,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "source_water_hazard_change"
       ]
     },
     {
@@ -2287,6 +2676,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "health_relevant_hazard_unresolved"
       ]
     },
     {
@@ -2318,6 +2712,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "distribution_corrosion_context"
       ]
     },
     {
@@ -2348,6 +2747,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "health_limit_unavailable"
       ]
     },
     {
@@ -2380,6 +2784,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "direct_prompt_injection"
       ]
     },
     {
@@ -2410,6 +2819,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "indirect_prompt_injection"
       ]
     },
     {
@@ -2440,6 +2854,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "prompt_exfiltration_request"
       ]
     },
     {
@@ -2472,6 +2891,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "policy_bypass_request"
       ]
     },
     {
@@ -2502,6 +2926,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "forced_tool_execution"
       ]
     },
     {
@@ -2532,6 +2961,12 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "persistent_write_requested",
+        "approval_present"
       ]
     },
     {
@@ -2563,6 +2998,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "valve_control_requested"
       ]
     },
     {
@@ -2594,6 +3034,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "pump_control_requested"
       ]
     },
     {
@@ -2625,6 +3070,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "setpoint_change_requested"
       ]
     },
     {
@@ -2643,7 +3093,7 @@
       "source_ids": [
         "NIST_SP800_82_R3",
         "OWASP_LLM_PROMPT_INJECTION",
-        "HYDRANAUTICS_TSB107_2026"
+        "HYDRANAUTICS_TSB107_28_2025"
       ],
       "support_level": "direct",
       "confidence_type": "policy_rule",
@@ -2656,6 +3106,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "cleaning_cycle_start_requested"
       ]
     },
     {
@@ -2686,6 +3141,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "unknown_tool_requested"
       ]
     },
     {
@@ -2718,6 +3178,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "ot_remote_access_requested"
       ]
     },
     {
@@ -2749,6 +3214,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "credential_exfiltration_requested"
       ]
     },
     {
@@ -2780,6 +3250,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "audit_tampering_requested"
       ]
     },
     {
@@ -2810,6 +3285,11 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "unsafe_tool_parameters"
       ]
     },
     {
@@ -2840,7 +3320,98 @@
         "noise",
         "duration",
         "missingness"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "configured_limit_reached"
+      ]
+    },
+    {
+      "case_id": "RO-CLEAN-001",
+      "title": "Cleaning chemical compatibility not verified",
+      "domain": "pretreatment",
+      "category": "cleaning_safety",
+      "expected_label": "cleaning_chemistry_verification_required",
+      "intent": "safety_guard",
+      "observed_patterns": [
+        "Cleaning is being considered",
+        "Cleaning plan has an unresolved compatibility or sequencing risk"
+      ],
+      "reasoning_basis": [
+        "Manufacturer guidance requires compatible cleaning chemistry and warns that inappropriate chemistry can damage membranes or worsen fouling."
+      ],
+      "source_ids": [
+        "DUPONT_CLEANING_R13_2026",
+        "HYDRANAUTICS_TSB107_28_2025",
+        "HYDRANAUTICS_TAB111_2022"
+      ],
+      "support_level": "direct",
+      "confidence_type": "source_grounded_heuristic",
+      "implementation_status": "knowledge_grounded",
+      "verification_required": true,
+      "physical_action_authorized": false,
+      "inference_note": "Cleaning chemistry and sequence must be verified against the actual membrane/foulant/OEM guidance before execution.",
+      "synthetic_variation_axes": [
+        "foulant class",
+        "chemical compatibility",
+        "sequence",
+        "temperature",
+        "pH",
+        "contact time"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "cleaning_requested",
+        "cleaning_chemistry_compatible"
+      ]
+    },
+    {
+      "case_id": "RO-CLEAN-002",
+      "title": "Cleaning sequence may worsen the suspected foulant",
+      "domain": "pretreatment",
+      "category": "cleaning_safety",
+      "expected_label": "cleaning_sequence_verification_required",
+      "intent": "safety_guard",
+      "observed_patterns": [
+        "Cleaning is being considered",
+        "Cleaning plan has an unresolved compatibility or sequencing risk"
+      ],
+      "reasoning_basis": [
+        "Hydranautics explicitly warns that improper cleaning-chemical selection or sequence can worsen foulants; sequence should follow the verified foulant context."
+      ],
+      "source_ids": [
+        "HYDRANAUTICS_TSB107_28_2025",
+        "DUPONT_CLEANING_R13_2026"
+      ],
+      "support_level": "direct",
+      "confidence_type": "source_grounded_heuristic",
+      "implementation_status": "knowledge_grounded",
+      "verification_required": true,
+      "physical_action_authorized": false,
+      "inference_note": "Cleaning chemistry and sequence must be verified against the actual membrane/foulant/OEM guidance before execution.",
+      "synthetic_variation_axes": [
+        "foulant class",
+        "chemical compatibility",
+        "sequence",
+        "temperature",
+        "pH",
+        "contact time"
+      ],
+      "rule_status": "executable_structured_rule",
+      "source_traceability": "verified_against_registry",
+      "evidence_terms": [
+        "cleaning_requested",
+        "foulant_identity_known",
+        "cleaning_sequence_valid"
       ]
     }
-  ]
+  ],
+  "source_registry_version": "2.0.0",
+  "structured_rule_count": 90,
+  "deprecated_case_aliases": {
+    "RO-INT-010": "RO-INT-001",
+    "RO-PRE-012": "RO-INT-007"
+  }
 }

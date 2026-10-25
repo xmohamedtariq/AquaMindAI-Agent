@@ -1,0 +1,15 @@
+{
+  "package": "AquaMind Authoritative Knowledge Base",
+  "version": "2.0.0",
+  "verified_on": "2026-10-25",
+  "sources": 40,
+  "cases": 90,
+  "rules": 90,
+  "evidence_terms": 102,
+  "synthetic_scenarios": 720,
+  "real_plant_incidents": 0,
+  "deduplicated_case_aliases": {
+    "RO-INT-010": "RO-INT-001",
+    "RO-PRE-012": "RO-INT-007"
+  }
+}

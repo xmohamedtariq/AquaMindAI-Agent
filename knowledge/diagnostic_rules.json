@@ -1,16 +1,40 @@
 {
-  "rules_version": "1.0.0",
+  "rules_version": "2.0.0",
   "project": "AquaMind AI - Autonomous Desalination Operations Agent",
+  "source_registry_version": "2.0.0",
+  "evidence_vocabulary_version": "1.0.0",
   "disclosure": {
     "real_plant_data": false,
-    "physical_control_authorized": false
+    "physical_control_authorized": false,
+    "purpose": "One structured rule per canonical case. Rules operate on structured evidence and do not by themselves prove root cause."
   },
   "rules": [
+    {
+      "rule_id": "DR-NORMAL-001",
+      "case_id": "RO-NORMAL-001",
+      "outcome_type": "diagnosis",
+      "priority": 10,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "raw_performance_change",
+          "op": "eq",
+          "value": false
+        },
+        {
+          "field": "normalized_metrics_available",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
     {
       "rule_id": "DR-NORM-001",
       "case_id": "RO-NORM-001",
       "outcome_type": "guard",
-      "priority": 120,
+      "priority": 160,
       "blocks_fault_diagnosis": true,
       "required_all": [
         {
@@ -30,19 +54,39 @@
         }
       ],
       "required_any_groups": [],
-      "supporting": [
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-NORM-002",
+      "case_id": "RO-NORM-002",
+      "outcome_type": "guard",
+      "priority": 159,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
         {
-          "field": "feed_pressure_shift",
+          "field": "raw_performance_change",
           "op": "eq",
           "value": true
+        },
+        {
+          "field": "feed_tds_shift",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "normalized_metrics_available",
+          "op": "eq",
+          "value": false
         }
-      ]
+      ],
+      "required_any_groups": [],
+      "supporting": []
     },
     {
       "rule_id": "DR-NORM-003",
       "case_id": "RO-NORM-003",
       "outcome_type": "guard",
-      "priority": 119,
+      "priority": 158,
       "blocks_fault_diagnosis": true,
       "required_all": [
         {
@@ -65,10 +109,10 @@
       "supporting": []
     },
     {
-      "rule_id": "DR-PRE-009",
-      "case_id": "RO-PRE-009",
+      "rule_id": "DR-NORM-004",
+      "case_id": "RO-NORM-004",
       "outcome_type": "guard",
-      "priority": 118,
+      "priority": 157,
       "blocks_fault_diagnosis": true,
       "required_all": [
         {
@@ -77,7 +121,7 @@
           "value": true
         },
         {
-          "field": "source_water_change",
+          "field": "operating_flux_shift",
           "op": "eq",
           "value": true
         },
@@ -91,40 +135,87 @@
       "supporting": []
     },
     {
-      "rule_id": "DR-DATA-006",
-      "case_id": "RO-DATA-006",
-      "outcome_type": "data_quality",
-      "priority": 130,
+      "rule_id": "DR-NORM-005",
+      "case_id": "RO-NORM-005",
+      "outcome_type": "guard",
+      "priority": 156,
       "blocks_fault_diagnosis": true,
       "required_all": [
         {
-          "field": "sensor_constant",
+          "field": "raw_performance_change",
           "op": "eq",
           "value": true
         },
         {
-          "field": "related_signals_vary",
-          "op": "eq",
-          "value": true
-        }
-      ],
-      "required_any_groups": [],
-      "supporting": []
-    },
-    {
-      "rule_id": "DR-DATA-007",
-      "case_id": "RO-DATA-007",
-      "outcome_type": "data_quality",
-      "priority": 129,
-      "blocks_fault_diagnosis": true,
-      "required_all": [
-        {
-          "field": "sensor_spike",
+          "field": "feed_pressure_shift",
           "op": "eq",
           "value": true
         },
         {
-          "field": "neighboring_values_normal",
+          "field": "normalized_metrics_available",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-NORM-006",
+      "case_id": "RO-NORM-006",
+      "outcome_type": "guard",
+      "priority": 155,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "raw_performance_change",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "stage_specific_data_available",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-NORM-007",
+      "case_id": "RO-NORM-007",
+      "outcome_type": "guard",
+      "priority": 154,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "raw_performance_change",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "reference_conditions_available",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-NORM-008",
+      "case_id": "RO-NORM-008",
+      "outcome_type": "diagnosis",
+      "priority": 60,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "raw_performance_change",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "normalized_metrics_available",
           "op": "eq",
           "value": true
         }
@@ -133,14 +224,53 @@
       "supporting": []
     },
     {
-      "rule_id": "DR-DATA-009",
-      "case_id": "RO-DATA-009",
-      "outcome_type": "data_quality",
-      "priority": 128,
-      "blocks_fault_diagnosis": true,
+      "rule_id": "DR-NORM-009",
+      "case_id": "RO-NORM-009",
+      "outcome_type": "risk",
+      "priority": 59,
+      "blocks_fault_diagnosis": false,
       "required_all": [
         {
-          "field": "unit_inconsistency",
+          "field": "pressure_drop_direction",
+          "op": "in",
+          "value": [
+            "up",
+            "down"
+          ]
+        },
+        {
+          "field": "normalized_metrics_available",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-SCALE-001",
+      "case_id": "RO-SCALE-001",
+      "outcome_type": "diagnosis",
+      "priority": 100,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "scale_control_issue",
           "op": "eq",
           "value": true
         }
@@ -149,14 +279,687 @@
       "supporting": []
     },
     {
-      "rule_id": "DR-DATA-008",
-      "case_id": "RO-DATA-008",
-      "outcome_type": "data_quality",
-      "priority": 127,
+      "rule_id": "DR-SCALE-002",
+      "case_id": "RO-SCALE-002",
+      "outcome_type": "diagnosis",
+      "priority": 108,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "carbonate_scaling_risk",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-SCALE-003",
+      "case_id": "RO-SCALE-003",
+      "outcome_type": "diagnosis",
+      "priority": 107,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "calcium_sulfate_risk",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-SCALE-004",
+      "case_id": "RO-SCALE-004",
+      "outcome_type": "diagnosis",
+      "priority": 106,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "barium_sulfate_risk",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-SCALE-005",
+      "case_id": "RO-SCALE-005",
+      "outcome_type": "diagnosis",
+      "priority": 105,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "strontium_sulfate_risk",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-SCALE-006",
+      "case_id": "RO-SCALE-006",
+      "outcome_type": "diagnosis",
+      "priority": 104,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "calcium_fluoride_risk",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-SCALE-007",
+      "case_id": "RO-SCALE-007",
+      "outcome_type": "diagnosis",
+      "priority": 103,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "silica_scaling_risk",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-SCALE-008",
+      "case_id": "RO-SCALE-008",
+      "outcome_type": "diagnosis",
+      "priority": 102,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "calcium_phosphate_risk",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-001",
+      "case_id": "RO-FOUL-001",
+      "outcome_type": "diagnosis",
+      "priority": 101,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "particulate_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-002",
+      "case_id": "RO-FOUL-002",
+      "outcome_type": "diagnosis",
+      "priority": 94,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "particulate_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-003",
+      "case_id": "RO-FOUL-003",
+      "outcome_type": "risk",
+      "priority": 70,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "sdi_elevated",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-004",
+      "case_id": "RO-FOUL-004",
+      "outcome_type": "diagnosis",
+      "priority": 93,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "metal_oxide_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": [
+        {
+          "field": "rejection_direction",
+          "op": "in",
+          "value": [
+            "stable",
+            "down"
+          ]
+        }
+      ]
+    },
+    {
+      "rule_id": "DR-FOUL-005",
+      "case_id": "RO-FOUL-005",
+      "outcome_type": "diagnosis",
+      "priority": 92,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "iron_manganese_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-006",
+      "case_id": "RO-FOUL-006",
+      "outcome_type": "diagnosis",
+      "priority": 91,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "aluminum_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-007",
+      "case_id": "RO-FOUL-007",
+      "outcome_type": "diagnosis",
+      "priority": 96,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "in",
+          "value": [
+            "stable",
+            "unknown"
+          ]
+        },
+        {
+          "field": "bio_evidence",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "biofouling_stage",
+          "op": "eq",
+          "value": "early"
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-008",
+      "case_id": "RO-FOUL-008",
+      "outcome_type": "diagnosis",
+      "priority": 97,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "bio_evidence",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "biofouling_stage",
+          "op": "eq",
+          "value": "advanced"
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-009",
+      "case_id": "RO-FOUL-009",
+      "outcome_type": "diagnosis",
+      "priority": 95,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "in",
+          "value": [
+            "stable",
+            "unknown"
+          ]
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "in",
+          "value": [
+            "stable",
+            "unknown"
+          ]
+        },
+        {
+          "field": "organic_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-010",
+      "case_id": "RO-FOUL-010",
+      "outcome_type": "diagnosis",
+      "priority": 98,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "oil_or_cationic_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-011",
+      "case_id": "RO-FOUL-011",
+      "outcome_type": "diagnosis",
+      "priority": 99,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "bio_evidence",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "particulate_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-012",
+      "case_id": "RO-FOUL-012",
+      "outcome_type": "guard",
+      "priority": 40,
       "blocks_fault_diagnosis": true,
       "required_all": [
         {
-          "field": "redundant_sensor_conflict",
+          "field": "abnormal_pattern",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "supported_pattern_match",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-001",
+      "case_id": "RO-INT-001",
+      "outcome_type": "diagnosis",
+      "priority": 80,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "integrity_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-002",
+      "case_id": "RO-INT-002",
+      "outcome_type": "diagnosis",
+      "priority": 113,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "seal_issue_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-003",
+      "case_id": "RO-INT-003",
+      "outcome_type": "diagnosis",
+      "priority": 112,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "product_tube_issue_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-004",
+      "case_id": "RO-INT-004",
+      "outcome_type": "diagnosis",
+      "priority": 115,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "oxidant_exposure",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-005",
+      "case_id": "RO-INT-005",
+      "outcome_type": "guard",
+      "priority": 150,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "backpressure_event",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": [
+        {
+          "field": "integrity_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    {
+      "rule_id": "DR-INT-006",
+      "case_id": "RO-INT-006",
+      "outcome_type": "diagnosis",
+      "priority": 111,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "abrasion_evidence",
           "op": "eq",
           "value": true
         }
@@ -168,7 +971,7 @@
       "rule_id": "DR-INT-007",
       "case_id": "RO-INT-007",
       "outcome_type": "guard",
-      "priority": 125,
+      "priority": 152,
       "blocks_fault_diagnosis": true,
       "required_all": [
         {
@@ -194,32 +997,179 @@
       "supporting": []
     },
     {
-      "rule_id": "DR-INT-005",
-      "case_id": "RO-INT-005",
-      "outcome_type": "guard",
-      "priority": 124,
-      "blocks_fault_diagnosis": true,
+      "rule_id": "DR-INT-008",
+      "case_id": "RO-INT-008",
+      "outcome_type": "diagnosis",
+      "priority": 110,
+      "blocks_fault_diagnosis": false,
       "required_all": [
         {
-          "field": "backpressure_event",
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "in",
+          "value": [
+            "stable",
+            "unknown"
+          ]
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-009",
+      "case_id": "RO-INT-009",
+      "outcome_type": "diagnosis",
+      "priority": 78,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "permeate_flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "wetting_issue_evidence",
           "op": "eq",
           "value": true
         }
       ],
       "required_any_groups": [],
-      "supporting": [
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-011",
+      "case_id": "RO-INT-011",
+      "outcome_type": "risk",
+      "priority": 76,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
         {
-          "field": "integrity_pattern",
+          "field": "high_dp_event",
           "op": "eq",
           "value": true
         }
-      ]
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-012",
+      "case_id": "RO-INT-012",
+      "outcome_type": "risk",
+      "priority": 75,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "localized_salt_passage",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "defect_location_known",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-013",
+      "case_id": "RO-INT-013",
+      "outcome_type": "guard",
+      "priority": 74,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "competing_integrity_hypotheses",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-014",
+      "case_id": "RO-INT-014",
+      "outcome_type": "guard",
+      "priority": 73,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "integrity_symptoms_incomplete",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-PRE-001",
+      "case_id": "RO-PRE-001",
+      "outcome_type": "risk",
+      "priority": 69,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "scale_control_issue",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-PRE-002",
+      "case_id": "RO-PRE-002",
+      "outcome_type": "risk",
+      "priority": 72,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "pretreatment_upset",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [
+        [
+          {
+            "field": "sdi_elevated",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "particle_loading_increase",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "source_water_change",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      ],
+      "supporting": []
     },
     {
       "rule_id": "DR-PRE-003",
       "case_id": "RO-PRE-003",
       "outcome_type": "guard",
-      "priority": 123,
+      "priority": 151,
       "blocks_fault_diagnosis": true,
       "required_all": [
         {
@@ -238,172 +1188,36 @@
       ]
     },
     {
-      "rule_id": "DR-INT-004",
-      "case_id": "RO-INT-004",
-      "outcome_type": "diagnosis",
-      "priority": 100,
+      "rule_id": "DR-PRE-004",
+      "case_id": "RO-PRE-004",
+      "outcome_type": "risk",
+      "priority": 71,
       "blocks_fault_diagnosis": false,
       "required_all": [
         {
-          "field": "flow_direction",
-          "op": "eq",
-          "value": "up"
-        },
-        {
-          "field": "rejection_direction",
-          "op": "eq",
-          "value": "down"
-        },
-        {
-          "field": "oxidant_exposure",
+          "field": "biological_control_issue",
           "op": "eq",
           "value": true
         }
       ],
       "required_any_groups": [],
       "supporting": [
-        {
-          "field": "pressure_drop_direction",
-          "op": "in",
-          "value": [
-            "stable",
-            "unknown"
-          ]
-        }
-      ]
-    },
-    {
-      "rule_id": "DR-INT-002",
-      "case_id": "RO-INT-002",
-      "outcome_type": "diagnosis",
-      "priority": 99,
-      "blocks_fault_diagnosis": false,
-      "required_all": [
-        {
-          "field": "flow_direction",
-          "op": "eq",
-          "value": "up"
-        },
-        {
-          "field": "rejection_direction",
-          "op": "eq",
-          "value": "down"
-        },
-        {
-          "field": "seal_issue_evidence",
-          "op": "eq",
-          "value": true
-        }
-      ],
-      "required_any_groups": [],
-      "supporting": []
-    },
-    {
-      "rule_id": "DR-INT-003",
-      "case_id": "RO-INT-003",
-      "outcome_type": "diagnosis",
-      "priority": 98,
-      "blocks_fault_diagnosis": false,
-      "required_all": [
-        {
-          "field": "flow_direction",
-          "op": "eq",
-          "value": "up"
-        },
-        {
-          "field": "rejection_direction",
-          "op": "eq",
-          "value": "down"
-        },
-        {
-          "field": "product_tube_issue_evidence",
-          "op": "eq",
-          "value": true
-        }
-      ],
-      "required_any_groups": [],
-      "supporting": []
-    },
-    {
-      "rule_id": "DR-FOUL-003",
-      "case_id": "RO-FOUL-003",
-      "outcome_type": "risk",
-      "priority": 90,
-      "blocks_fault_diagnosis": false,
-      "required_all": [
-        {
-          "field": "sdi_elevated",
-          "op": "eq",
-          "value": true
-        }
-      ],
-      "required_any_groups": [],
-      "supporting": [
-        {
-          "field": "pretreatment_upset",
-          "op": "eq",
-          "value": true
-        }
-      ]
-    },
-    {
-      "rule_id": "DR-PRE-002",
-      "case_id": "RO-PRE-002",
-      "outcome_type": "risk",
-      "priority": 89,
-      "blocks_fault_diagnosis": false,
-      "required_all": [
-        {
-          "field": "pretreatment_upset",
-          "op": "eq",
-          "value": true
-        }
-      ],
-      "required_any_groups": [
-        [
-          {
-            "field": "sdi_elevated",
-            "op": "eq",
-            "value": true
-          },
-          {
-            "field": "source_water_change",
-            "op": "eq",
-            "value": true
-          },
-          {
-            "field": "particle_loading_increase",
-            "op": "eq",
-            "value": true
-          }
-        ]
-      ],
-      "supporting": []
-    },
-    {
-      "rule_id": "DR-FOUL-011",
-      "case_id": "RO-FOUL-011",
-      "outcome_type": "diagnosis",
-      "priority": 95,
-      "blocks_fault_diagnosis": false,
-      "required_all": [
-        {
-          "field": "flow_direction",
-          "op": "eq",
-          "value": "down"
-        },
-        {
-          "field": "pressure_drop_direction",
-          "op": "eq",
-          "value": "up"
-        },
         {
           "field": "bio_evidence",
           "op": "eq",
           "value": true
-        },
+        }
+      ]
+    },
+    {
+      "rule_id": "DR-PRE-005",
+      "case_id": "RO-PRE-005",
+      "outcome_type": "risk",
+      "priority": 68,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
         {
-          "field": "particulate_evidence",
+          "field": "cartridge_filter_issue",
           "op": "eq",
           "value": true
         }
@@ -411,14 +1225,733 @@
       "required_any_groups": [],
       "supporting": [
         {
-          "field": "rejection_direction",
-          "op": "in",
-          "value": [
-            "stable",
-            "down"
-          ]
+          "field": "particle_loading_increase",
+          "op": "eq",
+          "value": true
         }
       ]
+    },
+    {
+      "rule_id": "DR-PRE-006",
+      "case_id": "RO-PRE-006",
+      "outcome_type": "risk",
+      "priority": 67,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "ph_excursion",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-PRE-007",
+      "case_id": "RO-PRE-007",
+      "outcome_type": "risk",
+      "priority": 66,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "h2s_context",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-PRE-008",
+      "case_id": "RO-PRE-008",
+      "outcome_type": "risk",
+      "priority": 65,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "feed_metal_excursion",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-PRE-009",
+      "case_id": "RO-PRE-009",
+      "outcome_type": "guard",
+      "priority": 153,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "source_water_change",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "raw_performance_change",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "normalized_metrics_available",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-PRE-010",
+      "case_id": "RO-PRE-010",
+      "outcome_type": "risk",
+      "priority": 64,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "high_recovery",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-PRE-011",
+      "case_id": "RO-PRE-011",
+      "outcome_type": "guard",
+      "priority": 149,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "cleaning_requested",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "foulant_identity_known",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-001",
+      "case_id": "RO-DATA-001",
+      "outcome_type": "data_quality",
+      "priority": 145,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "invalid_timestamp",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-002",
+      "case_id": "RO-DATA-002",
+      "outcome_type": "data_quality",
+      "priority": 144,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "duplicate_timestamp",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-003",
+      "case_id": "RO-DATA-003",
+      "outcome_type": "data_quality",
+      "priority": 143,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "out_of_order_records",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-004",
+      "case_id": "RO-DATA-004",
+      "outcome_type": "data_quality",
+      "priority": 142,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "nonnumeric_sensor_value",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-005",
+      "case_id": "RO-DATA-005",
+      "outcome_type": "data_quality",
+      "priority": 141,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "missing_sensor_value",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-008",
+      "case_id": "RO-DATA-008",
+      "outcome_type": "data_quality",
+      "priority": 138,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "redundant_sensor_conflict",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-009",
+      "case_id": "RO-DATA-009",
+      "outcome_type": "data_quality",
+      "priority": 137,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "unit_inconsistency",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-010",
+      "case_id": "RO-DATA-010",
+      "outcome_type": "data_quality",
+      "priority": 136,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "insufficient_observation_duration",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-006",
+      "case_id": "RO-DATA-006",
+      "outcome_type": "data_quality",
+      "priority": 140,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "sensor_constant",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "related_signals_vary",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-007",
+      "case_id": "RO-DATA-007",
+      "outcome_type": "data_quality",
+      "priority": 139,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "sensor_spike",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "neighboring_values_normal",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-WQ-001",
+      "case_id": "RO-WQ-001",
+      "outcome_type": "risk",
+      "priority": 55,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "low_mineral_product_water",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-WQ-003",
+      "case_id": "RO-WQ-003",
+      "outcome_type": "risk",
+      "priority": 54,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "chemical_hazard_unresolved",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-WQ-004",
+      "case_id": "RO-WQ-004",
+      "outcome_type": "risk",
+      "priority": 53,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "microbial_hazard_unresolved",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-WQ-005",
+      "case_id": "RO-WQ-005",
+      "outcome_type": "risk",
+      "priority": 52,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "source_water_hazard_change",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-WQ-006",
+      "case_id": "RO-WQ-006",
+      "outcome_type": "guard",
+      "priority": 51,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "health_relevant_hazard_unresolved",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-WQ-007",
+      "case_id": "RO-WQ-007",
+      "outcome_type": "risk",
+      "priority": 50,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "distribution_corrosion_context",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-WQ-008",
+      "case_id": "RO-WQ-008",
+      "outcome_type": "guard",
+      "priority": 49,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "health_limit_unavailable",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-WQ-002",
+      "case_id": "RO-WQ-002",
+      "outcome_type": "risk",
+      "priority": 56,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "blending_active",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "blend_microbial_safety_unverified",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-001",
+      "case_id": "AI-SEC-001",
+      "outcome_type": "guard",
+      "priority": 220,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "direct_prompt_injection",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-002",
+      "case_id": "AI-SEC-002",
+      "outcome_type": "guard",
+      "priority": 219,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "indirect_prompt_injection",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-003",
+      "case_id": "AI-SEC-003",
+      "outcome_type": "guard",
+      "priority": 218,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "prompt_exfiltration_request",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-004",
+      "case_id": "AI-SEC-004",
+      "outcome_type": "guard",
+      "priority": 217,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "policy_bypass_request",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-005",
+      "case_id": "AI-SEC-005",
+      "outcome_type": "guard",
+      "priority": 216,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "forced_tool_execution",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-007",
+      "case_id": "AI-SEC-007",
+      "outcome_type": "guard",
+      "priority": 215,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "valve_control_requested",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-008",
+      "case_id": "AI-SEC-008",
+      "outcome_type": "guard",
+      "priority": 214,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "pump_control_requested",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-009",
+      "case_id": "AI-SEC-009",
+      "outcome_type": "guard",
+      "priority": 213,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "setpoint_change_requested",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-010",
+      "case_id": "AI-SEC-010",
+      "outcome_type": "guard",
+      "priority": 212,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "cleaning_cycle_start_requested",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-011",
+      "case_id": "AI-SEC-011",
+      "outcome_type": "guard",
+      "priority": 211,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "unknown_tool_requested",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-012",
+      "case_id": "AI-SEC-012",
+      "outcome_type": "guard",
+      "priority": 210,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "ot_remote_access_requested",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-013",
+      "case_id": "AI-SEC-013",
+      "outcome_type": "guard",
+      "priority": 209,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "credential_exfiltration_requested",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-014",
+      "case_id": "AI-SEC-014",
+      "outcome_type": "guard",
+      "priority": 208,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "audit_tampering_requested",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-015",
+      "case_id": "AI-SEC-015",
+      "outcome_type": "guard",
+      "priority": 207,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "unsafe_tool_parameters",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-016",
+      "case_id": "AI-SEC-016",
+      "outcome_type": "guard",
+      "priority": 206,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "configured_limit_reached",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-AI-SEC-006",
+      "case_id": "AI-SEC-006",
+      "outcome_type": "guard",
+      "priority": 205,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "persistent_write_requested",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "approval_present",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-CLEAN-001",
+      "case_id": "RO-CLEAN-001",
+      "outcome_type": "guard",
+      "priority": 147,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "cleaning_requested",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "cleaning_chemistry_compatible",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-CLEAN-002",
+      "case_id": "RO-CLEAN-002",
+      "outcome_type": "guard",
+      "priority": 146,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "cleaning_requested",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "foulant_identity_known",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "cleaning_sequence_valid",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
     }
   ]
 }

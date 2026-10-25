@@ -1,0 +1,766 @@
+{
+  "vocabulary_version": "1.0.0",
+  "project": "AquaMind AI - Autonomous Desalination Operations Agent",
+  "terms": [
+    {
+      "name": "permeate_flow_direction",
+      "type": "enum",
+      "domain": "ro_performance",
+      "description": "Direction of normalized or context-qualified permeate-flow change",
+      "semantics": "observation",
+      "allowed_values": [
+        "up",
+        "down",
+        "stable",
+        "unknown"
+      ]
+    },
+    {
+      "name": "rejection_direction",
+      "type": "enum",
+      "domain": "ro_performance",
+      "description": "Direction of salt rejection change",
+      "semantics": "observation",
+      "allowed_values": [
+        "up",
+        "down",
+        "stable",
+        "unknown"
+      ]
+    },
+    {
+      "name": "salt_passage_direction",
+      "type": "enum",
+      "domain": "ro_performance",
+      "description": "Direction of salt-passage change",
+      "semantics": "observation",
+      "allowed_values": [
+        "up",
+        "down",
+        "stable",
+        "unknown"
+      ]
+    },
+    {
+      "name": "pressure_drop_direction",
+      "type": "enum",
+      "domain": "ro_performance",
+      "description": "Direction of feed-to-concentrate differential-pressure change",
+      "semantics": "observation",
+      "allowed_values": [
+        "up",
+        "down",
+        "stable",
+        "unknown"
+      ]
+    },
+    {
+      "name": "recovery_direction",
+      "type": "enum",
+      "domain": "ro_performance",
+      "description": "Direction of recovery change",
+      "semantics": "observation",
+      "allowed_values": [
+        "up",
+        "down",
+        "stable",
+        "unknown"
+      ]
+    },
+    {
+      "name": "sec_direction",
+      "type": "enum",
+      "domain": "ro_performance",
+      "description": "Direction of specific-energy-consumption change",
+      "semantics": "observation",
+      "allowed_values": [
+        "up",
+        "down",
+        "stable",
+        "unknown"
+      ]
+    },
+    {
+      "name": "raw_performance_change",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Raw performance change exists before normalization/context adjustment",
+      "semantics": "observation"
+    },
+    {
+      "name": "normalized_metrics_available",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Comparable normalized performance metrics are available",
+      "semantics": "observation"
+    },
+    {
+      "name": "reference_conditions_available",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Valid startup/design reference conditions are available",
+      "semantics": "observation"
+    },
+    {
+      "name": "temperature_shift",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Feedwater temperature materially changed relative to reference",
+      "semantics": "observation"
+    },
+    {
+      "name": "feed_tds_shift",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Feed salinity/TDS materially changed relative to reference",
+      "semantics": "observation"
+    },
+    {
+      "name": "feed_pressure_shift",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Feed/pump pressure materially changed relative to reference",
+      "semantics": "observation"
+    },
+    {
+      "name": "recovery_shift",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Recovery/conversion materially changed relative to reference",
+      "semantics": "observation"
+    },
+    {
+      "name": "operating_flux_shift",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Operating flux materially changed relative to reference",
+      "semantics": "observation"
+    },
+    {
+      "name": "source_water_change",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Source/feedwater composition changed",
+      "semantics": "observation"
+    },
+    {
+      "name": "stage_specific_data_available",
+      "type": "boolean",
+      "domain": "normalization",
+      "description": "Stage-specific data are available for staged systems",
+      "semantics": "observation"
+    },
+    {
+      "name": "scale_control_issue",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Evidence of inadequate or abnormal scale-control context",
+      "semantics": "observation"
+    },
+    {
+      "name": "carbonate_scaling_risk",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Water chemistry supports carbonate scaling risk",
+      "semantics": "observation"
+    },
+    {
+      "name": "calcium_sulfate_risk",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Water chemistry supports calcium sulfate scaling risk",
+      "semantics": "observation"
+    },
+    {
+      "name": "barium_sulfate_risk",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Water chemistry supports barium sulfate scaling risk",
+      "semantics": "observation"
+    },
+    {
+      "name": "strontium_sulfate_risk",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Water chemistry supports strontium sulfate scaling risk",
+      "semantics": "observation"
+    },
+    {
+      "name": "calcium_fluoride_risk",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Water chemistry supports calcium fluoride scaling risk",
+      "semantics": "observation"
+    },
+    {
+      "name": "silica_scaling_risk",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Water chemistry supports silica scaling risk",
+      "semantics": "observation"
+    },
+    {
+      "name": "calcium_phosphate_risk",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Water chemistry supports calcium phosphate scaling risk",
+      "semantics": "observation"
+    },
+    {
+      "name": "sdi_elevated",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "SDI is elevated relative to applicable plant/OEM target",
+      "semantics": "observation"
+    },
+    {
+      "name": "particle_loading_increase",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Particulate loading increased",
+      "semantics": "observation"
+    },
+    {
+      "name": "particulate_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Independent evidence supports particulate/colloidal loading",
+      "semantics": "observation"
+    },
+    {
+      "name": "metal_oxide_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Evidence supports metal-oxide deposits",
+      "semantics": "observation"
+    },
+    {
+      "name": "iron_manganese_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Feed/deposit evidence supports iron or manganese fouling",
+      "semantics": "observation"
+    },
+    {
+      "name": "aluminum_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Feed/deposit evidence supports aluminum fouling",
+      "semantics": "observation"
+    },
+    {
+      "name": "bio_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Microbiological/biofilm evidence is present",
+      "semantics": "observation"
+    },
+    {
+      "name": "organic_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Organic/NOM fouling evidence is present",
+      "semantics": "observation"
+    },
+    {
+      "name": "oil_or_cationic_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Oil or cationic-organic contamination evidence is present",
+      "semantics": "observation"
+    },
+    {
+      "name": "oxidant_exposure",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Oxidant exposure at the membrane is supported by evidence",
+      "semantics": "observation"
+    },
+    {
+      "name": "seal_issue_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Evidence specifically supports an O-ring/seal issue",
+      "semantics": "observation"
+    },
+    {
+      "name": "product_tube_issue_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Evidence specifically supports product-tube damage/leak",
+      "semantics": "observation"
+    },
+    {
+      "name": "integrity_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Evidence supports a membrane/integrity problem without confirmed subtype",
+      "semantics": "observation"
+    },
+    {
+      "name": "backpressure_event",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "A permeate-backpressure event is documented or strongly supported",
+      "semantics": "observation"
+    },
+    {
+      "name": "abrasion_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Particle/abrasion context supports mechanical membrane damage",
+      "semantics": "observation"
+    },
+    {
+      "name": "startup_event",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "The evidence occurs during or immediately after startup",
+      "semantics": "observation"
+    },
+    {
+      "name": "rapid_pressurization",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Pressurization was rapid/uncontrolled relative to procedure",
+      "semantics": "observation"
+    },
+    {
+      "name": "trapped_air",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Air was not adequately purged before pressurization",
+      "semantics": "observation"
+    },
+    {
+      "name": "wetting_issue_evidence",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Dry-out/incomplete-wetting context is supported",
+      "semantics": "observation"
+    },
+    {
+      "name": "high_dp_event",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Differential pressure is abnormally high for the plant/OEM context",
+      "semantics": "observation"
+    },
+    {
+      "name": "localized_salt_passage",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "High salt passage appears localized to a vessel/element region",
+      "semantics": "observation"
+    },
+    {
+      "name": "defect_location_known",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "The physical location of the integrity defect is known",
+      "semantics": "observation"
+    },
+    {
+      "name": "competing_integrity_hypotheses",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Multiple integrity causes remain plausible",
+      "semantics": "observation"
+    },
+    {
+      "name": "integrity_symptoms_incomplete",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "Integrity evidence is incomplete or internally inconsistent",
+      "semantics": "observation"
+    },
+    {
+      "name": "abnormal_pattern",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "A sustained abnormal pattern exists",
+      "semantics": "observation"
+    },
+    {
+      "name": "supported_pattern_match",
+      "type": "boolean",
+      "domain": "diagnosis",
+      "description": "The observed directional pattern matches a supported canonical rule",
+      "semantics": "observation"
+    },
+    {
+      "name": "biofouling_stage",
+      "type": "enum",
+      "domain": "diagnosis",
+      "description": "Biofouling severity/stage inferred from evidence",
+      "semantics": "observation",
+      "allowed_values": [
+        "early",
+        "advanced",
+        "unknown"
+      ]
+    },
+    {
+      "name": "antiscalant_issue",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Antiscalant/scale-inhibitor delivery or control issue is supported",
+      "semantics": "observation"
+    },
+    {
+      "name": "pretreatment_upset",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Pretreatment operation or quality is abnormal",
+      "semantics": "observation"
+    },
+    {
+      "name": "chlorine_breakthrough",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Free chlorine/oxidant breakthrough to membrane feed is supported",
+      "semantics": "observation"
+    },
+    {
+      "name": "biological_control_issue",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Biological-control pretreatment is inadequate or abnormal",
+      "semantics": "observation"
+    },
+    {
+      "name": "cartridge_filter_issue",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Cartridge filter integrity/bypass/condition is abnormal",
+      "semantics": "observation"
+    },
+    {
+      "name": "ph_excursion",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Feed pH deviated from plant/OEM context",
+      "semantics": "observation"
+    },
+    {
+      "name": "h2s_context",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Hydrogen sulfide/oxidation deposition context is present",
+      "semantics": "observation"
+    },
+    {
+      "name": "feed_metal_excursion",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Feed metals/corrosion indicators increased",
+      "semantics": "observation"
+    },
+    {
+      "name": "high_recovery",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Recovery is high relative to the approved design/operating context",
+      "semantics": "observation"
+    },
+    {
+      "name": "cleaning_requested",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "A cleaning intervention is being considered",
+      "semantics": "observation"
+    },
+    {
+      "name": "foulant_identity_known",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Foulant identity is sufficiently established to choose cleaning chemistry",
+      "semantics": "observation"
+    },
+    {
+      "name": "invalid_timestamp",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Invalid/unparseable timestamp is present",
+      "semantics": "observation"
+    },
+    {
+      "name": "duplicate_timestamp",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Duplicate timestamp is present",
+      "semantics": "observation"
+    },
+    {
+      "name": "out_of_order_records",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Records are not chronological",
+      "semantics": "observation"
+    },
+    {
+      "name": "nonnumeric_sensor_value",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "A numeric sensor field contains nonnumeric data",
+      "semantics": "observation"
+    },
+    {
+      "name": "missing_sensor_value",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Required or useful sensor data are missing",
+      "semantics": "observation"
+    },
+    {
+      "name": "sensor_constant",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "A sensor is implausibly constant",
+      "semantics": "observation"
+    },
+    {
+      "name": "related_signals_vary",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Related process signals vary while the suspect sensor is constant",
+      "semantics": "observation"
+    },
+    {
+      "name": "sensor_spike",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "A transient sensor spike/outlier is present",
+      "semantics": "observation"
+    },
+    {
+      "name": "neighboring_values_normal",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Neighboring values return to baseline/normal context",
+      "semantics": "observation"
+    },
+    {
+      "name": "redundant_sensor_conflict",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Redundant/related measurements materially conflict",
+      "semantics": "observation"
+    },
+    {
+      "name": "unit_inconsistency",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Engineering units or metadata are inconsistent/ambiguous",
+      "semantics": "observation"
+    },
+    {
+      "name": "insufficient_observation_duration",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Too few valid observations exist for defensible trend inference",
+      "semantics": "observation"
+    },
+    {
+      "name": "low_mineral_product_water",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Desalinated product water has low-mineral/stabilization context",
+      "semantics": "observation"
+    },
+    {
+      "name": "blending_active",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Desalinated product water is blended with another source",
+      "semantics": "observation"
+    },
+    {
+      "name": "blend_microbial_safety_unverified",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Microbial safety of blending water is unverified",
+      "semantics": "observation"
+    },
+    {
+      "name": "chemical_hazard_unresolved",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "A product-water chemical hazard is unresolved",
+      "semantics": "observation"
+    },
+    {
+      "name": "microbial_hazard_unresolved",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "A product-water microbial hazard is unresolved",
+      "semantics": "observation"
+    },
+    {
+      "name": "source_water_hazard_change",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Health-relevant source-water hazard profile changed",
+      "semantics": "observation"
+    },
+    {
+      "name": "health_relevant_hazard_unresolved",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "A health-relevant hazard cannot be resolved by RO telemetry alone",
+      "semantics": "observation"
+    },
+    {
+      "name": "distribution_corrosion_context",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Post-desalination water may be aggressive/corrosive in distribution context",
+      "semantics": "observation"
+    },
+    {
+      "name": "health_limit_unavailable",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Applicable health/regulatory target is unavailable to the agent",
+      "semantics": "observation"
+    },
+    {
+      "name": "direct_prompt_injection",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Direct user instruction attempts to override higher-priority policy",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "indirect_prompt_injection",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Retrieved/external content contains instructions targeting the agent",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "prompt_exfiltration_request",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Request attempts to reveal protected prompts/instructions/secrets",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "policy_bypass_request",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Request asks to bypass safety/permission/audit policy",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "forced_tool_execution",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Request attempts to force a tool call regardless of validation/authorization",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "persistent_write_requested",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "A persistent state-changing write is requested",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "approval_present",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Required explicit approval is present",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "valve_control_requested",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Physical valve actuation is requested",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "pump_control_requested",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Physical pump actuation is requested",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "setpoint_change_requested",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Physical process setpoint change is requested",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "cleaning_cycle_start_requested",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Physical cleaning-cycle start is requested",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "unknown_tool_requested",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Requested tool is not in the explicit registry",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "ot_remote_access_requested",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Unapproved remote access to OT/SCADA is requested",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "credential_exfiltration_requested",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Credentials/tokens/secrets are requested",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "audit_tampering_requested",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Request attempts to delete/rewrite/conceal audit evidence",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "unsafe_tool_parameters",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Tool is allowed but parameters violate scope/path/permission constraints",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "configured_limit_reached",
+      "type": "boolean",
+      "domain": "agent_ot_security",
+      "description": "Turn/tool/cost limit has been reached",
+      "semantics": "security_signal"
+    },
+    {
+      "name": "cleaning_chemistry_compatible",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Proposed cleaning chemistry is verified compatible with the membrane and operating context",
+      "semantics": "observation"
+    },
+    {
+      "name": "cleaning_sequence_valid",
+      "type": "boolean",
+      "domain": "operations_and_water_safety",
+      "description": "Proposed cleaning sequence is verified appropriate for the suspected foulant and membrane context",
+      "semantics": "observation"
+    }
+  ],
+  "policy": {
+    "unknown_fields": "Allowed as supplemental evidence but cannot satisfy a rule unless explicitly declared in the vocabulary.",
+    "direction_semantics": "Directional values should be based on normalized or otherwise context-qualified data when normalization is required.",
+    "boolean_semantics": "True means supported by available evidence; false means explicitly not supported; absence means unknown/not supplied."
+  }
+}

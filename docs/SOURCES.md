@@ -1,224 +1,327 @@
 # AquaMind AI — Authoritative Sources
 
-## Purpose
+Verified: **2026-10-25**
 
-This document is the human-readable bibliography for AquaMind AI's source-grounded desalination O&M knowledge base.
+This bibliography uses official manufacturer, standards-body, public-health and government sources. Paid standards are referenced by public metadata/scope only unless lawfully accessed.
 
-AquaMind does **not** claim to be trained on real plant telemetry unless such data is explicitly provided and documented. The production reasoning layer is grounded in a curated, traceable knowledge base, and the scenario bank uses reproducible **synthetic** telemetry.
+## Source registry
 
-Every supported diagnostic pattern should be traceable through:
-
-**Authoritative source → knowledge rule → scenario → agent decision → test → trace**
-
-## Source quality policy
-
-- **Tier A** — official manufacturer manuals/bulletins, consensus standards, international public-health guidance, or government guidance.
-- **Tier B** — official cross-check/draft sources that strengthen coverage but should not override applicable final standards or plant-specific documentation.
-- Prefer the latest official English version where a manufacturer states that the current English version is authoritative.
-- Manufacturer operating limits are product-specific and are never generalized to every membrane.
-- ASTM/AWWA paid material is referenced by title, edition, DOI/catalog metadata, scope, and legitimately accessed notes. AquaMind does not redistribute copyrighted standards.
-- No source in this bibliography authorizes AquaMind to actuate pumps, valves, cleaning cycles, PLCs, or SCADA.
-
-## 1. Core RO/NF engineering — DuPont FilmTec
-
-### DUPONT_RO_MANUAL_V20_2026 — Tier A
-**FilmTec Reverse Osmosis Membranes Technical Manual — Version 20, August 2026**  
-Official DuPont Water Solutions manual covering RO/NF fundamentals, feedwater analysis, pretreatment, system design, startup/shutdown, operating data, normalization, cleaning and troubleshooting.  
+### DUPONT_RO_MANUAL_R19_2026 — Tier A
+**DuPont Water Solutions — FilmTec Reverse Osmosis/Nanofiltration Membranes Technical Manual**  
+Rev. 19, February 2026  
+Status: `final` · Access: `public`  
 https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Manual-45-D01504-en.pdf
 
-### DUPONT_TROUBLESHOOTING_GRID_2022 — Tier A
-**FilmTec RO/NF Troubleshooting Grid — Rev. 10, February 2022**  
-Core qualitative source for symptom patterns involving permeate flow, salt passage and differential pressure and their association with scaling, colloidal fouling, biofouling, organic fouling, oxidation damage, membrane/O-ring/product-tube leaks and compaction.  
-https://www.dupont.com/content/dam/dupont/amer/us/en/water-solutions/public/documents/en/RO-NF-FilmTec-Troubleshooting-Grid-Manual-Exc-45-D01653-en.pdf
+Primary engineering reference. Plant- and product-specific limits take precedence; example values are not universal shutdown limits.
 
-### DUPONT_CLEANING_2022 — Tier A
-**FilmTec Cleaning Procedures — Rev. 12, June 2022**  
-Grounding for normalized-performance cleaning indicators and the requirement to consider pretreatment/operating changes before concluding that membranes require cleaning.  
-https://www.dupont.com/content/dam/dupont/amer/us/en/water-solutions/public/documents/en/RO-NF-FilmTec-Cleaning-Procedures-Manual-Exc-45-D01696-en.pdf
+### DUPONT_TROUBLESHOOTING_GRID_R10_2022 — Tier A
+**DuPont Water Solutions — FilmTec RO/NF Troubleshooting Grid - Technical Manual Excerpt**  
+Rev. 10, February 2022  
+Status: `final` · Access: `public`  
+https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Troubleshooting-Grid-Manual-Exc-45-D01653-en.pdf
 
-### DUPONT_CHLORINATION_2026 — Tier A
-**Water Chemistry and Pretreatment — Chlorination/Dechlorination**  
-Grounding for oxidation risk, chlorine removal and biological-fouling prevention.  
+Core directional-pattern source. DuPont explicitly notes that symptoms can overlap; AquaMind therefore treats outputs as hypotheses.
+
+### DUPONT_CLEANING_R13_2026 — Tier A
+**DuPont Water Solutions — Cleaning Procedures for FilmTec Elements**  
+Rev. 13, February 2026  
+Status: `final` · Access: `public`  
+https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Cleaning-Procedures-Manual-Exc-45-D01696-en.pdf
+
+Cleaning criteria are manufacturer guidance and are not universal safety or shutdown thresholds.
+
+### DUPONT_CHLORINATION_R11_2026 — Tier A
+**DuPont Water Solutions — FilmTec Chlorination - Dechlorination Technical Manual Excerpt**  
+Rev. 11, February 2026  
+Status: `final` · Access: `public`  
 https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Chlorination-Dechlorination-Manual-Exc-45-D01569-en.pdf
 
-### DUPONT_FTNORM_PRO_2026 — Tier A
-**FT-Norm PRO Technical Manual — Version 1, September 2026**  
-Primary reference for future formal RO/NF normalization. It explicitly explains why temperature, feedwater quality, flux and recovery changes can mask or imitate membrane performance changes.  
+Grounds oxidant exposure and dechlorination reasoning. Never authorizes automatic chemical dosing.
+
+### DUPONT_FTNORM_PRO_R0_2022 — Tier A
+**DuPont Water Solutions — FT-Norm PRO Technical Manual**  
+Rev. 0, January 2022  
+Status: `final` · Access: `public`  
 https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-FT-Norm-Pro-Manual-45-D03917-en.pdf
 
-### DUPONT_OPERATION_LIMITS_2026 — Tier A
-**FilmTec RO/NF Elements Operation Excellence and Limiting Conditions**  
-Product/manufacturer-specific operating protection reference.  
+Manual metadata verified from the official PDF; current tool availability is tracked separately.
+
+### DUPONT_FTNORM_TOOL_CURRENT — Tier A
+**DuPont Water Solutions — FT-Norm PRO online normalization tool**  
+Current official online tool, verified October 2026  
+Status: `final` · Access: `public`  
+https://watertools-qa.dupont.com/en/tool/ft-norm-pro
+
+Current DuPont tool page confirms that normalization compensates for feedwater temperature, salinity, and pump-pressure effects.
+
+### DUPONT_OPERATION_LIMITS_R1_2025 — Tier A
+**DuPont Water Solutions — FilmTec RO/NF Elements Operation Excellence and Limiting Conditions**  
+Rev. 1, June 2025  
+Status: `final` · Access: `public`  
 https://www.dupont.com/content/dam/water/amer/us/en/water/public/documents/en/RO-NF-FilmTec-Operation-Excellence-Limiting-Conditions-TechFact-45-D04388-en.pdf
 
-## 2. Independent membrane-manufacturer cross-checks
+Product-family guidance only. Values must not be generalized to membranes outside the applicable FilmTec scope.
 
-### HYDRANAUTICS_TSB107_2026 — Tier A
-**Hydranautics/Nitto TSB107.30 — Foulants and Cleaning Procedures, April 2026**  
-Covers carbonate/sulfate scale, metal oxides, silica, colloids, natural/man-made organics and biological fouling and stresses normalization when operating conditions vary.  
+### HYDRANAUTICS_TSB107_28_2025 — Tier A
+**Hydranautics / Nitto — Foulants and Cleaning Procedures for Composite Polyamide RO/NF Membrane Elements**  
+TSB107.28, April 2025  
+Status: `final` · Access: `public`  
 https://membranes.com/wp-content/uploads/Documents/TSB/TSB107.pdf
 
-### HYDRANAUTICS_TSB113 — Tier A
-**Hydranautics/Nitto TSB113.04 — Procedure for Measuring SDI**  
-Official manufacturer guidance for SDI/feedwater-quality testing; use together with ASTM D4189.  
+Independent manufacturer cross-check for foulant classes and cleaning selection.
+
+### HYDRANAUTICS_TSB113_04_2016 — Tier A
+**Hydranautics / Nitto — Procedure for Measuring Silt Density Index (SDI)**  
+TSB113.04, December 2016  
+Status: `final` · Access: `public`  
 https://membranes.com/wp-content/uploads/2014/12/TSB113.pdf
 
-### HYDRANAUTICS_TSB118 — Tier A
-**Hydranautics/Nitto TSB118.16 — Startup, Shutdown and Preservative Flushing**  
-Grounding for safe startup/shutdown reasoning, air purging, controlled pressurization and water-hammer prevention.  
+Use SDI as a fouling-potential indicator, not proof of a specific foulant.
+
+### HYDRANAUTICS_TSB118_16_2019 — Tier A
+**Hydranautics / Nitto — Membrane Start-up, Shutdown, and Preservative Flushing Guidelines**  
+TSB118.16, October 2019  
+Status: `final` · Access: `public`  
 https://membranes.com/wp-content/uploads/Documents/TSB/TSB118.pdf
 
-### LG_TSB109_FLUSHING — Tier B
-**LG Water Solutions TSB 109 — Membrane Element Flushing**  
-Independent manufacturer cross-check for startup/shutdown flushing and controlled pressurization.  
+Supports startup/shutdown and hydraulic-shock scenarios; AquaMind remains advisory only.
+
+### HYDRANAUTICS_TAB110 — Tier A
+**Hydranautics / Nitto — Chlorination in RO Seawater Supply Lines and Pretreatment Processes**  
+Official current PDF; date not asserted by registry  
+Status: `final` · Access: `public`  
+https://membranes.com/wp-content/uploads/Documents/application-report/TAB110.pdf
+
+Site-specific selection of chlorination/dechlorination strategy is required.
+
+### HYDRANAUTICS_TAB111_2022 — Tier A
+**Hydranautics / Nitto — Chemical Pretreatment for RO and NF**  
+February 2022, TAB111  
+Status: `final` · Access: `public`  
+https://membranes.com/wp-content/uploads/Documents/application-report/TAB111.pdf
+
+Pretreatment chemistry is site-specific; AquaMind does not auto-dose chemicals.
+
+### HYDRANAUTICS_TAB116_2022 — Tier A
+**Hydranautics / Nitto — RO/NF Polyamide Membrane Feedwater Requirements**  
+February 2022, TAB116  
+Status: `final` · Access: `public`  
+https://membranes.com/wp-content/uploads/Documents/application-report/TAB116.pdf
+
+Strong cross-check for feedwater conditions that can damage polyamide membranes.
+
+### LG_TSB109_FLUSHING_V2_4_1 — Tier B
+**LG Water Solutions — Technical Service Bulletin 109 - Membrane Element Flushing**  
+Version 2.4.1  
+Status: `final` · Access: `public`  
 https://www.lgwatersolutions.com/wp-content/uploads/2025/07/109.-Membrane-Element-Flushing.pdf
 
-## 3. AWWA professional manuals and standards
+Independent manufacturer cross-check; product-specific values are not universal.
 
-AWWA states that its manuals are developed and reviewed by water-industry committees and experts.
-
-### AWWA_M46 — Tier A
-**M46 Reverse Osmosis and Nanofiltration** — selection, installation, operation and maintenance.  
+### AWWA_M46_3E — Tier A
+**American Water Works Association — M46 Nanofiltration and Reverse Osmosis, Third Edition**  
+Third Edition; current AWWA catalog entry  
+Status: `final` · Access: `paid_or_restricted`  
 https://www.awwa.org/resource/membrane-processes/
+
+Do not redistribute copyrighted manual text.
 
 ### AWWA_M61 — Tier A
-**M61 Desalination of Seawater** — technical/planning guidance for seawater desalination facilities.  
-https://www.awwa.org/resource/membrane-processes/
+**American Water Works Association — M61 Desalination of Seawater**  
+Current AWWA catalog entry  
+Status: `final` · Access: `paid_or_restricted`  
+https://www.awwa.org/resource/desalination/
+
+Do not redistribute copyrighted manual text.
 
 ### AWWA_M69 — Tier A
-**M69 Inland Desalination and Concentrate Management**.  
-https://www.awwa.org/manuals/manuals-list/
+**American Water Works Association — M69 Inland Desalination and Concentrate Management**  
+Current AWWA catalog entry  
+Status: `final` · Access: `paid_or_restricted`  
+https://www.awwa.org/resource/desalination/
+
+Concentrate-management reference; site permits and regulation remain authoritative.
 
 ### AWWA_B114_22 — Tier A
-**ANSI/AWWA B114-22 Reverse Osmosis and Nanofiltration Systems for Water Treatment** — minimum requirements for RO/NF systems.  
-https://www.awwa.org/standards/standards-list
+**American Water Works Association — ANSI/AWWA B114-22 Reverse Osmosis and Nanofiltration Systems for Water Treatment**  
+2022  
+Status: `final` · Access: `paid_or_restricted`  
+https://www.awwa.org/standards/standards-list/
 
-**Copyright note:** AWWA manuals/standards may require purchase. AquaMind stores bibliographic/provenance metadata and only knowledge that is lawfully available to the project.
-
-## 4. WHO public-health and desalinated-water safety
+Do not reproduce paid standard text.
 
 ### WHO_GDWQ_2026 — Tier A
-**WHO Guidelines for drinking-water quality: fourth edition incorporating the first, second and third addenda — 17 June 2026**  
-Primary health-risk/water-safety framework.  
+**World Health Organization — Guidelines for drinking-water quality: fourth edition incorporating the first, second and third addenda**  
+17 June 2026  
+Status: `final` · Access: `public`  
 https://www.who.int/publications/i/item/9789240121225
 
+Primary health-risk framework. Local regulations may be more specific and must be applied where relevant.
+
 ### WHO_DESALINATION_2011 — Tier A
-**Safe drinking-water from desalination — WHO, 2011**  
-Desalination-specific risk-assessment and risk-management guidance.  
+**World Health Organization — Safe drinking-water from desalination: Guidance on risk assessment and risk management procedures**  
+1 March 2011  
+Status: `final` · Access: `public`  
 https://www.who.int/publications/i/item/WHO-HSE-WSH-11.03
 
-## 5. ASTM RO/NF standards
+Desalination-specific public-health grounding.
 
 ### ASTM_D4194_23 — Tier A
-**ASTM D4194-23 — Operating Characteristics of RO/NF Devices**  
+**ASTM International — D4194-23 Standard Test Methods for Operating Characteristics of Reverse Osmosis and Nanofiltration Devices**  
+2023; active  
+Status: `final` · Access: `paid_or_restricted`  
 https://store.astm.org/d4194-23.html
 
+Public scope/metadata only unless lawfully licensed.
+
 ### ASTM_D3923_23 — Tier A
-**ASTM D3923-23 — Detecting Leaks in RO/NF Devices**  
+**ASTM International — D3923-23 Standard Practices for Detecting Leaks in Reverse Osmosis and Nanofiltration Devices**  
+2023; active  
+Status: `final` · Access: `paid_or_restricted`  
 https://store.astm.org/d3923-23.html
 
+Supports leak/integrity taxonomy; do not reproduce paid procedures.
+
 ### ASTM_D4195_23 — Tier A
-**ASTM D4195-23 — Water Analysis for RO/NF Application**  
+**ASTM International — D4195-23 Standard Guide for Water Analysis for Reverse Osmosis and Nanofiltration Application**  
+2023; active  
+Status: `final` · Access: `paid_or_restricted`  
 https://store.astm.org/d4195-23.html
 
+Grounds feedwater variables relevant to RO/NF evaluation.
+
 ### ASTM_D4189_23 — Tier A
-**ASTM D4189-23 — Silt Density Index (SDI) of Water**  
+**ASTM International — D4189-23 Standard Test Method for Silt Density Index (SDI) of Water**  
+2023; active  
+Status: `final` · Access: `paid_or_restricted`  
 https://store.astm.org/d4189-23.html
 
+SDI is an indicator, not an absolute measurement of particulate quantity or a root-cause diagnosis.
+
 ### ASTM_D4472_23 — Tier A
-**ASTM D4472-23 — Recordkeeping for RO/NF Systems**  
+**ASTM International — D4472-23 Standard Guide for Recordkeeping for Reverse Osmosis and Nanofiltration Systems**  
+2023; active  
+Status: `final` · Access: `paid_or_restricted`  
 https://store.astm.org/d4472-23.html
 
+Strong grounding for operating-data and maintenance record requirements.
+
 ### ASTM_D4516_19A — Tier A
-**ASTM D4516-19a — Standardizing Reverse Osmosis Performance Data**  
-Especially important for avoiding false fault conclusions when pressure, temperature, conversion/recovery or feed concentration changes.  
+**ASTM International — D4516-19a Standard Practice for Standardizing Reverse Osmosis Performance Data**  
+2019; active  
+Status: `final` · Access: `paid_or_restricted`  
 https://store.astm.org/standards/d4516
 
+Critical normalization reference: operating conditions can change apparent permeate flow and salt passage.
+
 ### ASTM_D4582_23 — Tier A
-**ASTM D4582-23 — Stiff and Davis Stability Index for Reverse Osmosis**  
-Applicable within its stated high-TDS concentrate scope.  
+**ASTM International — D4582-23 Standard Practice for Calculation and Adjustment of the Stiff and Davis Stability Index for Reverse Osmosis**  
+2023; active  
+Status: `final` · Access: `paid_or_restricted`  
 https://store.astm.org/d4582-23.html
 
+Apply only within the standard's scope.
+
 ### ASTM_D6908_25 — Tier A
-**ASTM D6908-25 — Integrity Testing of Water Filtration Membrane Systems**  
-Includes RO/NF/UF membrane classes.  
+**ASTM International — D6908-25 Standard Practice for Integrity Testing of Water Filtration Membrane Systems**  
+2025; active  
+Status: `final` · Access: `paid_or_restricted`  
 https://store.astm.org/standards/d6908
 
-**Copyright note:** The registry does not redistribute ASTM standard text.
-
-## 6. Government desalination research
+Supports integrity-testing concepts; do not reproduce paid procedures.
 
 ### USBR_DWPR — Tier A
 **U.S. Bureau of Reclamation — Desalination and Water Purification Research Program**  
-Government research program focused on desalination/water-treatment innovation, cost, energy and barriers to deployment.  
+Current program; verified October 2026  
+Status: `final` · Access: `public`  
 https://www.usbr.gov/research/dwpr/index.html
 
-## 7. OT / water-sector cybersecurity
+Government R&D grounding and source for future validated case studies.
 
 ### NIST_SP800_82_R3 — Tier A
-**NIST SP 800-82 Rev. 3 — Guide to Operational Technology (OT) Security — Final, September 2023**  
-Primary final OT-security reference for SCADA/ICS/PLC risk, architectures and controls.  
+**National Institute of Standards and Technology — SP 800-82 Rev. 3 Guide to Operational Technology (OT) Security**  
+Final, September 2023  
+Status: `final` · Access: `public`  
 https://csrc.nist.gov/pubs/sp/800/82/r3/final
 
-### NIST_SP800_82_R4_IPD_2026 — Tier B / Draft
-**NIST SP 800-82 Rev. 4 — Initial Public Draft, September 2026**  
-Useful future-looking source with expanded water/IIoT/CSF 2.0 coverage. It must not be represented as final.  
+Primary final OT-security reference while Rev. 4 remains draft.
+
+### NIST_SP800_82_R4_IPD_2026 — Tier B
+**National Institute of Standards and Technology — SP 800-82 Rev. 4 Guide to Operational Technology (OT) Security**  
+Initial Public Draft, 21 September 2026  
+Status: `draft` · Access: `public`  
 https://csrc.nist.gov/pubs/sp/800/82/r4/ipd
 
+Track for future changes. Draft content must not be presented as a final requirement.
+
 ### NIST_SP1800_45_2026 — Tier A
-**NIST SP 1800-45 — Cybersecurity for the Water and Wastewater Sector: OT Remote Access — Final, June 2026**  
-Sector-specific reference for secure remote access architectures.  
+**National Institute of Standards and Technology — SP 1800-45 Cybersecurity for the Water and Wastewater Sector: Build Architecture**  
+Final, June 2026  
+Status: `final` · Access: `public`  
 https://csrc.nist.gov/pubs/sp/1800/45/final
 
-### CISA_EPA_FBI_WATER_CYBER_2024 — Tier A
-**CISA/EPA/FBI — Top Cyber Actions for Securing Water Systems**  
-https://www.cisa.gov/news-events/alerts/2024/02/21/cisa-epa-and-fbi-release-top-cyber-actions-securing-water-systems
-
-### EPA_WATER_CYBER_ASSESSMENTS — Tier A
-**U.S. EPA — Cybersecurity Assessments for Water Systems**  
-https://www.epa.gov/cyberwater/cybersecurity-assessments
-
-## 8. AI-agent governance and prompt-injection defense
+Water-sector-specific cybersecurity grounding.
 
 ### NIST_AI_RMF_1_0 — Tier A
-**NIST Artificial Intelligence Risk Management Framework 1.0**  
-https://www.nist.gov/itl/ai-risk-management-framework
+**National Institute of Standards and Technology — Artificial Intelligence Risk Management Framework (AI RMF 1.0)**  
+26 January 2023  
+Status: `final` · Access: `public`  
+https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10
+
+Grounds governance, evaluation, uncertainty and human oversight.
 
 ### NIST_AI_600_1 — Tier A
-**NIST AI 600-1 — Generative AI Profile**  
+**National Institute of Standards and Technology — Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile**  
+26 July 2024  
+Status: `final` · Access: `public`  
 https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence
 
+Companion source for GenAI-specific risks.
+
 ### OWASP_LLM_PROMPT_INJECTION — Tier A
-**OWASP LLM Prompt Injection Prevention Cheat Sheet**  
-Supports defense-in-depth, least privilege, tool-call validation, action-specific approval and monitoring.  
+**OWASP Foundation — LLM Prompt Injection Prevention Cheat Sheet**  
+Current online guidance; verified October 2026  
+Status: `final` · Access: `public`  
 https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html
 
-## Source-governance rule
+Use as best-practice guidance and smoke-test inspiration, not as a population-level security benchmark.
 
-AquaMind should never assert:
+### CISA_EPA_FBI_WATER_CYBER_2024 — Tier A
+**CISA / U.S. EPA / FBI — Top Cyber Actions for Securing Water Systems**  
+21 February 2024  
+Status: `final` · Access: `public`  
+https://www.cisa.gov/news-events/alerts/2024/02/21/cisa-epa-and-fbi-release-top-cyber-actions-securing-water-systems
 
-- that a diagnostic hypothesis is a confirmed root cause solely from telemetry;
-- that a manufacturer-specific threshold is universal;
-- that an ASTM/AWWA requirement was checked unless the project has legitimate access to the relevant text;
-- that a draft publication is final;
-- that synthetic scenarios are real plant incidents;
-- that a recommendation authorizes autonomous physical plant action.
+Practical water-sector cyber resilience guidance.
 
-When evidence is ambiguous, the correct behavior is to report **insufficient evidence** or an **unclassified abnormal pattern** and recommend verification.
+### EPA_WATER_CYBER_ASSESSMENTS — Tier A
+**U.S. Environmental Protection Agency — Cybersecurity Assessments for Water Systems**  
+Current official resource; verified October 2026  
+Status: `final` · Access: `public`  
+https://www.epa.gov/cyberwater/cybersecurity-assessments
 
-## 9. Toray independent manufacturer cross-checks
+Supports water-sector cyber assessment and governance.
 
 ### TORAY_RO_HANDLING_MANUAL_2025 — Tier A
-**TorayRO Operation, Maintenance, and Handling Manual**  
-Official Toray manual covering RO startup, operating records, feed/brine/permeate monitoring, SDI, conductivity, differential pressure and controlled startup/water-hammer prevention.  
+**Toray Industries, Inc. — TorayRO Operation, Maintenance, and Handling Manual**  
+Last updated July 2025; 06-G-MB1-250728(EN)  
+Status: `final` · Access: `public`  
 https://www.water.toray/knowledge/manual/pdf/TorayRO_HandlingManual.pdf
 
+Independent manufacturer cross-check for monitoring, normalization and safe operation.
+
 ### TORAY_TRAK — Tier A
-**TORAY TRAK — Reverse Osmosis Operation Data Normalization**  
-Official Toray normalization tool. Toray states that its normalization is based on ASTM D4516 with calculations tailored to Toray elements.  
+**Toray Industries, Inc. — TORAY TRAK - Reverse Osmosis Operation Data Normalization**  
+Version 3.1.5, October 2019; current official download page  
+Status: `final` · Access: `public`  
 https://www.water.toray/knowledge/tool/trak/
 
+Official Toray normalization tool based on ASTM D4516 with Toray-specific calculations.
+
 ### TORAY_MBFR — Tier B
-**mBFR — Membrane Biofilm Formation Rate**  
-Official Toray technical resource for early assessment of RO biofouling potential; useful as an independent manufacturer cross-check, not a universal requirement.  
+**Toray Industries, Inc. — mBFR - Membrane Biofilm Formation Rate**  
+Current official technical resource; verified October 2026  
+Status: `final` · Access: `public`  
 https://www.water.toray/knowledge/mBFR/
+
+Supplemental manufacturer cross-check for biofouling potential; not a universal requirement.
