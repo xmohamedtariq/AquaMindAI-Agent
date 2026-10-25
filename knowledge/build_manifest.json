@@ -1,8 +1,8 @@
 {
   "package": "AquaMind Authoritative Knowledge Base",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "verified_on": "2026-10-25",
-  "sources": 40,
+  "sources": 34,
   "cases": 90,
   "rules": 90,
   "evidence_terms": 102,
@@ -11,5 +11,8 @@
   "deduplicated_case_aliases": {
     "RO-INT-010": "RO-INT-001",
     "RO-PRE-012": "RO-INT-007"
-  }
+  },
+  "active_sources": 34,
+  "unused_sources": 0,
+  "draft_sources": 0
 }

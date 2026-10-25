@@ -126,30 +126,6 @@ https://www.awwa.org/resource/membrane-processes/
 
 Do not redistribute copyrighted manual text.
 
-### AWWA_M61 — Tier A
-**American Water Works Association — M61 Desalination of Seawater**  
-Current AWWA catalog entry  
-Status: `final` · Access: `paid_or_restricted`  
-https://www.awwa.org/resource/desalination/
-
-Do not redistribute copyrighted manual text.
-
-### AWWA_M69 — Tier A
-**American Water Works Association — M69 Inland Desalination and Concentrate Management**  
-Current AWWA catalog entry  
-Status: `final` · Access: `paid_or_restricted`  
-https://www.awwa.org/resource/desalination/
-
-Concentrate-management reference; site permits and regulation remain authoritative.
-
-### AWWA_B114_22 — Tier A
-**American Water Works Association — ANSI/AWWA B114-22 Reverse Osmosis and Nanofiltration Systems for Water Treatment**  
-2022  
-Status: `final` · Access: `paid_or_restricted`  
-https://www.awwa.org/standards/standards-list/
-
-Do not reproduce paid standard text.
-
 ### WHO_GDWQ_2026 — Tier A
 **World Health Organization — Guidelines for drinking-water quality: fourth edition incorporating the first, second and third addenda**  
 17 June 2026  
@@ -214,14 +190,6 @@ https://store.astm.org/standards/d4516
 
 Critical normalization reference: operating conditions can change apparent permeate flow and salt passage.
 
-### ASTM_D4582_23 — Tier A
-**ASTM International — D4582-23 Standard Practice for Calculation and Adjustment of the Stiff and Davis Stability Index for Reverse Osmosis**  
-2023; active  
-Status: `final` · Access: `paid_or_restricted`  
-https://store.astm.org/d4582-23.html
-
-Apply only within the standard's scope.
-
 ### ASTM_D6908_25 — Tier A
 **ASTM International — D6908-25 Standard Practice for Integrity Testing of Water Filtration Membrane Systems**  
 2025; active  
@@ -230,14 +198,6 @@ https://store.astm.org/standards/d6908
 
 Supports integrity-testing concepts; do not reproduce paid procedures.
 
-### USBR_DWPR — Tier A
-**U.S. Bureau of Reclamation — Desalination and Water Purification Research Program**  
-Current program; verified October 2026  
-Status: `final` · Access: `public`  
-https://www.usbr.gov/research/dwpr/index.html
-
-Government R&D grounding and source for future validated case studies.
-
 ### NIST_SP800_82_R3 — Tier A
 **National Institute of Standards and Technology — SP 800-82 Rev. 3 Guide to Operational Technology (OT) Security**  
 Final, September 2023  
@@ -245,14 +205,6 @@ Status: `final` · Access: `public`
 https://csrc.nist.gov/pubs/sp/800/82/r3/final
 
 Primary final OT-security reference while Rev. 4 remains draft.
-
-### NIST_SP800_82_R4_IPD_2026 — Tier B
-**National Institute of Standards and Technology — SP 800-82 Rev. 4 Guide to Operational Technology (OT) Security**  
-Initial Public Draft, 21 September 2026  
-Status: `draft` · Access: `public`  
-https://csrc.nist.gov/pubs/sp/800/82/r4/ipd
-
-Track for future changes. Draft content must not be presented as a final requirement.
 
 ### NIST_SP1800_45_2026 — Tier A
 **National Institute of Standards and Technology — SP 1800-45 Cybersecurity for the Water and Wastewater Sector: Build Architecture**  

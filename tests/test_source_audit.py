@@ -5,7 +5,7 @@ from src.knowledge.source_audit import KnowledgeAuditError, audit_knowledge_base
 ROOT=Path(__file__).resolve().parents[1]
 ARGS=dict(registry_path=ROOT/'knowledge/source_registry.json',case_library_path=ROOT/'knowledge/case_library.json',rules_path=ROOT/'knowledge/diagnostic_rules.json',vocabulary_path=ROOT/'knowledge/evidence_vocabulary.json',scenario_matrix_path=ROOT/'knowledge/scenario_matrix.json')
 def test_real_knowledge_base_audit():
- s=audit_knowledge_base(**ARGS); assert s.source_count==40; assert s.case_count==90; assert s.rule_count==90; assert s.scenario_count==720; assert 'NIST_SP800_82_R4_IPD_2026' in s.draft_source_ids
+ s=audit_knowledge_base(**ARGS); assert s.source_count==34; assert s.case_count==90; assert s.rule_count==90; assert s.scenario_count==720; assert s.draft_source_ids==(); assert s.unused_source_ids==()
 @pytest.mark.parametrize('name',list(ARGS))
 def test_missing_file(name,tmp_path):
  args=dict(ARGS); args[name]=tmp_path/'missing.json'
@@ -80,3 +80,11 @@ def test_wrong_container_types(tmp_path,key,field,value):
 def test_empty_alias_key(tmp_path):
     def f(d): d['aliases']['']='DUPONT_RO_MANUAL_R19_2026'
     with pytest.raises(KnowledgeAuditError): audit_knowledge_base(**mutate(tmp_path,'registry_path',f))
+
+def test_draft_source_is_reported_without_being_required_in_active_registry(tmp_path):
+    def f(d):
+        d['sources'][0]['publication_status'] = 'draft'
+    summary = audit_knowledge_base(**mutate(tmp_path,'registry_path',f))
+    assert summary.draft_source_ids == ('DUPONT_RO_MANUAL_R19_2026',)
+    assert summary.unused_source_ids == ()
+

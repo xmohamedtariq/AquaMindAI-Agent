@@ -17,7 +17,7 @@ AquaMind treats source provenance as part of the safety case. Source metadata is
 5. **DuPont Operation Excellence / Limiting Conditions** — metadata normalized to **Rev. 1, June 2025**.
 6. **Hydranautics TSB107** — corrected to the verified **TSB107.28, April 2025** rather than the earlier unverified 2026 revision claim.
 7. **AWWA M46** — normalized to the official catalog wording **Nanofiltration and Reverse Osmosis, Third Edition**.
-8. **NIST SP 800-82 Rev. 4** — retained only as an **Initial Public Draft** dated 21 September 2026; Rev. 3 remains the final OT-security reference.
+8. **NIST SP 800-82 Rev. 4** — verified as an **Initial Public Draft** dated 21 September 2026. Because it is not referenced by any active case/rule, it was removed from the production registry; Rev. 3 remains the final OT-security reference.
 
 ## Added high-value official sources
 
@@ -37,3 +37,16 @@ A source-version correction is not treated as a model failure. It is treated as 
 - Two non-duplicate cleaning-safety cases were added: `RO-CLEAN-001` and `RO-CLEAN-002`.
 
 The canonical library therefore remains at 90 cases without preserving duplicate semantics.
+
+## Active-registry cleanup
+
+The following six references were removed from the active registry because the validated 90-case knowledge base did not reference them in any current case/rule:
+
+- `ASTM_D4582_23`
+- `AWWA_B114_22`
+- `AWWA_M61`
+- `AWWA_M69`
+- `NIST_SP800_82_R4_IPD_2026`
+- `USBR_DWPR`
+
+This cleanup is intentional: AquaMind reports only sources that are actually used by the current knowledge base. A removed source may be reintroduced later only when a concrete case/rule requires it.

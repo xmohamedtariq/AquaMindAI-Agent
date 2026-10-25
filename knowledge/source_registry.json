@@ -1,5 +1,5 @@
 {
-  "registry_version": "2.0.0",
+  "registry_version": "2.1.0",
   "project": "AquaMind AI - Autonomous Desalination Operations Agent",
   "verified_on": "2026-10-25",
   "policy": {
@@ -367,67 +367,6 @@
       "usage_note": "Do not redistribute copyrighted manual text."
     },
     {
-      "id": "AWWA_M61",
-      "organization": "American Water Works Association",
-      "title": "M61 Desalination of Seawater",
-      "version_or_date": "Current AWWA catalog entry",
-      "source_type": "professional_manual",
-      "authority_tier": "A",
-      "access": "paid_or_restricted",
-      "publication_status": "final",
-      "verification_status": "verified_official_source",
-      "verified_on": "2026-10-25",
-      "url": "https://www.awwa.org/resource/desalination/",
-      "topics": [
-        "seawater desalination",
-        "planning",
-        "design",
-        "operations"
-      ],
-      "copyright_handling": "metadata_and_lawfully_accessed_notes_only",
-      "usage_note": "Do not redistribute copyrighted manual text."
-    },
-    {
-      "id": "AWWA_M69",
-      "organization": "American Water Works Association",
-      "title": "M69 Inland Desalination and Concentrate Management",
-      "version_or_date": "Current AWWA catalog entry",
-      "source_type": "professional_manual",
-      "authority_tier": "A",
-      "access": "paid_or_restricted",
-      "publication_status": "final",
-      "verification_status": "verified_official_source",
-      "verified_on": "2026-10-25",
-      "url": "https://www.awwa.org/resource/desalination/",
-      "topics": [
-        "inland desalination",
-        "concentrate management"
-      ],
-      "copyright_handling": "metadata_and_lawfully_accessed_notes_only",
-      "usage_note": "Concentrate-management reference; site permits and regulation remain authoritative."
-    },
-    {
-      "id": "AWWA_B114_22",
-      "organization": "American Water Works Association",
-      "title": "ANSI/AWWA B114-22 Reverse Osmosis and Nanofiltration Systems for Water Treatment",
-      "version_or_date": "2022",
-      "source_type": "consensus_standard",
-      "authority_tier": "A",
-      "access": "paid_or_restricted",
-      "publication_status": "final",
-      "verification_status": "verified_official_source",
-      "verified_on": "2026-10-25",
-      "url": "https://www.awwa.org/standards/standards-list/",
-      "topics": [
-        "RO systems",
-        "NF systems",
-        "minimum requirements",
-        "water treatment"
-      ],
-      "copyright_handling": "metadata_and_lawfully_accessed_notes_only",
-      "usage_note": "Do not reproduce paid standard text."
-    },
-    {
       "id": "WHO_GDWQ_2026",
       "organization": "World Health Organization",
       "title": "Guidelines for drinking-water quality: fourth edition incorporating the first, second and third addenda",
@@ -606,27 +545,6 @@
       "doi": "10.1520/D4516-19A"
     },
     {
-      "id": "ASTM_D4582_23",
-      "organization": "ASTM International",
-      "title": "D4582-23 Standard Practice for Calculation and Adjustment of the Stiff and Davis Stability Index for Reverse Osmosis",
-      "version_or_date": "2023; active",
-      "source_type": "consensus_standard",
-      "authority_tier": "A",
-      "access": "paid_or_restricted",
-      "publication_status": "final",
-      "verification_status": "verified_official_source",
-      "verified_on": "2026-10-25",
-      "url": "https://store.astm.org/d4582-23.html",
-      "topics": [
-        "scaling",
-        "Stiff and Davis Stability Index",
-        "high-TDS concentrate"
-      ],
-      "copyright_handling": "public_scope_and_metadata_only",
-      "usage_note": "Apply only within the standard's scope.",
-      "doi": "10.1520/D4582-23"
-    },
-    {
       "id": "ASTM_D6908_25",
       "organization": "ASTM International",
       "title": "D6908-25 Standard Practice for Integrity Testing of Water Filtration Membrane Systems",
@@ -650,30 +568,6 @@
       "doi": "10.1520/D6908-25"
     },
     {
-      "id": "USBR_DWPR",
-      "organization": "U.S. Bureau of Reclamation",
-      "title": "Desalination and Water Purification Research Program",
-      "version_or_date": "Current program; verified October 2026",
-      "source_type": "government_research_program",
-      "authority_tier": "A",
-      "access": "public",
-      "publication_status": "final",
-      "verification_status": "verified_official_source",
-      "verified_on": "2026-10-25",
-      "url": "https://www.usbr.gov/research/dwpr/index.html",
-      "topics": [
-        "desalination research",
-        "water purification",
-        "energy",
-        "cost",
-        "monitoring",
-        "sensors",
-        "concentrate management"
-      ],
-      "copyright_handling": "public_reference",
-      "usage_note": "Government R&D grounding and source for future validated case studies."
-    },
-    {
       "id": "NIST_SP800_82_R3",
       "organization": "National Institute of Standards and Technology",
       "title": "SP 800-82 Rev. 3 Guide to Operational Technology (OT) Security",
@@ -695,29 +589,6 @@
       ],
       "copyright_handling": "public_reference",
       "usage_note": "Primary final OT-security reference while Rev. 4 remains draft."
-    },
-    {
-      "id": "NIST_SP800_82_R4_IPD_2026",
-      "organization": "National Institute of Standards and Technology",
-      "title": "SP 800-82 Rev. 4 Guide to Operational Technology (OT) Security",
-      "version_or_date": "Initial Public Draft, 21 September 2026",
-      "source_type": "government_draft_guidance",
-      "authority_tier": "B",
-      "access": "public",
-      "publication_status": "draft",
-      "verification_status": "verified_official_source",
-      "verified_on": "2026-10-25",
-      "url": "https://csrc.nist.gov/pubs/sp/800/82/r4/ipd",
-      "topics": [
-        "OT security",
-        "water systems",
-        "IIoT",
-        "zero trust",
-        "CSF 2.0"
-      ],
-      "copyright_handling": "public_reference",
-      "usage_note": "Track for future changes. Draft content must not be presented as a final requirement.",
-      "doi": "10.6028/NIST.SP.800-82r4.ipd"
     },
     {
       "id": "NIST_SP1800_45_2026",
