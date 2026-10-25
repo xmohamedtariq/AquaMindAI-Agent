@@ -17,7 +17,10 @@ from src.agent.state import (
 )
 
 
-ToolFunction = Callable[[AgentState], Any]
+ToolFunction = Callable[
+    [AgentState],
+    Any,
+]
 
 
 class AgentLoop:
@@ -27,19 +30,22 @@ class AgentLoop:
     Lifecycle:
 
     PLAN
-      ↓
+      ->
     ACT
-      ↓
+      ->
     OBSERVE
-      ↓
+      ->
     REFLECT
-      ↓
+      ->
     CONTINUE / RETRY / TERMINATE
     """
 
     def __init__(
         self,
-        tools: dict[str, ToolFunction],
+        tools: dict[
+            str,
+            ToolFunction,
+        ],
         planner: Planner | None = None,
         reflector: Reflector | None = None,
     ) -> None:
@@ -63,7 +69,10 @@ class AgentLoop:
     ) -> str:
         """Return the final investigation message."""
 
-        if state.final_answer is not None:
+        if (
+            state.final_answer
+            is not None
+        ):
             return state.final_answer
 
         return (
@@ -80,7 +89,10 @@ class AgentLoop:
         if reason is not None:
             return reason
 
-        return TerminationReason.NON_RECOVERABLE_ERROR
+        return (
+            TerminationReason
+            .NON_RECOVERABLE_ERROR
+        )
 
     def _terminate_from_reflection(
         self,
@@ -89,13 +101,18 @@ class AgentLoop:
     ) -> AgentState:
         """Terminate execution using a reflection decision."""
 
-        reason = self._termination_reason(
-            reflection.termination_reason
+        reason = (
+            self._termination_reason(
+                reflection
+                .termination_reason
+            )
         )
 
         state.terminate(
             reason=reason,
-            final_answer=reflection.reason,
+            final_answer=(
+                reflection.reason
+            ),
         )
 
         return state
@@ -117,49 +134,74 @@ class AgentLoop:
                 state
             )
 
-        while state.termination_reason is None:
+        while (
+            state.termination_reason
+            is None
+        ):
 
-            # =====================================================
+            # =================================================
             # PLAN
-            # =====================================================
+            # =================================================
 
-            decision = self.planner.next_action(
-                state
+            decision = (
+                self.planner.next_action(
+                    state
+                )
             )
 
             # Planner requested termination.
-            if decision.action == AgentAction.STOP:
+            if (
+                decision.action
+                == AgentAction.STOP
+            ):
 
-                reason = self._termination_reason(
-                    decision.termination_reason
+                reason = (
+                    self._termination_reason(
+                        decision
+                        .termination_reason
+                    )
                 )
 
                 state.terminate(
                     reason=reason,
-                    final_answer=decision.reason,
-                )
-
-                break
-
-            # Investigation completed.
-            if decision.action == AgentAction.FINALIZE:
-
-                state.terminate(
-                    reason=TerminationReason.FINAL_ANSWER,
-                    final_answer=self._final_message(
-                        state
+                    final_answer=(
+                        decision.reason
                     ),
                 )
 
                 break
 
-            action = decision.action.value
+            # Investigation completed.
+            if (
+                decision.action
+                == AgentAction.FINALIZE
+            ):
 
-            state.current_action = action
+                state.terminate(
+                    reason=(
+                        TerminationReason
+                        .FINAL_ANSWER
+                    ),
+                    final_answer=(
+                        self._final_message(
+                            state
+                        )
+                    ),
+                )
 
-            # =====================================================
+                break
+
+            action = (
+                decision.action.value
+            )
+
+            state.current_action = (
+                action
+            )
+
+            # =================================================
             # TOOL LOOKUP
-            # =====================================================
+            # =================================================
 
             tool = self.tools.get(
                 action
@@ -168,7 +210,7 @@ class AgentLoop:
             if tool is None:
 
                 state.last_error = (
-                    f"No tool registered for "
+                    "No tool registered for "
                     f"action '{action}'."
                 )
 
@@ -177,16 +219,20 @@ class AgentLoop:
                         TerminationReason
                         .NON_RECOVERABLE_ERROR
                     ),
-                    final_answer=state.last_error,
+                    final_answer=(
+                        state.last_error
+                    ),
                 )
 
                 break
 
-            # =====================================================
+            # =================================================
             # ACT
-            # =====================================================
+            # =================================================
 
-            state.status = AgentStatus.ACTING
+            state.status = (
+                AgentStatus.ACTING
+            )
 
             state.turn_count += 1
             state.tool_call_count += 1
@@ -205,10 +251,14 @@ class AgentLoop:
                     exc
                 )
 
-                reflection = self.reflector.reflect(
-                    state=state,
-                    action=action,
-                    error=state.last_error,
+                reflection = (
+                    self.reflector.reflect(
+                        state=state,
+                        action=action,
+                        error=(
+                            state.last_error
+                        ),
+                    )
                 )
 
                 if (
@@ -217,16 +267,21 @@ class AgentLoop:
                 ):
                     continue
 
-                return self._terminate_from_reflection(
-                    state=state,
-                    reflection=reflection,
+                return (
+                    self
+                    ._terminate_from_reflection(
+                        state=state,
+                        reflection=reflection,
+                    )
                 )
 
-            # =====================================================
+            # =================================================
             # OBSERVE
-            # =====================================================
+            # =================================================
 
-            state.status = AgentStatus.OBSERVING
+            state.status = (
+                AgentStatus.OBSERVING
+            )
 
             permission_required = False
             safety_blocked = False
@@ -248,18 +303,28 @@ class AgentLoop:
                         "_safety_blocked",
                         False,
                     )
+                    or observation.get(
+                        "_safety_violation",
+                        False,
+                    )
                 )
 
-            # =====================================================
+            # =================================================
             # REFLECT
-            # =====================================================
+            # =================================================
 
-            reflection = self.reflector.reflect(
-                state=state,
-                action=action,
-                observation=observation,
-                permission_required=permission_required,
-                safety_blocked=safety_blocked,
+            reflection = (
+                self.reflector.reflect(
+                    state=state,
+                    action=action,
+                    observation=observation,
+                    permission_required=(
+                        permission_required
+                    ),
+                    safety_blocked=(
+                        safety_blocked
+                    ),
+                )
             )
 
             # Successful action.
@@ -283,9 +348,12 @@ class AgentLoop:
                 continue
 
             # STOP or REQUEST_APPROVAL.
-            return self._terminate_from_reflection(
-                state=state,
-                reflection=reflection,
+            return (
+                self
+                ._terminate_from_reflection(
+                    state=state,
+                    reflection=reflection,
+                )
             )
 
         return state
