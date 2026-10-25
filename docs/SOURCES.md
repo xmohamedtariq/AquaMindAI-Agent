@@ -205,3 +205,20 @@ AquaMind should never assert:
 - that a recommendation authorizes autonomous physical plant action.
 
 When evidence is ambiguous, the correct behavior is to report **insufficient evidence** or an **unclassified abnormal pattern** and recommend verification.
+
+## 9. Toray independent manufacturer cross-checks
+
+### TORAY_RO_HANDLING_MANUAL_2025 — Tier A
+**TorayRO Operation, Maintenance, and Handling Manual**  
+Official Toray manual covering RO startup, operating records, feed/brine/permeate monitoring, SDI, conductivity, differential pressure and controlled startup/water-hammer prevention.  
+https://www.water.toray/knowledge/manual/pdf/TorayRO_HandlingManual.pdf
+
+### TORAY_TRAK — Tier A
+**TORAY TRAK — Reverse Osmosis Operation Data Normalization**  
+Official Toray normalization tool. Toray states that its normalization is based on ASTM D4516 with calculations tailored to Toray elements.  
+https://www.water.toray/knowledge/tool/trak/
+
+### TORAY_MBFR — Tier B
+**mBFR — Membrane Biofilm Formation Rate**  
+Official Toray technical resource for early assessment of RO biofouling potential; useful as an independent manufacturer cross-check, not a universal requirement.  
+https://www.water.toray/knowledge/mBFR/

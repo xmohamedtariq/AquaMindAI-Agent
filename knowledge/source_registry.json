@@ -1,7 +1,7 @@
 {
-  "registry_version": "1.0.0",
+  "registry_version": "1.1.0",
   "project": "AquaMind AI - Autonomous Desalination Operations Agent",
-  "generated_for": "Stage 5C - Source-Grounded Knowledge Expansion",
+  "generated_for": "AquaMind authoritative source-grounded case library",
   "policy": {
     "diagnostic_rule_requires_source": true,
     "prefer_current_primary_sources": true,
@@ -608,6 +608,61 @@
       ],
       "url": "https://www.epa.gov/cyberwater/cybersecurity-assessments",
       "usage_note": "Supports water-sector security assessment and governance."
+    },
+    {
+      "id": "TORAY_RO_HANDLING_MANUAL_2025",
+      "organization": "Toray Industries, Inc.",
+      "title": "TorayRO Operation, Maintenance, and Handling Manual",
+      "version_or_date": "Document code 06-G-MB1-250728(EN), 2025",
+      "source_type": "official_manufacturer_manual",
+      "authority_tier": "A",
+      "access": "public",
+      "topics": [
+        "RO operation",
+        "startup",
+        "shutdown",
+        "monitoring",
+        "SDI",
+        "conductivity",
+        "differential pressure",
+        "water hammer"
+      ],
+      "url": "https://www.water.toray/knowledge/manual/pdf/TorayRO_HandlingManual.pdf",
+      "usage_note": "Independent manufacturer cross-check for RO operating records, startup, monitoring and water-hammer prevention. Product-specific limits must not be generalized."
+    },
+    {
+      "id": "TORAY_TRAK",
+      "organization": "Toray Industries, Inc.",
+      "title": "TORAY TRAK - Reverse Osmosis Operation Data Normalization",
+      "version_or_date": "current official online tool/documentation",
+      "source_type": "official_manufacturer_tool",
+      "authority_tier": "A",
+      "access": "public",
+      "topics": [
+        "RO normalization",
+        "temperature correction",
+        "performance monitoring",
+        "ASTM D4516"
+      ],
+      "url": "https://www.water.toray/knowledge/tool/trak/",
+      "usage_note": "Independent normalization cross-check. Toray states that the tool is based on ASTM D4516 with Toray-specific calculations."
+    },
+    {
+      "id": "TORAY_MBFR",
+      "organization": "Toray Industries, Inc.",
+      "title": "mBFR - Membrane Biofilm Formation Rate",
+      "version_or_date": "current official online technical resource",
+      "source_type": "official_manufacturer_technical_resource",
+      "authority_tier": "B",
+      "access": "public",
+      "topics": [
+        "biofouling",
+        "biofilm",
+        "pressure loss",
+        "permeate flow"
+      ],
+      "url": "https://www.water.toray/knowledge/mBFR/",
+      "usage_note": "Supplemental manufacturer cross-check for biofouling potential. Do not treat mBFR as a universal requirement for non-Toray systems."
     }
   ]
 }
