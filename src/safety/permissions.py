@@ -9,7 +9,8 @@ class PermissionLevel(str, Enum):
     AquaMind permission levels.
 
     AUTO:
-        Safe read-only or analytical operation.
+        Safe read-only, analytical, or in-memory
+        operation.
 
     ASK_ON_WRITE:
         Persistent write/export operation that requires
@@ -34,6 +35,7 @@ AUTO_TOOLS = frozenset(
         "diagnose_issue",
         "search_operational_knowledge",
         "search_incident_memory",
+        "generate_incident_report",
     }
 )
 
@@ -41,17 +43,17 @@ AUTO_TOOLS = frozenset(
 ASK_ON_WRITE_TOOLS = frozenset(
     {
         "save_incident",
-        "generate_incident_report",
+        "export_incident_report",
     }
 )
 
 
-# These high-impact operations are intentionally NOT part
-# of the AquaMind MVP execution tool registry.
+# High-impact physical operations are deliberately
+# NOT part of the AquaMind MVP execution registry.
 #
-# They are defined only so the permission system has an
-# explicit security policy if such operations are ever
-# requested.
+# They remain here as an explicit security boundary
+# so that a future request for such an action cannot
+# silently become an automatically authorized tool.
 ALWAYS_ASK_TOOLS = frozenset(
     {
         "control_valve",
@@ -77,12 +79,15 @@ class PermissionDecision:
     def to_dict(
         self,
     ) -> dict[str, Any]:
-        """Return a serializable permission decision."""
+        """Return a JSON-safe permission decision."""
 
         return {
-            "tool_name": self.tool_name,
-            "recognized": self.recognized,
-            "allowed": self.allowed,
+            "tool_name":
+                self.tool_name,
+            "recognized":
+                self.recognized,
+            "allowed":
+                self.allowed,
             "requires_approval":
                 self.requires_approval,
             "permission_level": (
@@ -91,7 +96,8 @@ class PermissionDecision:
                 is not None
                 else None
             ),
-            "reason": self.reason,
+            "reason":
+                self.reason,
         }
 
 
@@ -137,12 +143,12 @@ def evaluate_permission(
     Evaluate whether a tool may execute.
 
     Security model:
-    - Explicit allowlist.
-    - Unknown tools are denied by default.
-    - AUTO tools execute without approval.
-    - ASK_ON_WRITE requires explicit approval.
-    - ALWAYS_ASK requires explicit approval for every
-      execution attempt.
+    - explicit allowlist;
+    - unknown tools denied by default;
+    - AUTO tools execute automatically;
+    - persistent writes/exports require approval;
+    - physical/high-impact operations always require
+      explicit approval.
     """
 
     normalized = normalize_tool_name(
@@ -186,8 +192,8 @@ def evaluate_permission(
             requires_approval=False,
             permission_level=level,
             reason=(
-                "Read-only or analytical tool "
-                "is authorized automatically."
+                "Read-only, analytical, or in-memory "
+                "tool is authorized automatically."
             ),
         )
 
@@ -210,10 +216,11 @@ def evaluate_permission(
             "explicit human approval for every "
             "execution attempt."
         )
+
     else:
         reason = (
-            "Persistent write operation requires "
-            "explicit human approval."
+            "Persistent write or export operation "
+            "requires explicit human approval."
         )
 
     return PermissionDecision(
@@ -238,8 +245,8 @@ def make_permission_guard(
 
     Unknown tools become safety violations.
 
-    Approval-gated tools return the structured signals
-    already understood by the AquaMind agent loop.
+    Approval-gated tools return structured signals
+    understood by AquaMind's AgentLoop.
     """
 
     def guarded_tool(

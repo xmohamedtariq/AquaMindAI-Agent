@@ -25,10 +25,28 @@ def test_auto_tool_level():
     )
 
 
-def test_write_tool_level():
+def test_report_generation_is_auto():
+    assert (
+        get_permission_level(
+            "generate_incident_report"
+        )
+        == PermissionLevel.AUTO
+    )
+
+
+def test_save_incident_requires_write_permission():
     assert (
         get_permission_level(
             "save_incident"
+        )
+        == PermissionLevel.ASK_ON_WRITE
+    )
+
+
+def test_report_export_requires_write_permission():
+    assert (
+        get_permission_level(
+            "export_incident_report"
         )
         == PermissionLevel.ASK_ON_WRITE
     )
@@ -125,6 +143,32 @@ def test_auto_tool_is_allowed():
     )
 
 
+def test_in_memory_report_is_allowed():
+    result = evaluate_permission(
+        "generate_incident_report"
+    )
+
+    assert (
+        result.recognized
+        is True
+    )
+
+    assert (
+        result.allowed
+        is True
+    )
+
+    assert (
+        result.requires_approval
+        is False
+    )
+
+    assert (
+        result.permission_level
+        == PermissionLevel.AUTO
+    )
+
+
 def test_write_tool_requires_approval():
     result = evaluate_permission(
         "save_incident"
@@ -156,6 +200,27 @@ def test_write_tool_requires_approval():
     )
 
 
+def test_export_requires_approval():
+    result = evaluate_permission(
+        "export_incident_report"
+    )
+
+    assert (
+        result.allowed
+        is False
+    )
+
+    assert (
+        result.requires_approval
+        is True
+    )
+
+    assert (
+        result.permission_level
+        == PermissionLevel.ASK_ON_WRITE
+    )
+
+
 def test_write_tool_executes_after_approval():
     result = evaluate_permission(
         "save_incident",
@@ -175,6 +240,23 @@ def test_write_tool_executes_after_approval():
     assert (
         result.permission_level
         == PermissionLevel.ASK_ON_WRITE
+    )
+
+
+def test_export_executes_after_approval():
+    result = evaluate_permission(
+        "export_incident_report",
+        approved=True,
+    )
+
+    assert (
+        result.allowed
+        is True
+    )
+
+    assert (
+        result.requires_approval
+        is False
     )
 
 
@@ -306,6 +388,40 @@ def test_auto_guard_executes_tool():
     ]
 
 
+def test_report_guard_executes_without_approval():
+    calls = []
+
+    def tool(state):
+        calls.append(
+            state
+        )
+
+        return {
+            "success": True,
+            "report": {},
+        }
+
+    guarded = make_permission_guard(
+        "generate_incident_report",
+        tool,
+    )
+
+    state = object()
+
+    result = guarded(
+        state
+    )
+
+    assert (
+        result["success"]
+        is True
+    )
+
+    assert calls == [
+        state
+    ]
+
+
 def test_write_guard_blocks_without_approval():
     calls = []
 
@@ -387,6 +503,37 @@ def test_write_guard_executes_with_approval():
     assert calls == [
         state
     ]
+
+
+def test_export_guard_blocks_without_approval():
+    calls = []
+
+    def tool(state):
+        calls.append(
+            state
+        )
+
+        return {
+            "success": True,
+        }
+
+    guarded = make_permission_guard(
+        "export_incident_report",
+        tool,
+    )
+
+    result = guarded(
+        object()
+    )
+
+    assert (
+        result[
+            "_permission_required"
+        ]
+        is True
+    )
+
+    assert calls == []
 
 
 def test_always_ask_guard_blocks_without_approval():
