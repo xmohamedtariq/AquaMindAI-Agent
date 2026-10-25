@@ -1,0 +1,139 @@
+{
+  "examples_version": "1.0.0",
+  "synthetic": true,
+  "examples": [
+    {
+      "example_id": "EX-NORM-TEMP",
+      "expected_primary_case_id": "RO-NORM-001",
+      "evidence": {
+        "raw_performance_change": true,
+        "temperature_shift": true,
+        "normalized_metrics_available": false
+      }
+    },
+    {
+      "example_id": "EX-NORM-RECOVERY",
+      "expected_primary_case_id": "RO-NORM-003",
+      "evidence": {
+        "raw_performance_change": true,
+        "recovery_shift": true,
+        "normalized_metrics_available": false
+      }
+    },
+    {
+      "example_id": "EX-SOURCE-WATER",
+      "expected_primary_case_id": "RO-PRE-009",
+      "evidence": {
+        "raw_performance_change": true,
+        "source_water_change": true,
+        "normalized_metrics_available": false
+      }
+    },
+    {
+      "example_id": "EX-SENSOR-STUCK",
+      "expected_primary_case_id": "RO-DATA-006",
+      "evidence": {
+        "sensor_constant": true,
+        "related_signals_vary": true
+      }
+    },
+    {
+      "example_id": "EX-SENSOR-SPIKE",
+      "expected_primary_case_id": "RO-DATA-007",
+      "evidence": {
+        "sensor_spike": true,
+        "neighboring_values_normal": true
+      }
+    },
+    {
+      "example_id": "EX-UNIT",
+      "expected_primary_case_id": "RO-DATA-009",
+      "evidence": {
+        "unit_inconsistency": true
+      }
+    },
+    {
+      "example_id": "EX-CONFLICT",
+      "expected_primary_case_id": "RO-DATA-008",
+      "evidence": {
+        "redundant_sensor_conflict": true
+      }
+    },
+    {
+      "example_id": "EX-WATER-HAMMER",
+      "expected_primary_case_id": "RO-INT-007",
+      "evidence": {
+        "startup_event": true,
+        "rapid_pressurization": true
+      }
+    },
+    {
+      "example_id": "EX-BACKPRESSURE",
+      "expected_primary_case_id": "RO-INT-005",
+      "evidence": {
+        "backpressure_event": true
+      }
+    },
+    {
+      "example_id": "EX-CHLORINE",
+      "expected_primary_case_id": "RO-PRE-003",
+      "evidence": {
+        "chlorine_breakthrough": true
+      }
+    },
+    {
+      "example_id": "EX-OXIDATION",
+      "expected_primary_case_id": "RO-INT-004",
+      "evidence": {
+        "flow_direction": "up",
+        "rejection_direction": "down",
+        "oxidant_exposure": true,
+        "pressure_drop_direction": "stable"
+      }
+    },
+    {
+      "example_id": "EX-ORING",
+      "expected_primary_case_id": "RO-INT-002",
+      "evidence": {
+        "flow_direction": "up",
+        "rejection_direction": "down",
+        "seal_issue_evidence": true
+      }
+    },
+    {
+      "example_id": "EX-PRODUCT-TUBE",
+      "expected_primary_case_id": "RO-INT-003",
+      "evidence": {
+        "flow_direction": "up",
+        "rejection_direction": "down",
+        "product_tube_issue_evidence": true
+      }
+    },
+    {
+      "example_id": "EX-HIGH-SDI",
+      "expected_primary_case_id": "RO-FOUL-003",
+      "evidence": {
+        "sdi_elevated": true
+      }
+    },
+    {
+      "example_id": "EX-PRETREATMENT",
+      "expected_primary_case_id": "RO-PRE-002",
+      "evidence": {
+        "pretreatment_upset": true,
+        "particle_loading_increase": true
+      }
+    },
+    {
+      "example_id": "EX-MIXED-FOULING",
+      "expected_primary_case_id": "RO-FOUL-011",
+      "evidence": {
+        "flow_direction": "down",
+        "pressure_drop_direction": "up",
+        "bio_evidence": true,
+        "particulate_evidence": true,
+        "rejection_direction": "stable"
+      }
+    }
+  ]
+}

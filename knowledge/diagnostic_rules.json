@@ -1,0 +1,424 @@
+{
+  "rules_version": "1.0.0",
+  "project": "AquaMind AI - Autonomous Desalination Operations Agent",
+  "disclosure": {
+    "real_plant_data": false,
+    "physical_control_authorized": false
+  },
+  "rules": [
+    {
+      "rule_id": "DR-NORM-001",
+      "case_id": "RO-NORM-001",
+      "outcome_type": "guard",
+      "priority": 120,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "raw_performance_change",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "temperature_shift",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "normalized_metrics_available",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": [
+        {
+          "field": "feed_pressure_shift",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    {
+      "rule_id": "DR-NORM-003",
+      "case_id": "RO-NORM-003",
+      "outcome_type": "guard",
+      "priority": 119,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "raw_performance_change",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "recovery_shift",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "normalized_metrics_available",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-PRE-009",
+      "case_id": "RO-PRE-009",
+      "outcome_type": "guard",
+      "priority": 118,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "raw_performance_change",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "source_water_change",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "normalized_metrics_available",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-006",
+      "case_id": "RO-DATA-006",
+      "outcome_type": "data_quality",
+      "priority": 130,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "sensor_constant",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "related_signals_vary",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-007",
+      "case_id": "RO-DATA-007",
+      "outcome_type": "data_quality",
+      "priority": 129,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "sensor_spike",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "neighboring_values_normal",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-009",
+      "case_id": "RO-DATA-009",
+      "outcome_type": "data_quality",
+      "priority": 128,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "unit_inconsistency",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-DATA-008",
+      "case_id": "RO-DATA-008",
+      "outcome_type": "data_quality",
+      "priority": 127,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "redundant_sensor_conflict",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-007",
+      "case_id": "RO-INT-007",
+      "outcome_type": "guard",
+      "priority": 125,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "startup_event",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [
+        [
+          {
+            "field": "rapid_pressurization",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "trapped_air",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      ],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-005",
+      "case_id": "RO-INT-005",
+      "outcome_type": "guard",
+      "priority": 124,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "backpressure_event",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": [
+        {
+          "field": "integrity_pattern",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    {
+      "rule_id": "DR-PRE-003",
+      "case_id": "RO-PRE-003",
+      "outcome_type": "guard",
+      "priority": 123,
+      "blocks_fault_diagnosis": true,
+      "required_all": [
+        {
+          "field": "chlorine_breakthrough",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": [
+        {
+          "field": "oxidant_exposure",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    {
+      "rule_id": "DR-INT-004",
+      "case_id": "RO-INT-004",
+      "outcome_type": "diagnosis",
+      "priority": 100,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "flow_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "oxidant_exposure",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": [
+        {
+          "field": "pressure_drop_direction",
+          "op": "in",
+          "value": [
+            "stable",
+            "unknown"
+          ]
+        }
+      ]
+    },
+    {
+      "rule_id": "DR-INT-002",
+      "case_id": "RO-INT-002",
+      "outcome_type": "diagnosis",
+      "priority": 99,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "flow_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "seal_issue_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-INT-003",
+      "case_id": "RO-INT-003",
+      "outcome_type": "diagnosis",
+      "priority": 98,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "flow_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "rejection_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "product_tube_issue_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-003",
+      "case_id": "RO-FOUL-003",
+      "outcome_type": "risk",
+      "priority": 90,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "sdi_elevated",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": [
+        {
+          "field": "pretreatment_upset",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    {
+      "rule_id": "DR-PRE-002",
+      "case_id": "RO-PRE-002",
+      "outcome_type": "risk",
+      "priority": 89,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "pretreatment_upset",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [
+        [
+          {
+            "field": "sdi_elevated",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "source_water_change",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "particle_loading_increase",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      ],
+      "supporting": []
+    },
+    {
+      "rule_id": "DR-FOUL-011",
+      "case_id": "RO-FOUL-011",
+      "outcome_type": "diagnosis",
+      "priority": 95,
+      "blocks_fault_diagnosis": false,
+      "required_all": [
+        {
+          "field": "flow_direction",
+          "op": "eq",
+          "value": "down"
+        },
+        {
+          "field": "pressure_drop_direction",
+          "op": "eq",
+          "value": "up"
+        },
+        {
+          "field": "bio_evidence",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "particulate_evidence",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "required_any_groups": [],
+      "supporting": [
+        {
+          "field": "rejection_direction",
+          "op": "in",
+          "value": [
+            "stable",
+            "down"
+          ]
+        }
+      ]
+    }
+  ]
+}
