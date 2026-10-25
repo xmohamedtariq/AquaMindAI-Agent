@@ -1,0 +1,72 @@
+{
+  "dataset_type": "synthetic_ro_operational_scenarios",
+  "real_plant_data": false,
+  "generator_seed": 42,
+  "sampling_interval": "5min",
+  "rows_per_standard_scenario": 2016,
+  "start_time": "2026-10-01T00:00:00Z",
+  "purpose": "Deterministic scenario bank for AquaMind AI development, system evaluation, and demonstration.",
+  "disclaimer": "These datasets are synthetic. They must not be represented as telemetry collected from a real desalination plant.",
+  "scenarios": {
+    "normal_operation.csv": {
+      "expected": "normal_operation",
+      "description": "Stable synthetic RO operation with small measurement variation.",
+      "rows": 2016,
+      "synthetic": true
+    },
+    "scaling_colloidal_fouling.csv": {
+      "expected": "scaling_or_colloidal_fouling",
+      "description": "Progressive flow decline, rejection degradation, and pressure-drop increase.",
+      "rows": 2016,
+      "synthetic": true
+    },
+    "biofouling.csv": {
+      "expected": "biofouling",
+      "description": "Flow decline and pressure-drop increase with comparatively stable rejection.",
+      "rows": 2016,
+      "synthetic": true
+    },
+    "organic_fouling.csv": {
+      "expected": "organic_fouling",
+      "description": "Flow decline while pressure drop and rejection remain comparatively stable.",
+      "rows": 2016,
+      "synthetic": true
+    },
+    "membrane_integrity_issue.csv": {
+      "expected": "membrane_integrity_or_seal_issue",
+      "description": "Increased permeate flow accompanied by degraded salt rejection.",
+      "rows": 2016,
+      "synthetic": true
+    },
+    "compaction_mechanical_change.csv": {
+      "expected": "compaction_or_mechanical_change",
+      "description": "Flow decline with increased rejection and comparatively stable pressure drop.",
+      "rows": 2016,
+      "synthetic": true
+    },
+    "unclassified_abnormal.csv": {
+      "expected": "unclassified",
+      "description": "Abnormal combination deliberately outside the supported diagnostic patterns.",
+      "rows": 2016,
+      "synthetic": true
+    },
+    "membrane_fouling.csv": {
+      "expected": "scaling_or_colloidal_fouling",
+      "description": "Compatibility alias used by the existing end-to-end runtime success test.",
+      "rows": 2016,
+      "synthetic": true
+    },
+    "corrupted_recoverable.csv": {
+      "expected": "validation_recovery",
+      "description": "Contains an invalid timestamp, non-numeric sensor reading, missing readings, duplicate timestamp, and out-of-order rows.",
+      "rows": 2017,
+      "synthetic": true
+    },
+    "insufficient_evidence.csv": {
+      "expected": "insufficient_evidence",
+      "description": "Structurally valid dataset with too little trend information for a supported diagnosis.",
+      "rows": 2,
+      "synthetic": true
+    }
+  }
+}
