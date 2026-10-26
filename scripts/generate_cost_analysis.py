@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 
 
@@ -99,7 +99,7 @@ A safety-blocked request can terminate before any LLM call and legitimately use 
 
 ## Cost Projections
 
-The capstone requires projections for 100, 1,000, and 10,000 tasks. Free Tier availability at those volumes is quota-dependent, so AquaMind does not claim that every projected task remains free. The table below uses measured token usage with Google's paid-tier reference rates to provide a conservative scaling estimate.
+The capstone requires projections for 100, 1,000, and 10,000 tasks. Free Tier availability at those volumes is quota-dependent, so AquaMind does not claim that every projected task remains free. The table below uses measured token usage with Google's paid-tier reference rates to provide an observed mixed-workload scaling estimate based on the benchmark's actual safety and provider-availability behavior.
 
 | Volume | Paid-tier reference projection | Free Tier interpretation |
 |---|---:|---|
@@ -128,3 +128,4 @@ If the Gemini API is unavailable or a Free Tier rate limit is reached, AquaMind 
 
 if __name__ == "__main__":
     main()
+
