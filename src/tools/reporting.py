@@ -234,7 +234,7 @@ def build_incident_report(
 
     report = {
         "report_version":
-            "1.0",
+            "1.1",
         "generated_at":
             generated_at
             or _utc_now(),
@@ -253,6 +253,10 @@ def build_incident_report(
             ),
         "primary_hypothesis":
             primary_hypothesis,
+        "source_grounding":
+            diagnosis.get(
+                "source_grounding"
+            ),
         "recommendations":
             recommendations,
         "evidence": {
@@ -280,6 +284,10 @@ def build_incident_report(
                 state.input_tokens,
             "output_tokens":
                 state.output_tokens,
+            "react_event_count":
+                len(
+                    state.react_trace
+                ),
         },
         "safety_notice": (
             "AquaMind provides analytical and "

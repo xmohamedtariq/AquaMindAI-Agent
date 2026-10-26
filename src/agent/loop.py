@@ -29,7 +29,7 @@ class AgentLoop:
 
     Lifecycle:
 
-    PLAN
+    REASON
       ->
     ACT
       ->
@@ -38,6 +38,9 @@ class AgentLoop:
     REFLECT
       ->
     CONTINUE / RETRY / TERMINATE
+
+    The trace stores concise decision summaries only. It does not
+    expose private chain-of-thought reasoning.
     """
 
     def __init__(
@@ -94,6 +97,72 @@ class AgentLoop:
             .NON_RECOVERABLE_ERROR
         )
 
+    @staticmethod
+    def _observation_details(
+        observation: Any,
+    ) -> dict[str, Any]:
+        """
+        Build an audit-safe observation summary for the ReAct trace.
+
+        Raw sensor rows and full documents are intentionally omitted.
+        """
+
+        if not isinstance(
+            observation,
+            dict,
+        ):
+            return {
+                "result_type":
+                    type(
+                        observation
+                    ).__name__,
+            }
+
+        details: dict[str, Any] = {
+            "keys": sorted(
+                str(key)
+                for key
+                in observation
+            )
+        }
+
+        for key in (
+            "success",
+            "recoverable",
+            "diagnosis_status",
+            "anomaly_detected",
+            "overall_severity",
+            "match_count",
+            "_permission_required",
+            "_safety_blocked",
+            "_safety_violation",
+        ):
+            if key in observation:
+                details[key] = (
+                    observation[
+                        key
+                    ]
+                )
+
+        return details
+
+    @staticmethod
+    def _trace_termination(
+        state: AgentState,
+        *,
+        reason: TerminationReason,
+        summary: str,
+        action: str | None = None,
+    ) -> None:
+        """Record one audit-safe termination event."""
+
+        state.add_react_event(
+            phase="terminate",
+            decision_summary=summary,
+            action=action,
+            status=reason.value,
+        )
+
     def _terminate_from_reflection(
         self,
         state: AgentState,
@@ -106,6 +175,13 @@ class AgentLoop:
                 reflection
                 .termination_reason
             )
+        )
+
+        self._trace_termination(
+            state,
+            reason=reason,
+            summary=reflection.reason,
+            action=state.current_action,
         )
 
         state.terminate(
@@ -140,13 +216,24 @@ class AgentLoop:
         ):
 
             # =================================================
-            # PLAN
+            # REASON
             # =================================================
 
             decision = (
                 self.planner.next_action(
                     state
                 )
+            )
+
+            state.add_react_event(
+                phase="reason",
+                decision_summary=(
+                    decision.reason
+                ),
+                action=(
+                    decision.action.value
+                ),
+                status="planned",
             )
 
             # Planner requested termination.
@@ -160,6 +247,17 @@ class AgentLoop:
                         decision
                         .termination_reason
                     )
+                )
+
+                self._trace_termination(
+                    state,
+                    reason=reason,
+                    summary=(
+                        decision.reason
+                    ),
+                    action=(
+                        decision.action.value
+                    ),
                 )
 
                 state.terminate(
@@ -177,15 +275,31 @@ class AgentLoop:
                 == AgentAction.FINALIZE
             ):
 
+                final_message = (
+                    self._final_message(
+                        state
+                    )
+                )
+
+                self._trace_termination(
+                    state,
+                    reason=(
+                        TerminationReason
+                        .FINAL_ANSWER
+                    ),
+                    summary=final_message,
+                    action=(
+                        decision.action.value
+                    ),
+                )
+
                 state.terminate(
                     reason=(
                         TerminationReason
                         .FINAL_ANSWER
                     ),
                     final_answer=(
-                        self._final_message(
-                            state
-                        )
+                        final_message
                     ),
                 )
 
@@ -214,6 +328,18 @@ class AgentLoop:
                     f"action '{action}'."
                 )
 
+                self._trace_termination(
+                    state,
+                    reason=(
+                        TerminationReason
+                        .NON_RECOVERABLE_ERROR
+                    ),
+                    summary=(
+                        state.last_error
+                    ),
+                    action=action,
+                )
+
                 state.terminate(
                     reason=(
                         TerminationReason
@@ -240,6 +366,15 @@ class AgentLoop:
             state.last_tool = action
             state.last_error = None
 
+            state.add_react_event(
+                phase="act",
+                decision_summary=(
+                    f"Execute the approved tool '{action}'."
+                ),
+                action=action,
+                status="started",
+            )
+
             try:
                 observation = tool(
                     state
@@ -251,6 +386,19 @@ class AgentLoop:
                     exc
                 )
 
+                state.add_react_event(
+                    phase="observe",
+                    decision_summary=(
+                        f"Tool '{action}' raised an execution error."
+                    ),
+                    action=action,
+                    status="error",
+                    details={
+                        "error_type":
+                            type(exc).__name__,
+                    },
+                )
+
                 reflection = (
                     self.reflector.reflect(
                         state=state,
@@ -259,6 +407,18 @@ class AgentLoop:
                             state.last_error
                         ),
                     )
+                )
+
+                state.add_react_event(
+                    phase="reflect",
+                    decision_summary=(
+                        reflection.reason
+                    ),
+                    action=action,
+                    status=(
+                        reflection
+                        .decision.value
+                    ),
                 )
 
                 if (
@@ -309,6 +469,20 @@ class AgentLoop:
                     )
                 )
 
+            state.add_react_event(
+                phase="observe",
+                decision_summary=(
+                    f"Observe the structured result returned by '{action}'."
+                ),
+                action=action,
+                status="observed",
+                details=(
+                    self._observation_details(
+                        observation
+                    )
+                ),
+            )
+
             # =================================================
             # REFLECT
             # =================================================
@@ -325,6 +499,18 @@ class AgentLoop:
                         safety_blocked
                     ),
                 )
+            )
+
+            state.add_react_event(
+                phase="reflect",
+                decision_summary=(
+                    reflection.reason
+                ),
+                action=action,
+                status=(
+                    reflection
+                    .decision.value
+                ),
             )
 
             # Successful action.

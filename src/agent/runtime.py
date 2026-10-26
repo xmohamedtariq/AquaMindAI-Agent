@@ -14,6 +14,12 @@ from src.cost.tracker import (
     CostTracker,
     ModelPricing,
 )
+from src.knowledge.diagnostic_engine import (
+    SourceGroundedDiagnosticEngine,
+)
+from src.knowledge.runtime_grounding import (
+    make_source_grounded_diagnosis,
+)
 from src.mcp.client import (
     OperationalKnowledgeClient,
 )
@@ -77,6 +83,12 @@ class RuntimeConfig:
     knowledge_limit: int = 5
     budget_cap_usd: float = 0.10
 
+    case_library_path: str | Path | None = None
+    source_registry_path: str | Path | None = None
+    diagnostic_rules_path: str | Path | None = None
+    evidence_vocabulary_path: str | Path | None = None
+    diagnostic_top_k: int = 5
+
 
 class AquaMindRuntime:
     """
@@ -106,6 +118,7 @@ class AquaMindRuntime:
         memory: IncidentMemory | None = None,
         audit_logger: AuditLogger | None = None,
         cost_tracker: CostTracker | None = None,
+        diagnostic_engine: SourceGroundedDiagnosticEngine | None = None,
     ) -> None:
 
         self.config = config
@@ -154,6 +167,55 @@ class AquaMindRuntime:
                 knowledge_client
             )
 
+        self.case_library_path = (
+            self._knowledge_path(
+                config.case_library_path,
+                config.knowledge_root,
+                "case_library.json",
+            )
+        )
+        self.source_registry_path = (
+            self._knowledge_path(
+                config.source_registry_path,
+                config.knowledge_root,
+                "source_registry.json",
+            )
+        )
+        self.diagnostic_rules_path = (
+            self._knowledge_path(
+                config.diagnostic_rules_path,
+                config.knowledge_root,
+                "diagnostic_rules.json",
+            )
+        )
+        self.evidence_vocabulary_path = (
+            self._knowledge_path(
+                config.evidence_vocabulary_path,
+                config.knowledge_root,
+                "evidence_vocabulary.json",
+            )
+        )
+
+        if diagnostic_engine is None:
+            self.diagnostic_engine = (
+                SourceGroundedDiagnosticEngine
+                .from_files(
+                    rules_path=(
+                        self.diagnostic_rules_path
+                    ),
+                    library_path=(
+                        self.case_library_path
+                    ),
+                    registry_path=(
+                        self.source_registry_path
+                    ),
+                )
+            )
+        else:
+            self.diagnostic_engine = (
+                diagnostic_engine
+            )
+
         self.tools = (
             self._build_tool_registry()
         )
@@ -161,6 +223,19 @@ class AquaMindRuntime:
         self.agent_loop = AgentLoop(
             tools=self.tools
         )
+
+    @staticmethod
+    def _knowledge_path(
+        configured: str | Path | None,
+        knowledge_root: str | Path,
+        filename: str,
+    ) -> Path:
+        """Resolve an optional knowledge file path."""
+
+        if configured is not None:
+            return Path(configured)
+
+        return Path(knowledge_root) / filename
 
     @staticmethod
     def _run_async(
@@ -650,7 +725,21 @@ class AquaMindRuntime:
                     ),
                 ),
             "diagnose_issue":
-                make_diagnose_issue(),
+                make_source_grounded_diagnosis(
+                    base_tool=(
+                        make_diagnose_issue()
+                    ),
+                    engine=(
+                        self.diagnostic_engine
+                    ),
+                    vocabulary_path=(
+                        self.evidence_vocabulary_path
+                    ),
+                    top_k=(
+                        self.config
+                        .diagnostic_top_k
+                    ),
+                ),
             "generate_incident_report":
                 self._make_report_tool(),
         }
@@ -726,6 +815,10 @@ class AquaMindRuntime:
         return {
             "state":
                 state,
+            "react_trace":
+                list(
+                    state.react_trace
+                ),
             "report":
                 self._latest_report(
                     state
@@ -748,6 +841,7 @@ class AquaMindRuntime:
         task_id: str,
         user_request: str,
         plant_id: str = "demo-plant",
+        diagnostic_context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """
         Run one end-to-end AquaMind investigation.
@@ -760,6 +854,14 @@ class AquaMindRuntime:
             budget_cap_usd=(
                 self.config
                 .budget_cap_usd
+            ),
+            diagnostic_context=(
+                dict(
+                    diagnostic_context
+                )
+                if diagnostic_context
+                is not None
+                else {}
             ),
         )
 

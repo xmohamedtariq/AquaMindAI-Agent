@@ -36,7 +36,10 @@ class AgentState(BaseModel):
 
     Execution lifecycle:
 
-    PLAN -> ACT -> OBSERVE -> REFLECT
+    REASON -> ACT -> OBSERVE -> REFLECT
+
+    ``react_trace`` contains concise, audit-safe decision summaries.
+    It is intentionally not a private chain-of-thought transcript.
     """
 
     task_id: str
@@ -76,6 +79,19 @@ class AgentState(BaseModel):
     )
 
     recommendations: list[str] = Field(
+        default_factory=list
+    )
+
+    # Optional plant/operator context supplied as structured evidence.
+    # Runtime validation prevents unknown fields from entering the
+    # source-grounded diagnostic engine.
+    diagnostic_context: dict[str, Any] = Field(
+        default_factory=dict
+    )
+
+    # Audit-safe ReAct trace. These are decision summaries, not hidden
+    # chain-of-thought content.
+    react_trace: list[dict[str, Any]] = Field(
         default_factory=list
     )
 
@@ -127,6 +143,41 @@ class AgentState(BaseModel):
                 "value": value,
             }
         )
+
+    def add_react_event(
+        self,
+        *,
+        phase: str,
+        decision_summary: str,
+        action: str | None = None,
+        status: str | None = None,
+        details: dict[str, Any] | None = None,
+    ) -> None:
+        """
+        Append one audit-safe ReAct event.
+
+        The event records only the operational decision summary needed
+        to understand agent behavior. It deliberately excludes private
+        chain-of-thought reasoning.
+        """
+
+        event: dict[str, Any] = {
+            "sequence": len(self.react_trace) + 1,
+            "turn": self.turn_count,
+            "phase": phase,
+            "decision_summary": decision_summary,
+        }
+
+        if action is not None:
+            event["action"] = action
+
+        if status is not None:
+            event["status"] = status
+
+        if details:
+            event["details"] = details
+
+        self.react_trace.append(event)
 
     def add_cost(
         self,

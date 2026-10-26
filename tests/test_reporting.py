@@ -36,6 +36,10 @@ def diagnosis_result():
                 "The evidence supports a possible "
                 "biofouling pattern."
             ),
+        "source_grounding": {
+            "grounding_status": "canonical_support_only",
+            "source_ids": ["DUPONT_RO_MANUAL_R19_2026"],
+        },
         "primary_hypothesis": {
             "id":
                 "biofouling",
@@ -322,7 +326,7 @@ def test_complete_report():
 
     assert (
         report["report_version"]
-        == "1.0"
+        == "1.1"
     )
 
     assert (
@@ -350,6 +354,13 @@ def test_complete_report():
             "id"
         ]
         == "biofouling"
+    )
+
+    assert (
+        report["source_grounding"][
+            "grounding_status"
+        ]
+        == "canonical_support_only"
     )
 
     assert (
@@ -391,6 +402,13 @@ def test_complete_report():
             "cumulative_cost_usd"
         ]
         == 0.012
+    )
+
+    assert (
+        report["execution"][
+            "react_event_count"
+        ]
+        == 0
     )
 
     assert (
