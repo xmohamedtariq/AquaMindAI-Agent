@@ -204,6 +204,8 @@ def test_model_pricing_serialization():
             1.5,
         "output_per_million_usd":
             6.0,
+        "cached_input_per_million_usd":
+            1.5,
     }
 
 
@@ -649,3 +651,86 @@ def test_summary_after_usage():
         ]
         == 0.00675
     )
+
+def test_model_pricing_custom_cached_rate():
+    pricing = ModelPricing(
+        model="cached-model",
+        input_per_million_usd="2",
+        output_per_million_usd="8",
+        cached_input_per_million_usd="0.2",
+    )
+
+    assert pricing.cached_input_per_million_usd == Decimal("0.2")
+
+
+def test_cached_usage_cost():
+    pricing = ModelPricing(
+        model="cached-model",
+        input_per_million_usd="2",
+        output_per_million_usd="8",
+        cached_input_per_million_usd="0.2",
+    )
+
+    result = calculate_usage_cost(
+        input_tokens=1000,
+        cached_input_tokens=400,
+        output_tokens=500,
+        pricing=pricing,
+    )
+
+    assert result == Decimal("0.00528")
+
+
+def test_cached_tokens_cannot_exceed_input_tokens():
+    with pytest.raises(ValueError, match="cannot exceed"):
+        calculate_usage_cost(
+            input_tokens=10,
+            cached_input_tokens=11,
+            output_tokens=0,
+            pricing=sample_pricing(),
+        )
+
+
+def test_tracker_records_cached_usage():
+    pricing = ModelPricing(
+        model="cached-model",
+        input_per_million_usd="2",
+        output_per_million_usd="8",
+        cached_input_per_million_usd="0.2",
+    )
+    tracker = CostTracker(
+        budget_cap_usd="0.10",
+        pricing=[pricing],
+    )
+
+    event = tracker.record_usage(
+        model="cached-model",
+        input_tokens=1000,
+        cached_input_tokens=400,
+        output_tokens=500,
+        operation="reasoning",
+    )
+
+    assert event["cached_input_tokens"] == 400
+    assert event["cached_input_per_million_usd"] == 0.2
+    assert tracker.summary()["total_cached_input_tokens"] == 400
+
+
+def test_can_afford_accepts_cached_tokens():
+    pricing = ModelPricing(
+        model="cached-model",
+        input_per_million_usd="2",
+        output_per_million_usd="8",
+        cached_input_per_million_usd="0.2",
+    )
+    tracker = CostTracker(
+        budget_cap_usd="0.01",
+        pricing=[pricing],
+    )
+
+    assert tracker.can_afford(
+        model="cached-model",
+        input_tokens=1000,
+        cached_input_tokens=1000,
+        output_tokens=0,
+    ) is True

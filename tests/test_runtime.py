@@ -1,4 +1,5 @@
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -66,6 +67,9 @@ def make_runtime(
     dataset_path="membrane_fouling.csv",
     knowledge_client=None,
     pricing=None,
+    llm_enabled=False,
+    reasoner=None,
+    budget_cap_usd=0.10,
 ):
     return AquaMindRuntime(
         RuntimeConfig(
@@ -81,12 +85,14 @@ def make_runtime(
                 / "audit.jsonl"
             ),
             knowledge_limit=3,
-            budget_cap_usd=0.10,
+            budget_cap_usd=budget_cap_usd,
+            llm_enabled=llm_enabled,
         ),
         pricing=pricing,
         knowledge_client=(
             knowledge_client
         ),
+        reasoner=reasoner,
     )
 
 
@@ -114,6 +120,14 @@ def test_runtime_config_defaults():
         config.budget_cap_usd
         == 0.10
     )
+
+    assert config.llm_enabled is False
+    assert config.llm_model == "gemini-3.5-flash-lite"
+    assert config.llm_input_per_million_usd == 0.30
+    assert config.llm_cached_input_per_million_usd == 0.03
+    assert config.llm_output_per_million_usd == 2.50
+    assert config.llm_max_output_tokens == 160
+    assert config.llm_preflight_input_tokens == 6000
 
 
 def test_observation_status():
@@ -1131,3 +1145,137 @@ def test_runtime_preserves_structured_diagnostic_context(
     assert terminate_event["status"] == "SAFETY_BLOCK"
 
     assert result["state"].tool_call_count == 0
+
+
+class FakeLLMReasoner:
+    def __init__(self, *, error=None):
+        self.error = error
+        self.calls = 0
+
+    def review_candidate(self, **kwargs):
+        self.calls += 1
+        if self.error is not None:
+            raise self.error
+
+        return SimpleNamespace(
+            decision_summary=(
+                "Model-backed audit-safe decision summary."
+            ),
+            usage={
+                "model": "gemini-3.5-flash-lite",
+                "input_tokens": 100,
+                "cached_input_tokens": 10,
+                "output_tokens": 20,
+                "operation": "llm_reasoning",
+            },
+        )
+
+
+def test_llm_runtime_records_reasoning_usage(tmp_path: Path):
+    reasoner = FakeLLMReasoner()
+    runtime = make_runtime(
+        tmp_path,
+        llm_enabled=True,
+        reasoner=reasoner,
+        knowledge_client=FakeKnowledgeClient(),
+    )
+
+    result = runtime.run(
+        task_id="llm-runtime",
+        user_request="Investigate RO performance.",
+    )
+
+    assert result["state"].termination_reason == TerminationReason.FINAL_ANSWER
+    assert reasoner.calls == 7
+    assert result["cost_summary"]["call_count"] == 7
+    assert result["cost_summary"]["total_input_tokens"] == 700
+    assert result["cost_summary"]["total_cached_input_tokens"] == 70
+    assert result["cost_summary"]["total_output_tokens"] == 140
+    assert result["cost_summary"]["total_cost_usd"] > 0
+    assert result["state"].cumulative_cost_usd > 0
+
+
+def test_llm_runtime_falls_back_when_reasoner_fails(tmp_path: Path):
+    reasoner = FakeLLMReasoner(error=RuntimeError("provider unavailable"))
+    runtime = make_runtime(
+        tmp_path,
+        llm_enabled=True,
+        reasoner=reasoner,
+        knowledge_client=FakeKnowledgeClient(),
+    )
+
+    result = runtime.run(
+        task_id="llm-fallback",
+        user_request="Investigate RO performance.",
+    )
+
+    assert result["state"].termination_reason == TerminationReason.FINAL_ANSWER
+    assert reasoner.calls == 7
+    assert result["cost_summary"]["call_count"] == 0
+    assert result["audit_integrity"]["valid"] is True
+
+
+def test_llm_runtime_preflight_can_stop_before_api_call(tmp_path: Path):
+    reasoner = FakeLLMReasoner()
+    runtime = make_runtime(
+        tmp_path,
+        llm_enabled=True,
+        reasoner=reasoner,
+        budget_cap_usd=0.00000001,
+        knowledge_client=FakeKnowledgeClient(),
+    )
+
+    result = runtime.run(
+        task_id="llm-budget-stop",
+        user_request="Investigate RO performance.",
+    )
+
+    assert result["state"].termination_reason == TerminationReason.BUDGET_LIMIT_REACHED
+    assert result["state"].tool_call_count == 0
+    assert reasoner.calls == 0
+
+
+def test_llm_budget_guard_rejects_already_exhausted_state(tmp_path: Path):
+    runtime = make_runtime(
+        tmp_path,
+        llm_enabled=True,
+        reasoner=FakeLLMReasoner(),
+        knowledge_client=FakeKnowledgeClient(),
+    )
+    state = AgentState(
+        task_id="spent",
+        user_request="test",
+        budget_cap_usd=0.10,
+        cumulative_cost_usd=0.10,
+    )
+
+    assert runtime._can_afford_reasoning(
+        state,
+        "gemini-3.5-flash-lite",
+        100,
+        10,
+    ) is False
+
+
+def test_llm_runtime_builds_default_reasoner(monkeypatch, tmp_path: Path):
+    created = []
+
+    class StubReasoner(FakeLLMReasoner):
+        def __init__(self, *, model, max_output_tokens):
+            super().__init__()
+            created.append((model, max_output_tokens))
+
+    monkeypatch.setattr(
+        "src.agent.runtime.GeminiReasoner",
+        StubReasoner,
+    )
+
+    runtime = make_runtime(
+        tmp_path,
+        llm_enabled=True,
+        reasoner=None,
+        knowledge_client=FakeKnowledgeClient(),
+    )
+
+    assert created == [("gemini-3.5-flash-lite", 160)]
+    assert runtime.agent_loop.planner.reasoner.calls == 0

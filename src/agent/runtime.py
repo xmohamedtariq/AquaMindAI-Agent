@@ -4,7 +4,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from src.agent.hybrid_planner import HybridPlanner
 from src.agent.loop import AgentLoop
+from src.agent.planner import Planner
 from src.agent.state import (
     AgentState,
     TerminationReason,
@@ -24,6 +26,7 @@ from src.mcp.client import (
     OperationalKnowledgeClient,
 )
 from src.mcp.server import create_mcp_server
+from src.llm.gemini_reasoner import GeminiReasoner
 from src.memory.sqlite_memory import (
     IncidentMemory,
     make_save_incident,
@@ -89,6 +92,14 @@ class RuntimeConfig:
     evidence_vocabulary_path: str | Path | None = None
     diagnostic_top_k: int = 5
 
+    llm_enabled: bool = False
+    llm_model: str = "gemini-3.5-flash-lite"
+    llm_input_per_million_usd: float = 0.30
+    llm_cached_input_per_million_usd: float = 0.03
+    llm_output_per_million_usd: float = 2.50
+    llm_max_output_tokens: int = 160
+    llm_preflight_input_tokens: int = 6000
+
 
 class AquaMindRuntime:
     """
@@ -119,6 +130,7 @@ class AquaMindRuntime:
         audit_logger: AuditLogger | None = None,
         cost_tracker: CostTracker | None = None,
         diagnostic_engine: SourceGroundedDiagnosticEngine | None = None,
+        reasoner: Any | None = None,
     ) -> None:
 
         self.config = config
@@ -149,6 +161,22 @@ class AquaMindRuntime:
         else:
             self.cost_tracker = (
                 cost_tracker
+            )
+
+        if config.llm_enabled:
+            self.cost_tracker.register_pricing(
+                ModelPricing(
+                    model=config.llm_model,
+                    input_per_million_usd=(
+                        config.llm_input_per_million_usd
+                    ),
+                    cached_input_per_million_usd=(
+                        config.llm_cached_input_per_million_usd
+                    ),
+                    output_per_million_usd=(
+                        config.llm_output_per_million_usd
+                    ),
+                )
             )
 
         if knowledge_client is None:
@@ -220,8 +248,103 @@ class AquaMindRuntime:
             self._build_tool_registry()
         )
 
+        planner = self._build_planner(
+            reasoner=reasoner
+        )
+
         self.agent_loop = AgentLoop(
-            tools=self.tools
+            tools=self.tools,
+            planner=planner,
+        )
+
+    def _build_planner(
+        self,
+        *,
+        reasoner: Any | None,
+    ) -> Planner:
+        """Build deterministic or hybrid LLM-assisted planning."""
+
+        if not self.config.llm_enabled:
+            return Planner()
+
+        if reasoner is None:
+            reasoner = GeminiReasoner(
+                model=self.config.llm_model,
+                max_output_tokens=(
+                    self.config.llm_max_output_tokens
+                ),
+            )
+
+        return HybridPlanner(
+            reasoner=reasoner,
+            usage_recorder=(
+                self._record_reasoning_usage
+            ),
+            budget_guard=(
+                self._can_afford_reasoning
+            ),
+            fallback_logger=(
+                self._log_reasoning_fallback
+            ),
+            model=self.config.llm_model,
+            preflight_input_tokens=(
+                self.config.llm_preflight_input_tokens
+            ),
+            max_output_tokens=(
+                self.config.llm_max_output_tokens
+            ),
+        )
+
+    def _can_afford_reasoning(
+        self,
+        state: AgentState,
+        model: str,
+        input_tokens: int,
+        output_tokens: int,
+    ) -> bool:
+        """Conservatively preflight one model reasoning call."""
+
+        if state.budget_exceeded():
+            return False
+
+        return self.cost_tracker.can_afford(
+            model=model,
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
+            cached_input_tokens=0,
+        )
+
+    def _record_reasoning_usage(
+        self,
+        state: AgentState,
+        usage: dict[str, Any],
+    ) -> None:
+        """Record provider-reported usage from the LLM reasoner."""
+
+        self._apply_usage(
+            state=state,
+            tool_name="llm_reasoning",
+            observation={
+                "_usage": dict(usage)
+            },
+        )
+
+    def _log_reasoning_fallback(
+        self,
+        state: AgentState,
+        exc: Exception,
+    ) -> None:
+        """Audit a model failure before deterministic fallback."""
+
+        self.audit_logger.log_event(
+            task_id=state.task_id,
+            event_type="llm_reasoning",
+            action="fallback_to_deterministic_planner",
+            status="fallback",
+            details={
+                "error_type": type(exc).__name__,
+                "message": str(exc),
+            },
         )
 
     @staticmethod
@@ -567,6 +690,12 @@ class AquaMindRuntime:
                 output_tokens=usage[
                     "output_tokens"
                 ],
+                cached_input_tokens=int(
+                    usage.get(
+                        "cached_input_tokens",
+                        0,
+                    )
+                ),
                 operation=operation,
             )
         )

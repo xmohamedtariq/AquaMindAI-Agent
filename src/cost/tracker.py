@@ -103,6 +103,7 @@ class ModelPricing:
     model: str
     input_per_million_usd: Decimal | float | str
     output_per_million_usd: Decimal | float | str
+    cached_input_per_million_usd: Decimal | float | str | None = None
 
     def __post_init__(
         self,
@@ -143,6 +144,21 @@ class ModelPricing:
             ),
         )
 
+        cached_rate = (
+            self.input_per_million_usd
+            if self.cached_input_per_million_usd is None
+            else _non_negative_decimal(
+                self.cached_input_per_million_usd,
+                "cached_input_per_million_usd",
+            )
+        )
+
+        object.__setattr__(
+            self,
+            "cached_input_per_million_usd",
+            cached_rate,
+        )
+
     def to_dict(
         self,
     ) -> dict[str, Any]:
@@ -159,6 +175,10 @@ class ModelPricing:
                 float(
                     self.output_per_million_usd
                 ),
+            "cached_input_per_million_usd":
+                float(
+                    self.cached_input_per_million_usd
+                ),
         }
 
 
@@ -167,6 +187,7 @@ def calculate_usage_cost(
     input_tokens: int,
     output_tokens: int,
     pricing: ModelPricing,
+    cached_input_tokens: int = 0,
 ) -> Decimal:
     """Calculate the exact cost of one model call."""
 
@@ -180,9 +201,30 @@ def calculate_usage_cost(
         "output_tokens",
     )
 
+    validated_cached = _token_count(
+        cached_input_tokens,
+        "cached_input_tokens",
+    )
+
+    if validated_cached > validated_input:
+        raise ValueError(
+            "cached_input_tokens cannot exceed input_tokens."
+        )
+
+    uncached_input = (
+        validated_input
+        - validated_cached
+    )
+
     input_cost = (
-        Decimal(validated_input)
+        Decimal(uncached_input)
         * pricing.input_per_million_usd
+        / TOKENS_PER_MILLION
+    )
+
+    cached_input_cost = (
+        Decimal(validated_cached)
+        * pricing.cached_input_per_million_usd
         / TOKENS_PER_MILLION
     )
 
@@ -194,6 +236,7 @@ def calculate_usage_cost(
 
     return (
         input_cost
+        + cached_input_cost
         + output_cost
     )
 
@@ -202,7 +245,7 @@ def project_task_costs(
     average_task_cost_usd: Any,
 ) -> dict[str, float]:
     """
-    Produce the projections required by COST.md.
+    Produce the projections required by cost_analysis.md.
 
     Projections cover 100, 1,000 and 10,000 tasks.
     """
@@ -361,6 +404,7 @@ class CostTracker:
         model: str,
         input_tokens: int,
         output_tokens: int,
+        cached_input_tokens: int = 0,
     ) -> Decimal:
         """Estimate a model call without mutating state."""
 
@@ -372,6 +416,7 @@ class CostTracker:
             input_tokens=input_tokens,
             output_tokens=output_tokens,
             pricing=pricing,
+            cached_input_tokens=cached_input_tokens,
         )
 
     def can_afford(
@@ -380,6 +425,7 @@ class CostTracker:
         model: str,
         input_tokens: int,
         output_tokens: int,
+        cached_input_tokens: int = 0,
     ) -> bool:
         """Check whether an estimated call fits the budget."""
 
@@ -388,6 +434,7 @@ class CostTracker:
                 model=model,
                 input_tokens=input_tokens,
                 output_tokens=output_tokens,
+                cached_input_tokens=cached_input_tokens,
             )
         )
 
@@ -403,6 +450,7 @@ class CostTracker:
         model: str,
         input_tokens: int,
         output_tokens: int,
+        cached_input_tokens: int = 0,
         operation: str = "llm_call",
         timestamp: str | None = None,
     ) -> dict[str, Any]:
@@ -428,6 +476,11 @@ class CostTracker:
             "output_tokens",
         )
 
+        validated_cached = _token_count(
+            cached_input_tokens,
+            "cached_input_tokens",
+        )
+
         pricing = self.pricing_for(
             model
         )
@@ -437,6 +490,7 @@ class CostTracker:
                 input_tokens=validated_input,
                 output_tokens=validated_output,
                 pricing=pricing,
+                cached_input_tokens=validated_cached,
             )
         )
 
@@ -456,6 +510,8 @@ class CostTracker:
                 validated_input,
             "output_tokens":
                 validated_output,
+            "cached_input_tokens":
+                validated_cached,
             "input_per_million_usd":
                 float(
                     pricing
@@ -465,6 +521,11 @@ class CostTracker:
                 float(
                     pricing
                     .output_per_million_usd
+                ),
+            "cached_input_per_million_usd":
+                float(
+                    pricing
+                    .cached_input_per_million_usd
                 ),
             "call_cost_usd":
                 float(
@@ -524,6 +585,11 @@ class CostTracker:
             for event in self._events
         )
 
+        total_cached_input_tokens = sum(
+            event["cached_input_tokens"]
+            for event in self._events
+        )
+
         call_count = len(
             self._events
         )
@@ -545,6 +611,8 @@ class CostTracker:
                 total_input_tokens,
             "total_output_tokens":
                 total_output_tokens,
+            "total_cached_input_tokens":
+                total_cached_input_tokens,
             "total_cost_usd":
                 float(
                     self._total_cost_usd
