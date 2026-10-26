@@ -1115,4 +1115,19 @@ def test_runtime_preserves_structured_diagnostic_context(
     )
 
     assert result["state"].diagnostic_context == context
-    assert result["react_trace"] == []
+
+    trace = result["react_trace"]
+    assert len(trace) == 2
+
+    observe_event = trace[0]
+    assert observe_event["phase"] == "observe"
+    assert observe_event["action"] == "inspect_request"
+    assert observe_event["status"] == "blocked"
+    assert observe_event["details"]["tool_call_count"] == 0
+
+    terminate_event = trace[1]
+    assert terminate_event["phase"] == "terminate"
+    assert terminate_event["action"] == "inspect_request"
+    assert terminate_event["status"] == "SAFETY_BLOCK"
+
+    assert result["state"].tool_call_count == 0

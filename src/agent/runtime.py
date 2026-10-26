@@ -917,6 +917,31 @@ class AquaMindRuntime:
                 )
             )
 
+            state.add_react_event(
+                phase="observe",
+                decision_summary=(
+                    "Request-boundary safety inspection blocked "
+                    "execution before any operational tool call."
+                ),
+                action="inspect_request",
+                status="blocked",
+                details={
+                    "tool_call_count": 0,
+                    "assessment": safety.get(
+                        "assessment"
+                    ),
+                },
+            )
+            state.add_react_event(
+                phase="terminate",
+                decision_summary=message,
+                action="inspect_request",
+                status=(
+                    TerminationReason
+                    .SAFETY_BLOCK.value
+                ),
+            )
+
             state.terminate(
                 reason=(
                     TerminationReason
