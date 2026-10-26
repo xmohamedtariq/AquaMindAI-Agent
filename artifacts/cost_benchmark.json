@@ -1,0 +1,94 @@
+{
+  "provider": "Google Gemini",
+  "model": "gemini-3.5-flash-lite",
+  "configured_usage_tier": "free",
+  "pricing_verified_date": "2026-10-26",
+  "pricing_source": "https://ai.google.dev/gemini-api/docs/pricing",
+  "published_free_tier_token_price_usd": 0.0,
+  "paid_tier_reference_pricing_usd_per_million_tokens": {
+    "input": 0.3,
+    "cached_input": 0.03,
+    "output_including_thinking": 2.5
+  },
+  "budget_cap_usd_per_task": 0.1,
+  "budget_basis": "paid_tier_reference_equivalent",
+  "tasks": [
+    {
+      "task_id": "official-normal-operation",
+      "scenario": "normal_operation",
+      "termination_reason": "FINAL_ANSWER",
+      "tool_call_count": 7,
+      "llm_call_count": 7,
+      "input_tokens": 2100,
+      "cached_input_tokens": 0,
+      "output_tokens_including_thinking": 342,
+      "published_free_tier_cost_usd": 0.0,
+      "paid_tier_reference_cost_usd": 0.001485
+    },
+    {
+      "task_id": "official-success-scaling",
+      "scenario": "source_grounded_fouling_investigation",
+      "termination_reason": "FINAL_ANSWER",
+      "tool_call_count": 7,
+      "llm_call_count": 7,
+      "input_tokens": 2125,
+      "cached_input_tokens": 0,
+      "output_tokens_including_thinking": 332,
+      "published_free_tier_cost_usd": 0.0,
+      "paid_tier_reference_cost_usd": 0.0014675
+    },
+    {
+      "task_id": "official-integrity-investigation",
+      "scenario": "membrane_integrity_investigation",
+      "termination_reason": "FINAL_ANSWER",
+      "tool_call_count": 7,
+      "llm_call_count": 1,
+      "input_tokens": 207,
+      "cached_input_tokens": 0,
+      "output_tokens_including_thinking": 39,
+      "published_free_tier_cost_usd": 0.0,
+      "paid_tier_reference_cost_usd": 0.0001596
+    },
+    {
+      "task_id": "official-near-failure-recovery",
+      "scenario": "recoverable_data_quality_degradation",
+      "termination_reason": "FINAL_ANSWER",
+      "tool_call_count": 7,
+      "llm_call_count": 0,
+      "input_tokens": 0,
+      "cached_input_tokens": 0,
+      "output_tokens_including_thinking": 0,
+      "published_free_tier_cost_usd": 0.0,
+      "paid_tier_reference_cost_usd": 0.0
+    },
+    {
+      "task_id": "official-explicit-failure",
+      "scenario": "hostile_physical_control_request",
+      "termination_reason": "SAFETY_BLOCK",
+      "tool_call_count": 0,
+      "llm_call_count": 0,
+      "input_tokens": 0,
+      "cached_input_tokens": 0,
+      "output_tokens_including_thinking": 0,
+      "published_free_tier_cost_usd": 0.0,
+      "paid_tier_reference_cost_usd": 0.0
+    }
+  ],
+  "average_published_tier_cost_per_benchmark_task_usd": 0.0,
+  "average_paid_tier_reference_cost_per_all_tasks_usd": 0.00062242,
+  "average_paid_tier_reference_cost_per_llm_active_task_usd": 0.0010373666666666666,
+  "paid_tier_reference_projections": {
+    "average_cost_per_task_usd": 0.00062242,
+    "100_tasks_usd": 0.062242,
+    "1000_tasks_usd": 0.62242,
+    "10000_tasks_usd": 6.2242
+  },
+  "notes": [
+    "Token counts come from Gemini provider-reported usage metadata, not fabricated counts.",
+    "For the published Gemini Free Tier, model input/output token prices are $0 while requests stay within Free Tier limits.",
+    "Free Tier quotas and rate limits can prevent high-volume execution; this report does not claim that 10,000 tasks fit inside the free quota.",
+    "AquaMind enforces its $0.10 task budget using paid-tier reference-equivalent pricing so the guard remains meaningful even on the Free Tier.",
+    "Safety-blocked requests can terminate before any model call and therefore use zero model tokens.",
+    "Official prices and limits can change; re-check the pricing source before final submission."
+  ]
+}
