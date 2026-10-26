@@ -311,7 +311,7 @@ def test_final_answer_fallback():
     )
 
     assert result == (
-        "AquaMind AI completed the "
+        "AquaMindAI-Agent completed the "
         "desalination plant investigation."
     )
 

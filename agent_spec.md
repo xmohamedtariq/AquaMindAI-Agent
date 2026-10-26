@@ -1,13 +1,15 @@
-﻿# AquaMind AI — Agent Specification
+# AquaMindAI-Agent — Agent Specification
 
-**Track:** LLM4Yemen — Track B — Week 5: AI Agents & MCP
+**Project:** AquaMindAI-Agent
+**Product:** Autonomous AI Agent for Desalination Operations Intelligence
+
 **Domain:** Data Analysis
 **Agent Type:** Single autonomous ReAct agent
 **Application Domain:** Reverse Osmosis Desalination Operations & Maintenance
 
 ## 1. Goal
 
-AquaMind AI autonomously analyzes reverse-osmosis desalination operational data, detects abnormal behavior, investigates probable causes using source-grounded operational knowledge and persistent memory, and produces evidence-based recommendations while enforcing safety, cost, and permission boundaries.
+AquaMindAI-Agent autonomously analyzes reverse-osmosis desalination operational data, detects abnormal behavior, investigates probable causes using source-grounded operational knowledge and persistent memory, and produces evidence-based recommendations while enforcing safety, cost, and permission boundaries.
 
 ## 2. Allowed Tools
 
@@ -128,7 +130,7 @@ A reverse-osmosis operational CSV containing a sustained abnormal performance pa
 - A final incident report is generated.
 - Termination reason: `FINAL_ANSWER`.
 
-**Evidence:** `traces/success_1.jsonl`
+**Evidence:** `traces/source_grounded_fouling.jsonl`
 
 ### Example 2 — Recoverable Data-Quality Failure
 

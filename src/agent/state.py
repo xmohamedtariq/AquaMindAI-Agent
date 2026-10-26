@@ -32,7 +32,7 @@ class TerminationReason(str, Enum):
 
 class AgentState(BaseModel):
     """
-    Runtime state for one AquaMind AI investigation.
+    Runtime state for one AquaMindAI-Agent investigation.
 
     Execution lifecycle:
 

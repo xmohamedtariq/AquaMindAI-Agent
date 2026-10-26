@@ -173,7 +173,7 @@ def test_default_final_message():
     assert (
         result.final_answer
         == (
-            "AquaMind AI completed the "
+            "AquaMindAI-Agent completed the "
             "desalination plant investigation."
         )
     )

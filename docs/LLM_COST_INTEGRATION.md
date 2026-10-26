@@ -9,7 +9,7 @@ AquaMind uses a hybrid single-agent production pattern:
 3. Gemini cannot create tools, change permissions, authorize plant actuation, or bypass the request-boundary safety guard.
 4. If Gemini is unavailable or rate-limited, AquaMind falls back to the deterministic planner and records no fabricated model usage.
 
-This preserves the capstone's single-agent architecture while adding real model-backed reasoning and provider-reported token accounting.
+This preserves AquaMindAI-Agent's single-agent architecture while adding real model-backed reasoning and provider-reported token accounting.
 
 ## Default Model
 
@@ -29,7 +29,7 @@ Pricing is configurable because provider rates can change.
 
 Before each reasoning call, the hybrid planner performs a conservative budget preflight using the paid-tier reference pricing, even when the project is on the Free Tier. After a real Gemini call, AquaMind records provider-reported prompt, cached-input, candidate-output, and thinking-token usage. Candidate output plus thinking tokens are counted as output for the paid-tier reference calculation.
 
-The capstone task budget remains $0.10 per task.
+The AquaMindAI-Agent task budget remains $0.10 per task.
 
 ## Free Tier Reporting
 

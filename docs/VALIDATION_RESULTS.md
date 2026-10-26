@@ -1,4 +1,4 @@
-# AquaMind AI — Knowledge Layer Validation Results
+# AquaMindAI-Agent — Knowledge Layer Validation Results
 
 Verified on 25 October 2026.
 

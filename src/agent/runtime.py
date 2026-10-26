@@ -103,7 +103,7 @@ class RuntimeConfig:
 
 class AquaMindRuntime:
     """
-    Production integration layer for AquaMind AI.
+    Production integration layer for AquaMindAI-Agent.
 
     Integrates:
 
@@ -479,7 +479,7 @@ class AquaMindRuntime:
             str,
         ) or not summary.strip():
             summary = (
-                "AquaMind AI completed the "
+                "AquaMindAI-Agent completed the "
                 "desalination plant investigation."
             )
 

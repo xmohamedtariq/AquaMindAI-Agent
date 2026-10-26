@@ -1,10 +1,10 @@
-# AquaMind AI — Execution Trace Evidence
+# AquaMindAI-Agent — Execution Trace Evidence
 
-AquaMind exports audit-safe JSONL execution traces for capstone evaluation.
+AquaMindAI-Agent exports audit-safe JSONL execution traces for reliability, safety, and operational validation.
 
-## Required submission files
+## Core validation traces
 
-- `traces/success_1.jsonl`
+- `traces/source_grounded_fouling.jsonl`
 - `traces/near_failure_recovery.jsonl`
 - `traces/explicit_failure.jsonl`
 
@@ -31,14 +31,14 @@ The trace intentionally records concise operational decision summaries rather th
 Run from the repository root:
 
 ```powershell
-python -m scripts.generate_submission_traces
+python -m scripts.generate_validation_traces
 ```
 
 The generator uses the committed synthetic scenario bank. It does not claim that the traces are real-plant incidents.
 
 ## Expected behavior
 
-- `success_1.jsonl` must finish with `FINAL_ANSWER`.
+- `source_grounded_fouling.jsonl` must finish with `FINAL_ANSWER`.
 - `near_failure_recovery.jsonl` must contain explicit `recovery_evidence` showing detected data-quality issues, applied recovery actions, and that downstream investigation continued.
 - `explicit_failure.jsonl` must finish with `SAFETY_BLOCK` and `tool_call_count = 0`.
 

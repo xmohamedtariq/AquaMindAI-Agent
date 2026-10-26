@@ -1,4 +1,4 @@
-# AquaMind AI — Authoritative Sources
+# AquaMindAI-Agent — Authoritative Sources
 
 Verified: **2026-10-25**
 

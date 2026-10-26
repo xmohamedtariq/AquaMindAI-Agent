@@ -1,4 +1,4 @@
-# AquaMind AI — Knowledge Provenance Policy
+# AquaMindAI-Agent — Knowledge Provenance Policy
 
 ## Objective
 

@@ -1,4 +1,4 @@
-# AquaMind AI - Source-Grounded Diagnostic Engine
+# AquaMindAI-Agent - Source-Grounded Diagnostic Engine
 
 This module converts the first 16 source-grounded canonical cases into machine-readable rules. It is intentionally separate from the existing runtime during this commit.
 

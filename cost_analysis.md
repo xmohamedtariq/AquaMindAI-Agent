@@ -1,4 +1,4 @@
-# AquaMind AI — Cost Analysis
+# AquaMindAI-Agent — Cost Analysis
 
 ## Provider and Model
 
@@ -44,7 +44,7 @@ A safety-blocked request can terminate before any LLM call and legitimately use 
 
 ## Cost Projections
 
-The capstone requires projections for 100, 1,000, and 10,000 tasks. Free Tier availability at those volumes is quota-dependent, so AquaMind does not claim that every projected task remains free. The table below uses measured token usage with Google's paid-tier reference rates to provide an observed mixed-workload scaling estimate based on the benchmark's actual safety and provider-availability behavior.
+AquaMindAI-Agent reports scaling projections for 100, 1,000, and 10,000 tasks. Free Tier availability at those volumes is quota-dependent, so AquaMind does not claim that every projected task remains free. The table below uses measured token usage with Google's paid-tier reference rates to provide an observed mixed-workload scaling estimate based on the benchmark's actual safety and provider-availability behavior.
 
 | Volume | Paid-tier reference projection | Free Tier interpretation |
 |---|---:|---|
@@ -64,4 +64,4 @@ If the Gemini API is unavailable or a Free Tier rate limit is reached, AquaMind 
 
 - Free Tier quotas and rate limits can change and may differ by project.
 - Free Tier content may be subject to Google's published data-use terms; AquaMind's benchmark uses synthetic project datasets only.
-- Re-check the official pricing and quota pages before final submission or production deployment.
+- Re-check the official pricing and quota pages before production deployment or release.

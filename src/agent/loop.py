@@ -25,7 +25,7 @@ ToolFunction = Callable[
 
 class AgentLoop:
     """
-    Core autonomous execution loop for AquaMind AI.
+    Core autonomous execution loop for AquaMindAI-Agent.
 
     Lifecycle:
 
@@ -79,7 +79,7 @@ class AgentLoop:
             return state.final_answer
 
         return (
-            "AquaMind AI completed the "
+            "AquaMindAI-Agent completed the "
             "desalination plant investigation."
         )
 

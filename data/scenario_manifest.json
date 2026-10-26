@@ -5,7 +5,7 @@
   "sampling_interval": "5min",
   "rows_per_standard_scenario": 2016,
   "start_time": "2026-10-01T00:00:00Z",
-  "purpose": "Deterministic scenario bank for AquaMind AI development, system evaluation, and demonstration.",
+  "purpose": "Deterministic scenario bank for AquaMindAI-Agent development, system evaluation, and demonstration.",
   "disclaimer": "These datasets are synthetic. They must not be represented as telemetry collected from a real desalination plant.",
   "scenarios": {
     "normal_operation.csv": {

@@ -1,4 +1,4 @@
-# AquaMind AI — Knowledge Base Validation
+# AquaMindAI-Agent — Knowledge Base Validation
 
 ## Scope
 

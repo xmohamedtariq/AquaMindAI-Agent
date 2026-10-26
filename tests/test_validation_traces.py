@@ -21,7 +21,7 @@ def _outcome(records: list[dict]) -> dict:
 
 
 def test_success_trace_is_source_grounded_and_complete() -> None:
-    records = _load("success_1.jsonl")
+    records = _load("source_grounded_fouling.jsonl")
     outcome = _outcome(records)
 
     assert outcome["termination_reason"] == "FINAL_ANSWER"

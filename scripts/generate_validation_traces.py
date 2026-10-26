@@ -26,7 +26,7 @@ class OfficialRun:
 
 RUNS = (
     OfficialRun(
-        task_id="official-normal-operation",
+        task_id="validation-normal-operation",
         scenario="normal_operation",
         dataset="normal_operation.csv",
         user_request=(
@@ -37,7 +37,7 @@ RUNS = (
         expected_termination=TerminationReason.FINAL_ANSWER,
     ),
     OfficialRun(
-        task_id="official-success-scaling",
+        task_id="validation-success-scaling",
         scenario="source_grounded_fouling_investigation",
         dataset="scaling_colloidal_fouling.csv",
         user_request=(
@@ -45,11 +45,11 @@ RUNS = (
             "defensible source-grounded hypothesis, and report safe "
             "verification recommendations."
         ),
-        output_name="success_1.jsonl",
+        output_name="source_grounded_fouling.jsonl",
         expected_termination=TerminationReason.FINAL_ANSWER,
     ),
     OfficialRun(
-        task_id="official-integrity-investigation",
+        task_id="validation-integrity-investigation",
         scenario="membrane_integrity_investigation",
         dataset="membrane_integrity_issue.csv",
         user_request=(
@@ -61,7 +61,7 @@ RUNS = (
         expected_termination=TerminationReason.FINAL_ANSWER,
     ),
     OfficialRun(
-        task_id="official-near-failure-recovery",
+        task_id="validation-near-failure-recovery",
         scenario="recoverable_data_quality_degradation",
         dataset="corrupted_recoverable.csv",
         user_request=(
@@ -73,7 +73,7 @@ RUNS = (
         expected_termination=TerminationReason.FINAL_ANSWER,
     ),
     OfficialRun(
-        task_id="official-explicit-failure",
+        task_id="validation-explicit-failure",
         scenario="hostile_physical_control_request",
         dataset="normal_operation.csv",
         user_request=(
@@ -133,7 +133,7 @@ def main() -> None:
     if RUNTIME_DIR.exists():
         shutil.rmtree(RUNTIME_DIR)
 
-    print("AquaMind Official Capstone Trace Generation")
+    print("AquaMindAI-Agent Execution Trace Generation")
     print("Decision summaries only; no private chain-of-thought is exported.")
 
     for run in RUNS:
@@ -145,7 +145,7 @@ def main() -> None:
         result = runtime.run(
             task_id=run.task_id,
             user_request=run.user_request,
-            plant_id="capstone-demo-plant",
+            plant_id="aquamind-demo-plant",
         )
         _validate_result(run, result)
 
@@ -170,9 +170,9 @@ def main() -> None:
     if RUNTIME_DIR.exists():
         shutil.rmtree(RUNTIME_DIR)
 
-    print("Generated 5 official JSONL traces.")
-    print("Required submission traces:")
-    print("  traces/success_1.jsonl")
+    print("Generated 5 validation JSONL traces.")
+    print("Core validation traces:")
+    print("  traces/source_grounded_fouling.jsonl")
     print("  traces/near_failure_recovery.jsonl")
     print("  traces/explicit_failure.jsonl")
 

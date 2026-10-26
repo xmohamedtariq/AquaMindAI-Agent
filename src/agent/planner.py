@@ -10,7 +10,7 @@ from src.agent.state import (
 
 
 class AgentAction(str, Enum):
-    """Actions AquaMind AI is allowed to plan."""
+    """Actions AquaMindAI-Agent is allowed to plan."""
 
     VALIDATE_DATA = "validate_sensor_data"
     CALCULATE_KPIS = "calculate_plant_kpis"

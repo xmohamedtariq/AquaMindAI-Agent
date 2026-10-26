@@ -1,4 +1,4 @@
-# AquaMind AI — Canonical Case Library
+# AquaMindAI-Agent — Canonical Case Library
 
 Canonical cases: **90**
 Structured rules: **90**

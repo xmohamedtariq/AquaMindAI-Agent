@@ -628,7 +628,7 @@ def main() -> None:
 
         "purpose": (
             "Deterministic scenario bank for "
-            "AquaMind AI development, system "
+            "AquaMindAI-Agent development, system "
             "evaluation, and demonstration."
         ),
 

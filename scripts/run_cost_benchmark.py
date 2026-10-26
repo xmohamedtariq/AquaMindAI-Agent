@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 from src.agent.runtime import AquaMindRuntime, RuntimeConfig
 from src.cost.tracker import project_task_costs
-from scripts.generate_submission_traces import RUNS, _validate_result
+from scripts.generate_validation_traces import RUNS, _validate_result
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -194,7 +194,7 @@ def main() -> None:
             "Free Tier quotas and rate limits can prevent high-volume execution; this report does not claim that 10,000 tasks fit inside the free quota.",
             "AquaMind enforces its $0.10 task budget using paid-tier reference-equivalent pricing so the guard remains meaningful even on the Free Tier.",
             "Safety-blocked requests can terminate before any model call and therefore use zero model tokens.",
-            "Official prices and limits can change; re-check the pricing source before final submission.",
+            "Official prices and limits can change; re-check the pricing source before production deployment or release.",
         ],
     }
 

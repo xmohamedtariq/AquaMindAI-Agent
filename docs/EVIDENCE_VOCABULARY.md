@@ -1,4 +1,4 @@
-# AquaMind AI — Evidence Vocabulary
+# AquaMindAI-Agent — Evidence Vocabulary
 
 Canonical evidence terms: **102**
 

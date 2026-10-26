@@ -1,6 +1,6 @@
 {
   "vocabulary_version": "1.0.0",
-  "project": "AquaMind AI - Autonomous Desalination Operations Agent",
+  "project": "AquaMindAI-Agent - Autonomous Desalination Operations Agent",
   "terms": [
     {
       "name": "permeate_flow_direction",

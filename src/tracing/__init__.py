@@ -1,4 +1,4 @@
-"""Submission-grade execution trace utilities for AquaMind AI."""
+"""Production-grade execution trace utilities for AquaMindAI-Agent."""
 
 from .jsonl import build_trace_records, write_trace_jsonl
 

@@ -1,6 +1,6 @@
 {
   "registry_version": "2.1.0",
-  "project": "AquaMind AI - Autonomous Desalination Operations Agent",
+  "project": "AquaMindAI-Agent - Autonomous Desalination Operations Agent",
   "verified_on": "2026-10-25",
   "policy": {
     "diagnostic_rule_requires_source": true,

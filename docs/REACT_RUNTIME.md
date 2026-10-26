@@ -6,7 +6,7 @@ AquaMind remains a **single autonomous agent**. Its execution loop is expressed 
 
 `REASON -> ACT -> OBSERVE -> REFLECT -> repeat or terminate`
 
-This is the operational equivalent of the capstone-required Plan/Act/Observe/Reflect loop. The runtime records concise `decision_summary` events for auditability. It does **not** store or expose private chain-of-thought reasoning.
+AquaMindAI-Agent uses a production-oriented Plan/Act/Observe/Reflect execution loop. The runtime records concise `decision_summary` events for auditability. It does **not** store or expose private chain-of-thought reasoning.
 
 ## Source-grounded diagnosis
 
@@ -18,7 +18,7 @@ This is the operational equivalent of the capstone-required Plan/Act/Observe/Ref
 4. the 90-case canonical case library;
 5. source IDs and verification requirements.
 
-This preserves the simple single-agent architecture required by the capstone.
+This preserves a focused single-agent architecture with deterministic safety boundaries.
 
 ## Evidence policy
 
@@ -54,4 +54,4 @@ AquaMind remains analytical decision support only.
 - `reflect` - continue/retry/stop/approval decision;
 - `terminate` - final termination reason.
 
-The runtime result exposes this list as `react_trace`, which will later be serialized into the three required JSONL submission traces.
+The runtime result exposes this list as `react_trace`, which will later be serialized into the core JSONL validation traces.
