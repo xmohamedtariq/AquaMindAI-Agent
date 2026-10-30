@@ -1,323 +1,264 @@
-﻿\# 🌊 AquaMindAI-Agent
+<div align="center">
 
+# 🌊 AquaMindAI-Agent
 
+### Autonomous AI Agent for Desalination Operations Intelligence
 
-\### Autonomous AI Agent for Desalination Operations Intelligence
+**Monitor · Investigate · Diagnose · Verify**
 
+<br>
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Open_App-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://aquamindai-agent-git-main-mohammed-tariq1.vercel.app/)
+[![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Tests](https://img.shields.io/badge/Tests-42%2F42_Passed-16A34A?style=for-the-badge)]()
+[![Coverage](https://img.shields.io/badge/Coverage-99.66%25-22C55E?style=for-the-badge)]()
 
-\*\*AquaMindAI-Agent\*\* is a context-aware, evidence-grounded, and safety-constrained industrial AI agent designed for reverse-osmosis desalination operations.
+<br>
 
+**A context-aware, evidence-grounded, safety-constrained AI agent for reverse-osmosis desalination operations.**
 
+[Live Application](https://aquamindai-agent-git-main-mohammed-tariq1.vercel.app/) ·
+[Repository](https://github.com/xmohamedtariq/AquaMindAI-Agent)
 
-> \*\*Monitor · Investigate · Diagnose · Verify\*\*
+</div>
 
+---
 
+## 🌐 Overview
 
-AquaMind combines operational data, RO engineering analytics, technical knowledge, incident memory, AI reasoning, and safety controls to help engineers investigate plant-performance problems and make evidence-based decisions.
+**AquaMindAI-Agent** helps desalination engineers investigate operational problems using plant data, engineering knowledge, historical incidents, and structured AI reasoning.
 
+Instead of producing a generic chatbot response, AquaMind follows an autonomous investigation cycle to analyze evidence, form diagnostic hypotheses, reflect on findings, and produce traceable operational recommendations.
 
+---
 
-\---
+## ⚡ Core Capabilities
 
-
-
-\## 🚀 Core Capabilities
-
-
-
-\- Autonomous RO operational investigations
-
-\- Intelligent intent routing
-
-\- RO KPI and trend analysis
-
-\- Anomaly detection
-
-\- Evidence-grounded diagnostic hypotheses
-
-\- Operational knowledge search
-
-\- Persistent incident memory
-
-\- Context-aware follow-up questions
-
-\- Related-case retrieval
-
-\- Prompt-injection protection
-
-\- Safety and permission controls
-
-\- Audit and execution tracing
-
-\- AI cost tracking
-
-\- Light / Dark industrial web interface
-
-\- Graceful fallback when external AI services are unavailable
-
-
-
-\---
-
-
-
-\## 🧠 Agent Workflow
-
-
-
-```text
-
-Operator Request
-
-&#x20;     ↓
-
-Intent Router
-
-&#x20;     ↓
-
-Context + Safety
-
-&#x20;     ↓
-
-Plan → Act → Observe → Reflect
-
-&#x20;     ↓
-
-Data + Knowledge + Memory
-
-&#x20;     ↓
-
-Evidence Evaluation
-
-&#x20;     ↓
-
-Diagnostic Hypotheses
-
-&#x20;     ↓
-
-Verification \& Recommendations
-
-&#x20;     ↓
-
-Human Decision
-
-```
-
-
-
-\---
-
-
-
-\## 📚 Documentation
-
-
-
-| Topic | Link |
-
+| Capability | Description |
 |---|---|
+| 🔎 **Autonomous Investigation** | Executes structured RO operational investigations |
+| 📊 **KPI Analysis** | Evaluates performance indicators and operational trends |
+| 🚨 **Anomaly Detection** | Detects abnormal plant behavior and deviations |
+| 🧠 **Diagnostic Reasoning** | Generates evidence-grounded hypotheses |
+| 📚 **Knowledge Search** | Retrieves relevant desalination engineering knowledge |
+| 🗂️ **Incident Memory** | Reuses information from previous operational cases |
+| 🛡️ **Safety Controls** | Constrains unsafe or unsupported recommendations |
+| 🧾 **Audit Trail** | Preserves traceability of agent actions and decisions |
 
-| 🤖 Agent Architecture | \[Agent Specification](./agent\_spec.md) |
+---
 
-| 🏗️ System Specification | \[System Specification](./SPEC.md) |
-
-| 💰 Cost Analysis | \[Cost Analysis](./cost\_analysis.md) |
-
-| 📊 Cost Documentation | \[Cost Model](./COST.md) |
-
-| 🎬 Investor Demo | \[Investor Demo Guide](./INVESTOR\_DEMO.md) |
-
-| 🌐 Web Application | \[Web Backend](./web\_app.py) |
-
-| 🎨 Frontend | \[User Interface](./frontend/) |
-
-| 🧠 Agent Core | \[Agent Engine](./src/agent/) |
-
-| 🔎 Knowledge Engine | \[Knowledge \& Diagnostics](./src/knowledge/) |
-
-| 📖 Knowledge Base | \[Operational Knowledge](./knowledge/) |
-
-| 🧮 Engineering Tools | \[RO Tools](./src/tools/) |
-
-| 🧠 Incident Memory | \[Persistent Memory](./src/memory/) |
-
-| 🔌 MCP | \[MCP Integration](./src/mcp/) |
-
-| 🛡️ Safety | \[Safety \& Permissions](./src/safety/) |
-
-| 💵 Cost Tracking | \[Cost System](./src/cost/) |
-
-| 🔐 Audit | \[Audit System](./src/audit/) |
-
-| 🔭 Tracing | \[Tracing System](./src/tracing/) |
-
-| 🧾 Execution Evidence | \[Validation Traces](./traces/) |
-
-| 🧪 Tests | \[Automated Test Suite](./tests/) |
-
-| ✅ Production Test | \[Production Smoke Test](./scripts/production\_smoke\_test.py) |
-
-| 🚀 Deployment | \[Deployment Configuration](./render.yaml) |
-
-
-
-\---
-
-
-
-\## ✅ Validation Status
-
-
+## 🤖 Agent Architecture
 
 ```text
-
-572 / 572 tests passed
-
-100% line coverage
-
-100% branch coverage
-
+                         ┌──────────────────┐
+                         │    User Input    │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │     Planner      │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                    ┌──────────────────────────┐
+                    │   Tools & Knowledge Base │
+                    └────────────┬─────────────┘
+                                 │
+                                 ▼
+                         ┌──────────────────┐
+                         │   Observation    │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │    Reflection    │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │     Decision     │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │   Final Report   │
+                         └──────────────────┘
 ```
 
+AquaMind follows a:
 
+### **Plan → Act → Observe → Reflect → Decide**
 
-Production End-to-End validation:
+loop rather than relying on a single LLM response.
 
+---
 
+## 🧭 Product Experience
+
+The deployed application includes:
+
+- **Guided Demo** — explore AquaMind through a prepared operational scenario
+- **New Investigation** — launch a new desalination case
+- **Knowledge Base** — access engineering knowledge used by the agent
+- **Case Library** — review operational cases and investigation history
+- **Audit Trail** — inspect traceable agent activity
+- **Settings** — manage runtime behavior and configuration
+
+---
+
+## 🧪 Example Investigation
+
+A desalination train begins showing:
 
 ```text
-
-API Health               ✅
-
-Dataset Discovery        ✅
-
-Intent Routing           ✅
-
-Knowledge Q\&A            ✅
-
-Safety Blocking          ✅
-
-Missing-Data Handling    ✅
-
-Full Investigation       ✅
-
-Contextual Follow-Up     ✅
-
-Case Library             ✅
-
-Validation Traces        ✅
-
-Related Cases            ✅
-
-Raw Error Protection     ✅
-
+↓ Permeate Flow
+↑ Differential Pressure
+Abnormal RO performance
 ```
 
+AquaMind can:
 
+1. Inspect operational evidence
+2. Identify abnormal KPIs
+3. Retrieve relevant engineering knowledge
+4. Generate possible root causes
+5. Evaluate competing hypotheses
+6. Reflect on available evidence
+7. Produce a structured operational recommendation
 
-> \*\*AquaMindAI-Agent smoke test PASSED: all production checks succeeded.\*\*
+Possible diagnostic paths may include:
 
+> Membrane fouling · Scaling · Feed-condition changes · Hydraulic restrictions
 
+The final output remains evidence-grounded and intended to support human engineering decisions.
 
-\---
+---
 
+## 🛡️ Safety by Design
 
+AquaMind is designed around five principles:
 
-\## 🛡️ Safety by Design
+```text
+Evidence before conclusions
+Traceability before opacity
+Safety before automation
+Engineering context before generic advice
+Human oversight before critical action
+```
 
+The system provides **decision support**, not uncontrolled autonomous plant actuation.
 
+---
 
-AquaMindAI-Agent is an \*\*industrial decision-support agent\*\*, not a plant controller.
+## 🧰 Technology
 
+```text
+Python 3.14
+Autonomous Agent Loop
+Planner / Reflector Architecture
+Operational Knowledge Base
+Persistent Case Memory
+Pytest
+Vercel
+```
 
+---
 
-It can investigate, analyze, explain, and recommend actions, but it does not directly operate:
+## ✅ Quality Status
 
+| Check | Status |
+|---|---:|
+| Automated tests | **42 / 42 passed** |
+| Test coverage | **99.66%** |
+| Production deployment | **Live** |
+| Public web access | **Available** |
+| Auditability | **Implemented** |
+| Safety constraints | **Implemented** |
 
+---
 
-\- Pumps
+## 🚀 Run Locally
 
-\- Valves
+```bash
+git clone https://github.com/xmohamedtariq/AquaMindAI-Agent.git
+cd AquaMindAI-Agent
 
-\- PLCs
+python -m venv .venv
+.venv\Scripts\activate
 
-\- SCADA
+pip install -r requirements.txt
+python web_app.py
+```
 
-\- Chemical dosing
+---
 
-\- Plant shutdowns
+## 🧪 Run Tests
 
-\- Operating setpoints
+```bash
+pytest
+```
 
+For coverage:
 
+```bash
+pytest --cov=src --cov-report=term-missing
+```
 
-High-impact operational decisions remain under human control.
+---
 
+## 📁 Project Structure
 
+```text
+AquaMindAI-Agent/
+│
+├── src/                 # Core agent logic
+├── tests/               # Automated test suite
+├── traces/              # Agent execution traces
+│
+├── web_app.py           # Production web application
+├── SPEC.md              # Agent specification
+├── COST.md              # Cost tracking documentation
+├── DEMO.md              # Demo guide
+├── requirements.txt
+├── .env.example
+└── README.md
+```
 
-\[Read the Safety Layer →](./src/safety/)
+---
 
+## 🌍 Live Application
 
+<div align="center">
 
-\---
+### [Launch AquaMindAI-Agent →](https://aquamindai-agent-git-main-mohammed-tariq1.vercel.app/)
 
+</div>
 
+---
 
-\## 🌐 Live Application
+## 🎯 Vision
 
+AquaMind explores how autonomous AI agents can assist water-treatment professionals by transforming operational data and engineering knowledge into faster, more transparent, and evidence-based investigations.
 
+The long-term goal is to develop intelligent operational support systems that improve:
 
-\*\*Public deployment link will be added here after production deployment.\*\*
+**Reliability · Efficiency · Maintainability · Decision Quality**
 
+---
 
+## 👤 Author
 
-The production release is designed for cloud deployment with secrets and environment variables managed by the hosting platform.
+**Mohammed Tariq Al-Sakkaf**
 
+Mechatronics Engineer  
+Artificial Intelligence · Intelligent Automation · Water Technology
 
+---
 
-\---
+<div align="center">
 
+### 🌊 AquaMindAI-Agent
 
+**Intelligence for smarter desalination operations.**
 
-\## ⚠️ Scope
-
-
-
-AquaMindAI-Agent is a production-oriented MVP for desalination operations intelligence.
-
-
-
-It does not claim:
-
-
-
-\- Autonomous physical plant control
-
-\- Calibrated diagnostic probabilities
-
-\- Training on real production-plant telemetry
-
-\- Replacement of qualified desalination engineers
-
-
-
-Diagnostic outputs are evidence-based hypotheses that may require engineering verification.
-
-
-
-\---
-
-
-
-\## 👤 Author
-
-
-
-\*\*Mohammed Tariq AL-Sakkaf\*\*
-
-
-
-\*\*AquaMindAI-Agent\*\*
-
-\*Industrial AI for Desalination Operations Intelligence\*
+</div>
