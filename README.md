@@ -259,7 +259,7 @@ It does not autonomously control physical desalination equipment.
 
 <div align="center">
 
-## 👤 Mohammed Tariq Al-Sakkaf
+## 👤 Mohammed Tariq Al-Saqqaf
 
 **Mechatronics Engineer · Artificial Intelligence · Intelligent Automation · Water Technology**
 
