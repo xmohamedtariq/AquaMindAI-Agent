@@ -1,67 +1,128 @@
-# AquaMindAI-Agent — Cost Analysis
+﻿# AquaMindAI-Agent - Cost Analysis
 
 ## Provider and Model
 
-- **Provider:** Google Gemini
-- **Model:** `gemini-3.5-flash-lite`
-- **Configured usage tier:** free
-- **Pricing verified:** 2026-10-26
-- **Pricing source:** https://ai.google.dev/gemini-api/docs/pricing
-- **Per-task budget cap:** $0.100000
-- **Budget basis:** paid-tier reference-equivalent cost
+| Item | Value |
+|---|---|
+| Provider | Google Gemini |
+| Model | `gemini-3.5-flash-lite` |
+| Usage tier | Free Tier |
+| Per-task budget cap | `$0.10` |
+| Pricing verified | 2026-10-31 |
+| Pricing source | https://ai.google.dev/gemini-api/docs/pricing |
 
-The benchmark uses provider-reported Gemini token usage from real API calls. No synthetic token counts are used.
+AquaMind records provider-reported token usage from real Gemini API calls. It does not invent or estimate token counts for completed model calls.
 
-## Free Tier and Reference Pricing
+---
 
-Google's published Gemini Free Tier lists model input/output token prices as free of charge while requests remain inside the Free Tier limits. AquaMind therefore reports both the published Free Tier cost and a conservative paid-tier reference equivalent.
+## Pricing
 
-Paid-tier reference prices are USD per 1 million tokens:
+Current Gemini 3.5 Flash-Lite standard paid-tier reference pricing:
 
-| Token type | Reference price |
+| Token type | USD / 1M tokens |
 |---|---:|
-| Input | $0.300000 |
-| Cached input | $0.030000 |
-| Output including thinking tokens | $2.500000 |
+| Input | $0.30 |
+| Cached input | $0.03 |
+| Output including thinking | $2.50 |
 
-## Benchmark Tasks
+The Gemini Free Tier currently reports these token categories as free of charge while requests remain within applicable Free Tier limits.
 
-| Scenario | LLM calls | Input tokens | Cached input | Output + thinking | Published Free Tier cost | Paid-tier reference |
+AquaMind therefore reports:
+
+1. actual Free Tier cost, and
+2. paid-tier reference-equivalent cost for budgeting and scaling.
+
+No Anthropic pricing is used.
+
+---
+
+## Cost Formula
+
+For paid-tier reference calculations:
+
+`cost = input_cost + cached_input_cost + output_cost`
+
+where each component is:
+
+`tokens / 1,000,000 x provider price`
+
+---
+
+## Benchmark Results
+
+| Scenario | LLM Calls | Input | Cached | Output + Thinking | Free Tier | Paid Reference |
 |---|---:|---:|---:|---:|---:|---:|
-| normal_operation | 7 | 2100 | 0 | 342 | $0.000000 | $0.001485 |
-| source_grounded_fouling_investigation | 7 | 2125 | 0 | 332 | $0.000000 | $0.001468 |
-| membrane_integrity_investigation | 1 | 207 | 0 | 39 | $0.000000 | $0.000160 |
+| normal_operation | 7 | 2,100 | 0 | 342 | $0.000000 | $0.001485 |
+| source_grounded_fouling_investigation | 7 | 2,125 | 0 | 332 | $0.000000 | $0.0014675 |
+| membrane_integrity_investigation | 1 | 207 | 0 | 39 | $0.000000 | $0.0001596 |
 | recoverable_data_quality_degradation | 0 | 0 | 0 | 0 | $0.000000 | $0.000000 |
 | hostile_physical_control_request | 0 | 0 | 0 | 0 | $0.000000 | $0.000000 |
 
+Zero-call cases are valid production outcomes. For example, a safety-blocked request can terminate before any LLM call.
+
+---
+
 ## Average Cost
 
-**Average published-tier benchmark cost:** $0.000000
+**Average Free Tier benchmark cost:** `$0.000000`
 
-**Average paid-tier reference equivalent per benchmark task:** $0.000622
+**Average paid-tier reference cost per benchmark task:** `$0.00062242`
 
-A safety-blocked request can terminate before any LLM call and legitimately use zero model tokens. This is included in the benchmark average because it reflects real production behavior.
+This value reflects the measured five-scenario benchmark, including zero-cost safety and fallback paths.
 
-## Cost Projections
+---
 
-AquaMindAI-Agent reports scaling projections for 100, 1,000, and 10,000 tasks. Free Tier availability at those volumes is quota-dependent, so AquaMind does not claim that every projected task remains free. The table below uses measured token usage with Google's paid-tier reference rates to provide an observed mixed-workload scaling estimate based on the benchmark's actual safety and provider-availability behavior.
+## Scaling Projection
 
-| Volume | Paid-tier reference projection | Free Tier interpretation |
-|---|---:|---|
-| 100 tasks | $0.062242 | $0 token price while within current Free Tier quota |
-| 1,000 tasks | $0.622420 | quota/rate-limit dependent |
-| 10,000 tasks | $6.224200 | quota/rate-limit dependent; do not assume free availability |
+Using the observed benchmark average:
+
+| Tasks | Paid-Tier Reference |
+|---:|---:|
+| 100 | $0.062242 |
+| 1,000 | $0.622420 |
+| 10,000 | $6.224200 |
+
+Free Tier availability at these volumes depends on Google's current quotas and rate limits, so AquaMind does not assume that all projected traffic remains free.
+
+---
 
 ## Cost Controls
 
-AquaMind keeps a $0.100000 task budget. Even when running on Gemini's Free Tier, the budget preflight uses paid-tier reference-equivalent pricing. This prevents the safety control from becoming meaningless simply because the current tier has a $0 token price.
+AquaMind enforces a per-task budget:
 
-Provider-reported usage is recorded immediately after each model call and added to the task cost ledger and append-only audit log.
+`budget_cap_usd = 0.10`
 
-If the Gemini API is unavailable or a Free Tier rate limit is reached, AquaMind falls back to its deterministic safety-constrained planner. The fallback does not fabricate token usage or provider cost.
+Cost controls include:
+
+- preflight budget validation
+- provider-reported token accounting
+- input token tracking
+- output and thinking token tracking
+- cached-token tracking
+- per-call cost calculation
+- cumulative task cost
+- remaining-budget calculation
+- append-only audit logging
+
+The budget guard uses paid-tier reference pricing even when the active Gemini tier is free. This keeps the budget constraint meaningful.
+
+---
+
+## Provider Failure and Fallback
+
+If the Gemini API is unavailable or a quota/rate limit prevents a model call, AquaMind can use its deterministic safety-constrained planner.
+
+The fallback:
+
+- does not fabricate provider token usage
+- does not fabricate API cost
+- remains subject to the same safety and permission boundaries
+
+---
 
 ## Limitations
 
-- Free Tier quotas and rate limits can change and may differ by project.
-- Free Tier content may be subject to Google's published data-use terms; AquaMind's benchmark uses synthetic project datasets only.
-- Re-check the official pricing and quota pages before production deployment or release.
+- Gemini pricing and quotas may change.
+- Free Tier availability is quota dependent.
+- Production deployments should re-check official Google pricing.
+- Benchmark datasets are synthetic and intended for project evaluation.
