@@ -23,9 +23,24 @@ from src.agent.runtime import AquaMindRuntime, RuntimeConfig
 APP_TITLE = "AquaMindAI-Agent"
 PROJECT_ROOT = Path(__file__).resolve().parent
 DATA_ROOT = (PROJECT_ROOT / "data").resolve()
-UPLOAD_ROOT = (DATA_ROOT / "uploads").resolve()
-RUNTIME_ROOT = (PROJECT_ROOT / ".runtime").resolve()
 FRONTEND_ROOT = (PROJECT_ROOT / "frontend").resolve()
+
+# Vercel Functions expose the deployed project as read-only at runtime.
+# Use /tmp for temporary uploads, SQLite memory, and audit files there,
+# while keeping the existing local paths unchanged for normal development.
+IS_VERCEL = bool(os.getenv("VERCEL"))
+WRITABLE_ROOT = Path("/tmp/aquamind").resolve() if IS_VERCEL else PROJECT_ROOT
+
+UPLOAD_ROOT = (
+    (WRITABLE_ROOT / "uploads").resolve()
+    if IS_VERCEL
+    else (DATA_ROOT / "uploads").resolve()
+)
+RUNTIME_ROOT = (
+    (WRITABLE_ROOT / ".runtime").resolve()
+    if IS_VERCEL
+    else (PROJECT_ROOT / ".runtime").resolve()
+)
 MAX_UPLOAD_BYTES = int(os.getenv("AQUAMIND_MAX_UPLOAD_MB", "10")) * 1024 * 1024
 
 UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
@@ -107,10 +122,16 @@ def _resolve_dataset(name: str) -> Path:
 def _runtime_config(dataset_path: Path) -> RuntimeConfig:
     signature = inspect.signature(RuntimeConfig)
     values: dict[str, Any] = {}
+
+    resolved_dataset = dataset_path.resolve()
+    allowed_root = DATA_ROOT
+    if IS_VERCEL and (resolved_dataset == UPLOAD_ROOT or UPLOAD_ROOT in resolved_dataset.parents):
+        allowed_root = UPLOAD_ROOT
+
     candidates: dict[str, Any] = {
         "dataset_path": dataset_path,
-        "allowed_data_root": DATA_ROOT,
-        "allowed_root": DATA_ROOT,
+        "allowed_data_root": allowed_root,
+        "allowed_root": allowed_root,
         "memory_path": RUNTIME_ROOT / "aquamind_memory.db",
         "memory_db_path": RUNTIME_ROOT / "aquamind_memory.db",
         "db_path": RUNTIME_ROOT / "aquamind_memory.db",
@@ -127,7 +148,7 @@ def _runtime_config(dataset_path: Path) -> RuntimeConfig:
         if "dataset" in lowered and "path" in lowered:
             values[name] = dataset_path
         elif "allowed" in lowered and ("root" in lowered or "path" in lowered):
-            values[name] = DATA_ROOT
+            values[name] = allowed_root
         elif "memory" in lowered and ("path" in lowered or "db" in lowered):
             values[name] = RUNTIME_ROOT / "aquamind_memory.db"
         elif "audit" in lowered and "path" in lowered:
