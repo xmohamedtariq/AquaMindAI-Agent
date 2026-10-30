@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: aquamindai-agent
+    env: python
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: uvicorn web_app:app --host 0.0.0.0 --port $PORT
+    autoDeploy: true
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: AQUAMIND_LLM_MODEL
+        value: gemini-3.5-flash-lite

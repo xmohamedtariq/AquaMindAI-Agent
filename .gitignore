@@ -42,3 +42,13 @@ logs/
 # OS files
 .DS_Store
 Thumbs.db
+# AquaMind local runtime / development artifacts
+.runtime/
+.streamlit/
+AquaMind_UI_PixelMatch/
+frontend_before_signature/
+app_backup.py
+app_before_*.py
+web_app_before_*.py
+
+README_before_final.md

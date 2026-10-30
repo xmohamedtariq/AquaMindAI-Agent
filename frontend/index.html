@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6f9fc" />
+  <title>AquaMindAI-Agent</title>
+  <link rel="stylesheet" href="/assets/styles.css?v=20261027-signature-3" />
+  <script defer src="/assets/app.js?v=20261027-signature-3"></script>
+</head>
+<body>
+  <div id="nameGate" class="name-gate">
+    <div class="name-card">
+      <div class="brand-lockup gate-brand">
+        <div class="wave-logo"><span></span><span></span><span></span></div>
+        <div><div class="brand-title">AquaMindAI-Agent</div><div class="brand-subtitle">Desalination Operations Intelligence</div></div>
+      </div>
+      <div class="gate-kicker">Monitor · Investigate · Diagnose · Verify</div>
+      <h1>Welcome to AquaMindAI-Agent</h1>
+      <p>Enter your name to open the operations workspace.</p>
+      <label for="nameInput">Your name</label>
+      <input id="nameInput" maxlength="120" placeholder="e.g. Mohammed" autocomplete="name" />
+      <button id="openWorkspace" class="primary wide">Open workspace</button>
+    </div>
+  </div>
+
+  <div id="app" class="app-shell hidden">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <div class="wave-logo"><span></span><span></span><span></span></div>
+        <div><div class="brand-title">AquaMindAI-Agent</div><div class="brand-subtitle">Desalination Operations Intelligence</div></div>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="globalSearch" placeholder="Search plants, investigations, equipment, or ask a question..." />
+        <span class="shortcut">⌘ K</span>
+      </div>
+      <div class="topbar-right">
+        <div class="system-ready"><span class="green-dot"></span><div><strong id="systemStatusText">System Ready</strong><small id="systemStatusSubtext">AI agent online</small></div></div>
+        <button id="themeToggle" class="icon-button" aria-label="Toggle theme">☼</button>
+        <div class="top-divider"></div>
+        <button id="userMenuButton" class="user-button" type="button"><div id="avatar" class="avatar">OP</div><div class="user-meta"><strong id="userName">Operator</strong><small>Plant Operator</small></div><span class="chevron">⌄</span></button>
+      </div>
+    </header>
+
+    <aside class="sidebar">
+      <button id="newInvestigation" class="new-investigation"><span>＋</span> New Investigation</button><button id="investorDemo" class="investor-demo" type="button"><span>▶</span> Guided Demo</button>
+      <nav>
+        <button data-view="overview" class="nav-item"><span>⊞</span>Overview</button>
+        <button data-view="investigations" class="nav-item active"><span>▣</span>Investigations</button>
+        <button data-view="knowledge" class="nav-item"><span>▤</span>Knowledge Base</button>
+        <button data-view="cases" class="nav-item"><span>▭</span>Case Library</button>
+        <button data-view="traces" class="nav-item"><span>⌁</span>Audit Trail</button>
+        <button data-view="settings" class="nav-item"><span>⚙</span>Settings</button>
+      </nav>
+      <button id="plantCardButton" class="plant-card" type="button">
+        <div class="plant-icon">▥</div>
+        <div><strong>AquaMind Desalination</strong><small id="plantCardId">RO-TRAIN-01</small></div>
+        <span>⌄</span>
+      </button>
+    </aside>
+
+    <main id="workspace" class="workspace">
+      <section id="investigationsView" class="view active-view">
+        <div class="investigation-panel panel">
+          <div class="panel-head investigation-head">
+            <div><strong>Investigation</strong><span class="head-dot">•</span><span id="investigationTitle">Performance decline in Train 1</span></div>
+            <div class="head-actions"><span class="active-pill"><span class="green-dot"></span>Active</span><div class="menu-wrap"><button id="investigationMenuButton" class="dots" type="button">•••</button><div id="investigationMenu" class="context-menu hidden"><button id="saveIncidentMenu" type="button">Save incident</button><button id="exportInvestigationMenu" type="button">Export investigation</button><button id="resetInvestigationMenu" type="button">New investigation</button></div></div></div>
+          </div>
+          <div id="chatArea" class="chat-area">
+            <div class="chat-row user-row">
+              <div id="chatUserAvatar" class="chat-avatar user-avatar">OP</div>
+              <div class="bubble-wrap"><div id="initialUserBubble" class="chat-bubble user-bubble">We’re seeing a decline in permeate flow in Train 1 over the last week. Can you help identify the likely cause and what we should do?</div><span class="timestamp">10:24 AM</span></div>
+            </div>
+            <div class="chat-row agent-row">
+              <div class="chat-avatar agent-avatar"><div class="mini-wave"><i></i><i></i><i></i></div></div>
+              <div class="bubble-wrap"><div class="chat-bubble agent-bubble">I’ll investigate the performance decline in Train 1. I’ll analyze recent trends, compare with baseline, check operating conditions and membrane health, and identify the most defensible causes with evidence and recommended verification steps.</div><span class="timestamp">10:24 AM</span></div>
+            </div>
+          </div>
+
+          <div class="activity-card">
+            <div class="activity-head"><strong>Investigation Activity</strong><span id="activityStatus" class="activity-status">Ready ○</span></div>
+            <div id="activityTimeline" class="timeline">
+              <div class="timeline-step"><span class="step-dot"></span><div><strong>Understand the issue</strong><small>Analyzed request and identified relevant assets (Train 1)</small></div><time>10:24 AM</time></div>
+              <div class="timeline-step"><span class="step-dot"></span><div><strong>Gather and analyze data</strong><small>Retrieved operational data, compared with baseline, reviewed alarms and maintenance records</small></div><time>10:25 AM</time></div>
+              <div class="timeline-step current"><span class="step-dot"></span><div><strong>Evaluate possible causes</strong><small>Analyzing fouling indicators, feedwater quality, pretreatment performance, and operating setpoints…</small></div><time>10:26 AM</time></div>
+              <div class="timeline-step"><span class="step-dot"></span><div><strong>Synthesize findings</strong><small>Formulating conclusions with supporting evidence</small></div><time></time></div>
+              <div class="timeline-step"><span class="step-dot"></span><div><strong>Recommend actions</strong><small>Preparing prioritized next steps</small></div><time></time></div>
+            </div>
+          </div>
+
+          <div class="composer-card">
+            <div id="suggestionChips" class="suggestion-chips"></div>
+            <div class="composer-line"><input id="investigationInput" placeholder="Ask a follow-up question..." /><button id="sendInvestigation" class="send-button">➤</button></div>
+            <div class="composer-tools">
+              <label class="square-tool file-tool">＋<input id="uploadFile" type="file" accept=".csv,text/csv" hidden /></label>
+              <label class="tool-button file-tool">⌕ Attach<input id="attachFile" type="file" accept=".csv,text/csv" hidden /></label>
+              <button id="plantDataButton" class="tool-button">▱ Plant Data</button>
+              <span class="composer-spacer"></span>
+              <button id="helpButton" class="square-tool">?</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-panel panel">
+          <div class="results-tabs-row">
+            <div class="tabs"><button class="tab active" data-tab="results">Results</button><button class="tab" data-tab="charts">Charts</button><button class="tab" data-tab="system">System View</button><button class="tab" data-tab="cases">Related Cases</button></div>
+            <button id="periodButton" class="period-button" type="button">▣ Last 7 days ⌄</button>
+          </div>
+          <div class="results-body">
+            <h2>Key Operating Indicators – Train 1</h2>
+            <div id="kpiGrid" class="kpi-grid"></div>
+
+            <div class="middle-grid">
+              <div class="chart-card card">
+                <div class="card-head"><strong>Permeate Flow Trend – Train 1</strong><div class="legend"><span class="legend-line solid"></span>Train 1 <span class="legend-line dashed"></span>Baseline (initial avg) <button>m³/h⌄</button></div></div>
+                <div class="chart-container"><canvas id="trendChart"></canvas></div>
+              </div>
+              <div class="system-card card">
+                <div class="card-head"><strong>RO System – Train 1</strong><span class="operating-pill"><span class="green-dot"></span>Operating</span></div>
+                <div class="ro-system">
+                  <div class="feed-label">Feed Water<small>From Pretreatment</small></div>
+                  <div class="flow-arrow cyan"></div>
+                  <div class="pump"><div class="pump-circle"></div><div class="pump-base"></div><strong>HP Pump</strong><small id="pumpPressure">— bar</small></div>
+                  <div class="flow-arrow cyan short"></div>
+                  <div class="membranes"><div></div><div></div><div></div><strong>RO Membranes</strong><small>Train 1</small></div>
+                  <div class="product-lines"><div class="permeate-line"><span></span><div>Permeate<small id="permeateFlow">— m³/h</small></div></div><div class="brine-line"><span></span><div>Brine<small>— m³/h</small></div></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bottom-grid">
+              <div class="bottom-card card">
+                <div class="card-head"><strong>⚗ Active Hypothesis</strong><div class="card-head-actions"><button id="explainHypothesis" class="view-all" type="button">Explain</button><span class="verification-pill">Verification Required</span></div></div>
+                <div class="bottom-body"><strong id="hypothesisTitle" class="hypothesis-title">Awaiting investigation</strong><p id="hypothesisCopy">Run an investigation to generate a source-grounded diagnostic hypothesis.</p></div>
+              </div>
+              <div class="bottom-card card">
+                <div class="card-head"><strong>▤ Supporting Evidence</strong><button id="evidenceViewAll" class="view-all" type="button">View All</button></div>
+                <ol id="evidenceList" class="evidence-list"><li>Supporting evidence will appear after the investigation.</li></ol>
+              </div>
+              <div class="bottom-card card">
+                <div class="card-head"><strong>⌕ Recommended Actions</strong></div>
+                <ol id="recommendationsList" class="recommend-list"><li>Verification recommendations will appear after the investigation.</li></ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="overviewView" class="view simple-view">
+        <div class="simple-page-head"><div><span class="eyebrow">Operations</span><h1>Overview</h1><p>Plant intelligence and recent investigation status.</p></div><button class="primary" id="overviewNewInvestigation">New Investigation</button></div>
+        <div id="overviewCards" class="overview-cards"></div>
+      </section>
+
+      <section id="knowledgeView" class="view simple-view"><div class="simple-page-head"><div><span class="eyebrow">Grounding</span><h1>Knowledge Base</h1><p>Ask grounded desalination questions without running a plant investigation.</p></div></div><div class="knowledge-ask"><input id="knowledgeAskInput" placeholder="Ask about RO membranes, fouling, recovery, rejection, pretreatment..."/><button id="knowledgeAskButton" class="primary" type="button">Ask AquaMind</button></div><div id="knowledgeStats" class="overview-cards"></div></section>
+      <section id="casesView" class="view simple-view"><div class="simple-page-head"><div><span class="eyebrow">Reliability</span><h1>Case Library</h1><p>Canonical source-grounded RO diagnostic cases.</p></div></div><div id="caseLibraryContent" class="case-library"></div></section>
+      <section id="tracesView" class="view simple-view"><div class="simple-page-head"><div><span class="eyebrow">Governance</span><h1>Audit Trail</h1><p>Audit-safe execution evidence. Private chain-of-thought is never exposed.</p></div></div><div id="traceList" class="trace-list"></div></section>
+      <section id="settingsView" class="view simple-view"><div class="simple-page-head"><div><span class="eyebrow">Workspace</span><h1>Settings</h1><p>User-facing workspace preferences only.</p></div></div><div class="settings-grid"><label>Operator name<input id="settingsName" /></label><label>Plant ID<input id="plantIdInput" value="RO-TRAIN-01" /></label><label>Dataset<select id="datasetSelect"></select></label><button id="saveSettings" class="primary">Save workspace settings</button></div></section>
+    </main>
+
+    <div id="modalBackdrop" class="modal-backdrop hidden"><div class="modal-card"><div class="modal-head"><strong id="modalTitle">Details</strong><button id="closeModal" type="button">×</button></div><div id="modalBody" class="modal-body"></div></div></div>
+    <div id="toast" class="toast"></div>
+    <div id="datasetDrawer" class="drawer"><div class="drawer-head"><strong>Plant Data</strong><button id="closeDrawer">×</button></div><div id="datasetList" class="drawer-list"></div></div>
+  </div>
+</body>
+</html>
