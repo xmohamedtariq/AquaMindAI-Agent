@@ -98,14 +98,14 @@ if dataset_path is not None:
         st.json(summary)
 
         preview = pd.read_csv(dataset_path, nrows=20)
-        st.dataframe(preview, use_container_width=True)
+        st.dataframe(preview, width="stretch")
     except Exception as exc:
         st.warning(f"Dataset preview unavailable: {exc}")
 
 run_clicked = st.button(
     "🚀 Run Investigation",
     type="primary",
-    use_container_width=True,
+    width="stretch",
 )
 
 if run_clicked:
@@ -247,3 +247,4 @@ st.caption(
     f"{APP_TITLE} · Engineering decision support only · "
     "No autonomous physical plant actuation"
 )
+
