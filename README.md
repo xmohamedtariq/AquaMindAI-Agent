@@ -62,7 +62,7 @@ Want the short version or the engineering details? Jump directly to what interes
 | 💰 [**Cost Analysis**](./cost_analysis.md) | Gemini pricing, measured usage, scaling projections |
 | 🧾 [**Execution Traces**](./traces) | Successful, recovery, and explicit failure runs |
 | 🧪 [**Test Suite**](./tests) | 572 automated tests |
-| ✅ [**Verification Evidence**](./evidence) | Reproducible MCP, memory, safety, permissions, and coverage evidence |
+| ✅ [**Verification Evidence**](./evidence) | Reproducible MCP, memory, safety, permissions, diagnosis, and coverage evidence |
 | 🎬 [**Demo Guide**](./DEMO.md) | Recommended end-to-end demonstration |
 
 ---
@@ -152,13 +152,13 @@ flowchart LR
 | Capability | Description | Explore |
 |---|---|---|
 | 🔎 **Autonomous Investigation** | Executes an RO investigation end to end | [Agent Core](./src/agent) |
-| 📊 **Data Validation** | Validates plant telemetry before analysis | [Validation Tool](./src/tools/validation.py) |
-| 📈 **KPI Analysis** | Calculates relevant RO performance indicators | [KPI Tools](./src/tools/kpi_tools.py) |
-| 🚨 **Anomaly Detection** | Identifies abnormal operating behavior | [Detection Engine](./src/tools/anomaly_detection.py) |
+| 📊 **Data Validation** | Validates plant telemetry before analysis | [Tools](./src/tools) |
+| 📈 **KPI Analysis** | Calculates relevant RO performance indicators | [Tools](./src/tools) |
+| 🚨 **Anomaly Detection** | Identifies abnormal operating behavior | [Anomaly Detection](./src/tools/anomaly_detection.py) |
 | 📚 **MCP Knowledge Retrieval** | Retrieves approved engineering evidence | [MCP](./src/mcp) |
 | 🗂️ **Incident Memory** | Recalls relevant historical incidents | [Memory](./src/memory) |
-| 🧠 **Diagnostic Reasoning** | Builds source-grounded hypotheses | [Diagnosis](./src/tools/diagnosis.py) |
-| 🔄 **Reflection** | Reassesses evidence before finalizing | [Reflector](./src/agent/reflector.py) |
+| 🧠 **Diagnostic Reasoning** | Builds evidence-backed hypotheses | [Diagnosis](./src/tools/diagnosis.py) |
+| 🔄 **Reflection** | Reassesses evidence before finalizing | [Agent Core](./src/agent) |
 | 🛡️ **Safety Enforcement** | Blocks unsafe and injected requests | [Safety](./src/safety) |
 | 🧾 **Auditability** | Records operational decisions and actions | [Audit](./src/audit) |
 | 💰 **Cost Control** | Tracks model usage and task budget | [Cost Analysis](./cost_analysis.md) |
@@ -179,7 +179,7 @@ AquaMind operates through a deliberately constrained tool registry.
 | `diagnose_issue` | Generate evidence-grounded hypotheses |
 | `generate_incident_report` | Produce the final investigation report |
 
-No unregistered tool may execute.
+No unregistered operational tool may execute.
 
 [Explore the complete specification →](./agent_spec.md)
 
@@ -187,19 +187,20 @@ No unregistered tool may execute.
 
 ## 🔌 Model Context Protocol
 
-AquaMind includes a custom **MCP server** that exposes curated desalination knowledge to the agent.
+AquaMind includes a custom **Model Context Protocol server** that exposes curated desalination engineering knowledge to the agent.
 
-The agent accesses it through the MCP client using:
+The agent accesses it through:
 
 ```text
 search_operational_knowledge
 ```
 
-Resources are exposed through `knowledge://` URIs.
+Knowledge resources are exposed through `knowledge://` URIs.
 
-A practical MCP verification returned five relevant knowledge matches through the actual MCP client.
+A practical MCP verification returned relevant engineering knowledge matches through the actual MCP client.
 
-[View MCP implementation →](./src/mcp)  
+[View MCP implementation →](./src/mcp)
+
 [View MCP verification evidence →](./evidence/mcp_knowledge_search.txt)
 
 ---
@@ -222,35 +223,39 @@ Query SQLite memory
 Incident recovered successfully
 ```
 
-[View memory implementation →](./src/memory)  
-[View persistence verification →](./evidence/memory_restart_verify.txt)
+[View memory implementation →](./src/memory)
+
+[View memory save evidence →](./evidence/memory_restart_save.txt)
+
+[View restart verification →](./evidence/memory_restart_verify.txt)
 
 ---
 
 ## 🛡️ Safety by Design
 
-AquaMind treats safety as part of the architecture rather than a prompt instruction.
+AquaMind treats safety as part of the system architecture rather than relying only on prompt instructions.
 
 ### Permission Model
 
 | Level | Behavior |
 |---|---|
 | `AUTO` | Safe analytical and read-only operations |
-| `ASK_ON_WRITE` | Persistent writes require human approval |
+| `ASK_ON_WRITE` | Persistent writes require explicit human approval |
 | `ALWAYS_ASK` | High-impact operations require explicit authorization |
 
-Physical plant-control operations are outside the autonomous execution boundary.
+Physical plant-control operations remain outside AquaMind's autonomous execution boundary.
 
-[Explore permission implementation →](./src/safety/permissions.py)  
+[Explore the safety layer →](./src/safety)
+
 [View permission verification →](./evidence/permission_layer.txt)
 
 ### Prompt-Injection Defense
 
-Three hostile inputs were tested independently:
+Three independent hostile inputs were tested:
 
-- instruction override + hidden prompt extraction
-- safety bypass + forced tool execution
-- physical-control request targeting valve and setpoint operations
+- instruction override + hidden prompt extraction,
+- safety bypass + forced tool execution,
+- physical-control request targeting valve and setpoint operations.
 
 Result:
 
@@ -260,39 +265,42 @@ Termination: SAFETY_BLOCK
 Operational tool calls: 0
 ```
 
-[View hostile-input evidence →](./evidence/hostile_inputs_test.txt)  
+[View hostile-input evidence →](./evidence/hostile_inputs_test.txt)
+
 [View detailed safety-block evidence →](./evidence/prompt_injection_safety.txt)
 
 ---
 
 ## 🧾 Execution Traces
 
-Three traces highlight how the agent behaves under different conditions.
+Three execution traces demonstrate different agent outcomes.
 
 ### ✅ Successful Investigation
 
-A complete evidence-grounded investigation ending in `FINAL_ANSWER`.
+A complete evidence-grounded investigation ending in:
 
-[Open `success_1.jsonl` →](./traces/success_1.jsonl)
+`FINAL_ANSWER`
+
+[Open success_1.jsonl →](./traces/success_1.jsonl)
 
 ### 🔄 Near-Failure Recovery
 
-The agent detects recoverable data-quality degradation, performs recovery, reassesses the evidence, and continues safely.
+AquaMind detects recoverable data-quality degradation, applies recovery, reassesses the remaining evidence, and continues safely.
 
-[Open `near_failure_recovery.jsonl` →](./traces/near_failure_recovery.jsonl)
+[Open near_failure_recovery.jsonl →](./traces/near_failure_recovery.jsonl)
 
 ### 🛡️ Explicit Failure
 
 A deliberately hostile request attempts to bypass safety and trigger physical plant control.
 
-AquaMind blocks the request before any operational tool executes.
+AquaMind blocks it before operational tools execute.
 
 ```text
 termination_reason = SAFETY_BLOCK
 tool_call_count = 0
 ```
 
-[Open `explicit_failure.jsonl` →](./traces/explicit_failure.jsonl)
+[Open explicit_failure.jsonl →](./traces/explicit_failure.jsonl)
 
 ---
 
@@ -310,15 +318,13 @@ AquaMind integrates task-level cost tracking around **Google Gemini**.
 | Estimated 1,000 tasks | `$0.622420` |
 | Estimated 10,000 tasks | `$6.224200` |
 
-Provider-reported token usage is used for completed Gemini calls rather than fabricated token estimates.
+Provider-reported token usage is used for completed Gemini calls instead of fabricated token estimates.
 
 [Explore the full cost analysis →](./cost_analysis.md)
 
 ---
 
 ## ✅ Engineering Verification
-
-<div align="center">
 
 | Verification | Result |
 |---|---:|
@@ -331,9 +337,62 @@ Provider-reported token usage is used for completed Gemini calls rather than fab
 | Memory After Restart | **Verified** ✅ |
 | Permission Enforcement | **Verified** ✅ |
 
-</div>
-
 [Open full test & coverage evidence →](./evidence/tests_coverage.txt)
+
+---
+
+## 🎯 Diagnostic Quality Evaluation
+
+AquaMind was evaluated using controlled synthetic RO scenarios for deterministic engineering verification.
+
+| Metric | Result |
+|---|---:|
+| End-to-End Scenario Conformance | **8 / 8 — 100%** |
+| Outcome-Label Conformance | **8 / 8 — 100%** |
+| Supported Diagnosis Conformance | **7 / 7** |
+| Safety-Boundary Conformance | **1 / 1** |
+| Reference Diagnostic Profiles | **90 / 90 — 100%** |
+| Synthetic Rule Variations | **720 / 720 — 100%** |
+| Synthetic Normal False-Alarm Rate | **0 / 8 — 0.00%** |
+| Source-Grounded Cases | **90 / 90** |
+| Fully Resolvable Source IDs | **90 / 90** |
+| Verified Engineering Sources | **34** |
+
+The evaluation datasets are **controlled synthetic engineering scenarios**, not telemetry collected from a real desalination plant.
+
+The engineering logic, evidence requirements, diagnostic patterns, and source grounding are linked to verified manufacturer and industry references.
+
+AquaMind deliberately returns **evidence-grounded hypotheses** rather than claiming confirmed physical root causes when the available telemetry is insufficient.
+
+For example, scaling and colloidal fouling are not artificially separated when plant telemetry alone cannot reliably distinguish them. Further evidence such as feed-water chemistry, SDI/turbidity, stage localization, deposit inspection, and normalized membrane performance may be required.
+
+Runtime confidence values are **heuristic support scores**, not calibrated probabilities of real-world root cause.
+
+Independent blinded comparison against diagnoses from a qualified RO specialist remains an important future validation stage before claiming field diagnostic accuracy.
+
+[View Diagnostic Quality Evaluation →](./evidence/diagnostic_quality_evaluation.txt)
+
+[View End-to-End Scenario Evaluation →](./evidence/diagnostic_scenario_evaluation.txt)
+
+---
+
+## 🧪 Sensor-Data Robustness
+
+AquaMind does not assume that uploaded sensor data is clean.
+
+The recovery workflow has been tested against a dataset containing:
+
+- invalid timestamps,
+- duplicate timestamps,
+- missing readings,
+- non-numeric sensor values,
+- out-of-order records.
+
+The agent identifies the data-quality issue, applies recoverable processing where appropriate, records the recovery, reassesses the resulting dataset, and continues only when sufficient evidence remains.
+
+[View recovery trace →](./traces/near_failure_recovery.jsonl)
+
+[View diagnostic quality evidence →](./evidence/diagnostic_quality_evaluation.txt)
 
 ---
 
@@ -347,6 +406,8 @@ For reviewers, developers, or anyone who wants to inspect the system in depth:
 | Successful execution | [success_1.jsonl](./traces/success_1.jsonl) |
 | Recovery behavior | [near_failure_recovery.jsonl](./traces/near_failure_recovery.jsonl) |
 | Explicit safety failure | [explicit_failure.jsonl](./traces/explicit_failure.jsonl) |
+| Diagnostic quality | [diagnostic_quality_evaluation.txt](./evidence/diagnostic_quality_evaluation.txt) |
+| End-to-end diagnostic scenarios | [diagnostic_scenario_evaluation.txt](./evidence/diagnostic_scenario_evaluation.txt) |
 | Cost methodology | [cost_analysis.md](./cost_analysis.md) |
 | 572 tests / 100% coverage | [tests_coverage.txt](./evidence/tests_coverage.txt) |
 | MCP retrieval | [mcp_knowledge_search.txt](./evidence/mcp_knowledge_search.txt) |
@@ -363,20 +424,21 @@ For reviewers, developers, or anyone who wants to inspect the system in depth:
 AquaMindAI-Agent/
 ├── src/
 │   ├── agent/                # Autonomous agent core
-│   ├── audit/                # Append-only audit logging
+│   ├── audit/                # Audit logging
 │   ├── cost/                 # Budget and cost tracking
 │   ├── knowledge/            # Diagnostic knowledge services
-│   ├── llm/                  # Gemini reasoning integration
+│   ├── llm/                  # Gemini integration
 │   ├── mcp/                  # MCP server and client
 │   ├── memory/               # Persistent SQLite memory
 │   ├── safety/               # Permissions and injection protection
-│   ├── tools/                # Operational agent tools
+│   ├── tools/                # Operational tools
 │   └── tracing/              # JSONL execution tracing
 │
-├── knowledge/                # Curated engineering knowledge
+├── knowledge/                # Source-grounded engineering knowledge
+├── data/                     # Controlled synthetic evaluation scenarios
 ├── tests/                    # 572 automated tests
 ├── traces/                   # Key execution traces
-├── evidence/                 # Reproducible verification evidence
+├── evidence/                 # Verification and diagnostic evidence
 │
 ├── streamlit_app.py          # Interactive Streamlit interface
 ├── web_app.py                # Production web application
@@ -444,7 +506,7 @@ pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
 
-For the production-oriented FastAPI interface, see:
+Production-oriented interface:
 
 [web_app.py](./web_app.py)
 
@@ -460,19 +522,49 @@ A guided end-to-end demonstration is available in:
 
 The workflow covers:
 
-**Plant Data → Investigation → Tool Use → MCP → Memory → Diagnosis → Safety → Final Recommendation**
+**Plant Data → Validation → Planning → Tool Use → MCP → Memory → Diagnosis → Reflection → Safety → Final Recommendation**
 
 ---
 
-## 🌊 Operational Philosophy
+## 🛡️ Operational Boundary
 
-AquaMind is built around five principles:
+AquaMind may:
 
-**Evidence · Safety · Traceability · Engineering Context · Human Oversight**
+- analyze operational data,
+- calculate RO performance indicators,
+- detect abnormal patterns,
+- retrieve engineering references,
+- search incident memory,
+- generate diagnostic hypotheses,
+- recommend verification actions.
 
-The system may analyze operational data, retrieve engineering evidence, form hypotheses, and recommend verification steps.
+AquaMind does **not** independently:
 
-It does not independently execute physical desalination-plant control.
+- operate valves,
+- start or stop pumps,
+- change plant setpoints,
+- initiate cleaning cycles,
+- shut down equipment.
+
+Final physical operational decisions remain under qualified human supervision.
+
+---
+
+## 🔗 Quick Links
+
+- [🚀 Production Interface](https://aquamindai-agent-git-main-mohammed-tariq1.vercel.app/)
+- [🌊 Interactive Streamlit Demo](https://aquamindai-agent.onrender.com/)
+- [📋 Agent Specification](./agent_spec.md)
+- [🎬 Demo Guide](./DEMO.md)
+- [💰 Cost Analysis](./cost_analysis.md)
+- [🎯 Diagnostic Quality Evaluation](./evidence/diagnostic_quality_evaluation.txt)
+- [🧪 Scenario Evaluation](./evidence/diagnostic_scenario_evaluation.txt)
+- [✅ Test & Coverage Evidence](./evidence/tests_coverage.txt)
+- [🧾 Successful Trace](./traces/success_1.jsonl)
+- [🔄 Recovery Trace](./traces/near_failure_recovery.jsonl)
+- [🛡️ Explicit Failure Trace](./traces/explicit_failure.jsonl)
+- [💻 Source Code](./src)
+- [🧪 Automated Tests](./tests)
 
 ---
 
