@@ -7,7 +7,7 @@
 **Monitor · Investigate · Diagnose · Verify**
 
 [![Production UI](https://img.shields.io/badge/PRODUCTION_UI-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://aquamindai-agent-git-main-mohammed-tariq1.vercel.app/)
-[![Interactive Demo](https://img.shields.io/badge/INTERACTIVE_DEMO-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://aquamindai-agent.onrender.com/)
+[![Interactive Demo](https://img.shields.io/badge/INTERACTIVE_DEMO-Streamlit-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://aquamindai-agent.onrender.com/)
 [![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Tests](https://img.shields.io/badge/Tests-572%2F572-16A34A?style=for-the-badge&logo=pytest&logoColor=white)](./evidence/tests_coverage.txt)
 [![Coverage](https://img.shields.io/badge/Coverage-100%25-22C55E?style=for-the-badge)](./evidence/tests_coverage.txt)
