@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 from pathlib import Path
+import os
 import shutil
+
+from dotenv import load_dotenv
 
 from src.agent.runtime import AquaMindRuntime, RuntimeConfig
 from src.agent.state import TerminationReason
@@ -12,6 +15,23 @@ DATA = ROOT / "data"
 KNOWLEDGE = ROOT / "knowledge"
 TRACES = ROOT / "traces"
 RUNTIME_DIR = TRACES / ".runtime"
+
+
+def _env_flag(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+
+    if raw is None:
+        return default
+
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _env_float(name: str, default: str) -> float:
+    return float(os.getenv(name, default))
+
+
+def _env_int(name: str, default: str) -> int:
+    return int(os.getenv(name, default))
 
 
 @dataclass(frozen=True)
@@ -91,6 +111,19 @@ def _runtime_for(run: OfficialRun) -> AquaMindRuntime:
     run_dir = RUNTIME_DIR / run.task_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
+    llm_enabled = (
+        _env_flag("AQUAMIND_LLM_ENABLED", False)
+        and bool(os.getenv("GEMINI_API_KEY", "").strip())
+    )
+
+    model = (
+        os.getenv(
+            "AQUAMIND_LLM_MODEL",
+            "gemini-3.5-flash-lite",
+        ).strip()
+        or "gemini-3.5-flash-lite"
+    )
+
     return AquaMindRuntime(
         RuntimeConfig(
             dataset_path=run.dataset,
@@ -98,7 +131,32 @@ def _runtime_for(run: OfficialRun) -> AquaMindRuntime:
             knowledge_root=KNOWLEDGE,
             memory_db_path=run_dir / "memory.db",
             audit_log_path=run_dir / "audit.jsonl",
-            budget_cap_usd=0.10,
+            budget_cap_usd=_env_float(
+                "AQUAMIND_TASK_BUDGET_USD",
+                "0.10",
+            ),
+            llm_enabled=llm_enabled,
+            llm_model=model,
+            llm_input_per_million_usd=_env_float(
+                "AQUAMIND_LLM_INPUT_PER_MILLION_USD",
+                "0.30",
+            ),
+            llm_cached_input_per_million_usd=_env_float(
+                "AQUAMIND_LLM_CACHED_INPUT_PER_MILLION_USD",
+                "0.03",
+            ),
+            llm_output_per_million_usd=_env_float(
+                "AQUAMIND_LLM_OUTPUT_PER_MILLION_USD",
+                "2.50",
+            ),
+            llm_max_output_tokens=_env_int(
+                "AQUAMIND_LLM_MAX_OUTPUT_TOKENS",
+                "160",
+            ),
+            llm_preflight_input_tokens=_env_int(
+                "AQUAMIND_LLM_PREFLIGHT_INPUT_TOKENS",
+                "6000",
+            ),
         )
     )
 
@@ -129,6 +187,8 @@ def _validate_result(run: OfficialRun, result: dict) -> None:
 
 
 def main() -> None:
+    load_dotenv()
+
     TRACES.mkdir(parents=True, exist_ok=True)
     if RUNTIME_DIR.exists():
         shutil.rmtree(RUNTIME_DIR)
@@ -158,6 +218,14 @@ def main() -> None:
             TRACES / run.output_name,
             records,
         )
+
+        # The required success_1 trace must come directly from the
+        # successful source-grounded Agent Loop execution.
+        if run.output_name == "source_grounded_fouling.jsonl":
+            write_trace_jsonl(
+                TRACES / "success_1.jsonl",
+                records,
+            )
 
         state = result["state"]
         print(

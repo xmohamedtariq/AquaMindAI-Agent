@@ -119,6 +119,36 @@ def _resolve_dataset(name: str) -> Path:
     raise HTTPException(status_code=404, detail="Dataset not found")
 
 
+def _env_flag(name: str, default: bool = False) -> bool:
+    """Read a boolean environment flag safely."""
+
+    raw = os.getenv(name)
+
+    if raw is None:
+        return default
+
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _env_positive_float(name: str, default: float) -> float:
+    """Read a positive finite float or safely use the default."""
+
+    raw = os.getenv(name)
+
+    if raw is None or not raw.strip():
+        return default
+
+    try:
+        value = float(raw)
+    except ValueError:
+        return default
+
+    if not math.isfinite(value) or value <= 0:
+        return default
+
+    return value
+
+
 def _runtime_config(dataset_path: Path) -> RuntimeConfig:
     signature = inspect.signature(RuntimeConfig)
     values: dict[str, Any] = {}
@@ -127,6 +157,21 @@ def _runtime_config(dataset_path: Path) -> RuntimeConfig:
     allowed_root = DATA_ROOT
     if IS_VERCEL and (resolved_dataset == UPLOAD_ROOT or UPLOAD_ROOT in resolved_dataset.parents):
         allowed_root = UPLOAD_ROOT
+
+    llm_requested = _env_flag(
+        "AQUAMIND_LLM_ENABLED",
+        False,
+    )
+    gemini_key_available = bool(
+        os.getenv("GEMINI_API_KEY", "").strip()
+    )
+    llm_model = (
+        os.getenv(
+            "AQUAMIND_LLM_MODEL",
+            "gemini-3.5-flash-lite",
+        ).strip()
+        or "gemini-3.5-flash-lite"
+    )
 
     candidates: dict[str, Any] = {
         "dataset_path": dataset_path,
@@ -137,6 +182,12 @@ def _runtime_config(dataset_path: Path) -> RuntimeConfig:
         "db_path": RUNTIME_ROOT / "aquamind_memory.db",
         "audit_path": RUNTIME_ROOT / "aquamind_audit.jsonl",
         "audit_log_path": RUNTIME_ROOT / "aquamind_audit.jsonl",
+        "llm_enabled": llm_requested and gemini_key_available,
+        "llm_model": llm_model,
+        "budget_cap_usd": _env_positive_float(
+            "AQUAMIND_TASK_BUDGET_USD",
+            0.10,
+        ),
     }
     for name, parameter in signature.parameters.items():
         if name in candidates:

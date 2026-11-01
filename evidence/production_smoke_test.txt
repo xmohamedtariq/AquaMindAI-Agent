@@ -1,0 +1,15 @@
+[PASS] API health ù HTTP 200
+[PASS] Dataset discovery ù scaling_colloidal_fouling.csv
+[PASS] Intent routing: ambiguous prompt ù clarify
+[PASS] Knowledge Q&A ù knowledge
+[PASS] Safety block ù safety_block
+[PASS] Operational request without dataset ù needs_data
+[PASS] End-to-end investigation ù route=investigation, HTTP 200
+[PASS] No raw backend error leakage
+[PASS] Contextual follow-up ù followup
+[PASS] Case library endpoint ù HTTP 200
+[PASS] Validation traces endpoint ù HTTP 200
+[PASS] Related cases ù HTTP 200
+
+====================================================================
+AquaMindAI-Agent smoke test PASSED: all production checks succeeded.
