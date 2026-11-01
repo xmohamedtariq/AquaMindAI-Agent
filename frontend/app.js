@@ -544,7 +544,7 @@ function bind() {
   $('#themeToggle').onclick = () => { state.theme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'; document.documentElement.dataset.theme = state.theme; localStorage.setItem('aquamind_theme', state.theme); if (state.datasetSummary) renderChart(state.datasetSummary); };
   $$('.nav-item').forEach(b => b.onclick = () => showView(b.dataset.view));
   $('#newInvestigation').onclick = resetInvestigation;
-  $('#investorDemo').onclick = async () => { try { const d = await api('/api/demo-scenario'); if (d.dataset) { await loadDataset(d.dataset); $('#datasetSelect').value = d.dataset; } resetInvestigation(); $('#investigationTitle').textContent = d.title || 'Investor Demo'; await askAgent(d.prompt); } catch (e) { toast(e.message); } };
+  $('#investorDemo').onclick = async () => { try { const d = await api('/api/demo-scenario'); if (d.dataset) { await loadDataset(d.dataset); $('#datasetSelect').value = d.dataset; } resetInvestigation(); $('#investigationTitle').textContent = d.title || 'Guided Demo'; await askAgent(d.prompt); } catch (e) { toast(e.message); } };
   $('#overviewNewInvestigation').onclick = resetInvestigation;
   $('#sendInvestigation').onclick = () => { const x = $('#investigationInput'); const text = x.value; x.value = ''; investigate(text); };
   $('#investigationInput').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#sendInvestigation').click(); } });
