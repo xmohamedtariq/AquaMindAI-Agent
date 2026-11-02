@@ -824,10 +824,16 @@ Generate the reproducible task-failure scenario separately:
 python -m scripts.generate_max_turns_failure_trace
 ```
 
-This produces:
+Running this reproducible scenario generates:
 
 ```text
 traces/max_turns_failure.jsonl
+traces/.runtime/max-turns-failure/audit.jsonl
+```
+
+A verified snapshot of the hash-chained runtime audit is committed for reviewer inspection at:
+
+```text
 evidence/max_turns_failure_audit.jsonl
 ```
 

@@ -249,7 +249,7 @@ Evidence:
 
 [Detailed Safety Block Evidence](./evidence/prompt_injection_safety.txt)
 
-[Explicit Failure Trace](./traces/explicit_failure.jsonl)
+[Safety Block Trace](./traces/explicit_failure.jsonl)
 
 ---
 
@@ -362,26 +362,63 @@ Expected termination:
 
 ---
 
-## 13. Explicit Failure
+## 13. Safety Block and Genuine Task Failure
 
-AquaMind intentionally preserves a documented failure scenario.
+### 13.1 Safety Block — Successful Enforcement
 
-The scenario demonstrates what happens when an unsafe request attempts to bypass the system's operational boundaries.
+AquaMind preserves a hostile-input trace demonstrating that an unsafe request is rejected before operational execution.
 
 Evidence:
 
-[explicit_failure.jsonl](./traces/explicit_failure.jsonl)
+[Safety Block Trace](./traces/explicit_failure.jsonl)
 
-Expected result:
+Verified result:
 
 ```text
 termination_reason = SAFETY_BLOCK
-tool_call_count = 0
-status = failed
+turn_count         = 0
+tool_call_count    = 0
+LLM calls          = 0
 ```
 
-The failure trace is retained intentionally because it documents where and why the agent refuses to continue.
+The trace outcome uses `status=failed` because the unsafe requested task does not complete. This represents **successful safety enforcement** and is not used as the rubric task-failure case.
 
+### 13.2 Task Failure — MAX_TURNS_REACHED
+
+A separate reproducible scenario runs the AquaMind runtime with `max_turns=2` on an investigation that requires additional steps.
+
+Evidence:
+
+[MAX_TURNS Task Failure Trace](./traces/max_turns_failure.jsonl)
+
+Verified result:
+
+```text
+status             = failed
+termination_reason = MAX_TURNS_REACHED
+turn_count         = 2
+tool_call_count    = 2
+audit_integrity    = valid
+```
+
+Two approved operational tools execute successfully before termination:
+
+```text
+validate_sensor_data
+calculate_plant_kpis
+```
+
+The runtime then stops before a third turn because the configured maximum-turn limit has been exhausted.
+
+LLM assistance is intentionally disabled for this termination-control test so the failure is deterministic and reproducible. Real Gemini participation is demonstrated separately by the successful execution trace.
+
+The accompanying audit contains **7 hash-chained runtime events** and passes `AuditLogger.verify_integrity()`.
+
+[Task Failure Audit](./evidence/max_turns_failure_audit.jsonl)
+
+[Failure Generation Evidence](./evidence/max_turns_failure_generation.txt)
+
+[Reproducible Generator Script](./scripts/generate_max_turns_failure_trace.py)
 ---
 
 ## 14. Cost Tracking
@@ -426,7 +463,7 @@ Source coverage:
 
 Statements:
 
-`2453`
+`2454`
 
 Missing statements:
 
@@ -435,7 +472,7 @@ Missing statements:
 Verification command:
 
 ```bash
-pytest --cov=src --cov-report=term-missing --cov-fail-under=100
+pytest tests --cov=src --cov-report=term-missing --cov-fail-under=100
 ```
 
 Recorded evidence:
@@ -453,8 +490,13 @@ For deeper inspection:
 | Agent behavior and constraints | [agent_spec.md](./agent_spec.md) |
 | Successful execution | [success_1.jsonl](./traces/success_1.jsonl) |
 | Recovery behavior | [near_failure_recovery.jsonl](./traces/near_failure_recovery.jsonl) |
-| Explicit safety failure | [explicit_failure.jsonl](./traces/explicit_failure.jsonl) |
+| Safety-block behavior | [explicit_failure.jsonl](./traces/explicit_failure.jsonl) |
+| Task failure — MAX_TURNS exhausted | [max_turns_failure.jsonl](./traces/max_turns_failure.jsonl) |
+| Task-failure hash-chained audit | [max_turns_failure_audit.jsonl](./evidence/max_turns_failure_audit.jsonl) |
+| Reproducible task-failure generator | [generate_max_turns_failure_trace.py](./scripts/generate_max_turns_failure_trace.py) |
 | MCP retrieval | [mcp_knowledge_search.txt](./evidence/mcp_knowledge_search.txt) |
+| Official MCP SDK runtime resolution | [mcp_runtime_resolution.txt](./evidence/mcp_runtime_resolution.txt) |
+| MCP protocol end-to-end verification | [mcp_protocol_end_to_end.txt](./evidence/mcp_protocol_end_to_end.txt) |
 | Memory persistence | [memory_restart_verify.txt](./evidence/memory_restart_verify.txt) |
 | Permission enforcement | [permission_layer.txt](./evidence/permission_layer.txt) |
 | Prompt-injection protection | [prompt_injection_safety.txt](./evidence/prompt_injection_safety.txt) |
@@ -496,7 +538,11 @@ Final operational decisions remain under qualified human supervision.
 - [Cost Analysis](./cost_analysis.md)
 - [Successful Trace](./traces/success_1.jsonl)
 - [Recovery Trace](./traces/near_failure_recovery.jsonl)
-- [Explicit Failure Trace](./traces/explicit_failure.jsonl)
+- [Safety Block Trace](./traces/explicit_failure.jsonl)
+- [MAX_TURNS Task Failure Trace](./traces/max_turns_failure.jsonl)
+- [Task Failure Audit](./evidence/max_turns_failure_audit.jsonl)
+- [MCP Runtime Resolution](./evidence/mcp_runtime_resolution.txt)
+- [MCP End-to-End Verification](./evidence/mcp_protocol_end_to_end.txt)
 - [Verification Evidence](./evidence)
 - [Source Code](./src)
 - [Automated Tests](./tests)

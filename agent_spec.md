@@ -1,4 +1,4 @@
-﻿# AquaMindAI-Agent — Agent Specification
+# AquaMindAI-Agent — Agent Specification
 
 ## 1. Goal
 
@@ -152,7 +152,9 @@ No operational tool is executed.
 
 - [Successful Trace](./traces/success_1.jsonl)
 - [Recovery Trace](./traces/near_failure_recovery.jsonl)
-- [Explicit Failure Trace](./traces/explicit_failure.jsonl)
+- [Safety Block Trace](./traces/explicit_failure.jsonl)
+- [MAX_TURNS Task Failure Trace](./traces/max_turns_failure.jsonl)
+- [Task Failure Audit](./evidence/max_turns_failure_audit.jsonl)
 
 ---
 
