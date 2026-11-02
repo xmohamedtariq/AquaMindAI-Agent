@@ -1,0 +1,19 @@
+=== MCP RUNTIME RESOLUTION ===
+distribution_version = 2.3.0
+mcp.__file__ = C:\Users\USER\Desktop\AquaMind-AI-Agent\.venv\Lib\site-packages\mcp\__init__.py
+mcp.server.__file__ = C:\Users\USER\Desktop\AquaMind-AI-Agent\.venv\Lib\site-packages\mcp\server\__init__.py
+BoundMCPServer.__module__ = mcp.server.mcpserver.server
+BoundMCPServer file = C:\Users\USER\Desktop\AquaMind-AI-Agent\.venv\Lib\site-packages\mcp\server\mcpserver\server.py
+same_object = True
+
+=== SYS.PATH ===
+0
+1 C:\Users\USER\AppData\Local\Programs\Python\Python314\python314.zip
+2 C:\Users\USER\AppData\Local\Programs\Python\Python314\DLLs
+3 C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib
+4 C:\Users\USER\AppData\Local\Programs\Python\Python314
+5 C:\Users\USER\Desktop\AquaMind-AI-Agent\.venv
+6 C:\Users\USER\Desktop\AquaMind-AI-Agent\.venv\Lib\site-packages
+7 C:\Users\USER\Desktop\AquaMind-AI-Agent\.venv\Lib\site-packages\win32
+8 C:\Users\USER\Desktop\AquaMind-AI-Agent\.venv\Lib\site-packages\win32\lib
+9 C:\Users\USER\Desktop\AquaMind-AI-Agent\.venv\Lib\site-packages\pythonwin

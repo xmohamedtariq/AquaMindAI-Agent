@@ -1,0 +1,8 @@
+PASS: MAX_TURNS_REACHED
+trace=C:\Users\USER\Desktop\AquaMind-AI-Agent\traces\max_turns_failure.jsonl
+status=failed
+termination_reason=MAX_TURNS_REACHED
+turns=2
+tool_calls=2
+audit_integrity=True
+final_answer=The maximum number of agent turns has been reached.

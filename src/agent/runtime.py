@@ -85,6 +85,7 @@ class RuntimeConfig:
 
     knowledge_limit: int = 5
     budget_cap_usd: float = 0.10
+    max_turns: int = 12
 
     case_library_path: str | Path | None = None
     source_registry_path: str | Path | None = None
@@ -983,6 +984,10 @@ class AquaMindRuntime:
             budget_cap_usd=(
                 self.config
                 .budget_cap_usd
+            ),
+            max_turns=(
+                self.config
+                .max_turns
             ),
             diagnostic_context=(
                 dict(

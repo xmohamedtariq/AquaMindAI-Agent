@@ -1,183 +1,92 @@
 ============================= test session starts =============================
-
 platform win32 -- Python 3.14.0, pytest-9.1.1, pluggy-1.7.0
-
 rootdir: C:\Users\USER\Desktop\AquaMind-AI-Agent
-
 configfile: pyproject.toml
-
 plugins: anyio-4.15.1, cov-7.1.0
-
 collected 572 items
 
-
-
 tests\test_anomaly_detection.py .....................                    [  3%]
-
 tests\test_audit.py ...............................                      [  9%]
-
 tests\test_case_library.py .........................................     [ 16%]
-
 tests\test_cost.py ......................................                [ 22%]
-
 tests\test_data_loader.py ..............                                 [ 25%]
-
 tests\test_diagnosis.py .............................                    [ 30%]
-
 tests\test_diagnostic_engine.py ........................................ [ 37%]
-
 ......................                                                   [ 41%]
-
 tests\test_diagnostic_examples.py .                                      [ 41%]
-
 tests\test_evidence_adapter.py .........                                 [ 43%]
-
 tests\test_evidence_vocabulary.py ..                                     [ 43%]
-
 tests\test_gemini_reasoner.py ............                               [ 45%]
-
 tests\test_hybrid_planner.py ......                                      [ 46%]
-
 tests\test_injection.py .....................                            [ 50%]
-
 tests\test_knowledge_matrix.py .                                         [ 50%]
-
 tests\test_kpi_tools.py ....................                             [ 53%]
-
 tests\test_loop.py ..............                                        [ 56%]
-
 tests\test_loop_preterminated.py .                                       [ 56%]
-
 tests\test_loop_safety_signal.py ..                                      [ 56%]
-
 tests\test_mcp_server.py .....................                           [ 60%]
-
 tests\test_memory.py ...........................                         [ 65%]
-
 tests\test_permissions.py ..........................                     [ 69%]
-
 tests\test_planner.py .....                                              [ 70%]
-
 tests\test_react_trace.py .                                              [ 70%]
-
 tests\test_reflector.py .........                                        [ 72%]
-
 tests\test_reporting.py ................                                 [ 75%]
-
 tests\test_runtime.py ...............................                    [ 80%]
-
 tests\test_runtime_coverage.py ..                                        [ 80%]
-
 tests\test_runtime_grounding.py .........                                [ 82%]
-
 tests\test_runtime_safety_trace.py .                                     [ 82%]
-
 tests\test_scenario_generator.py ........                                [ 84%]
-
 tests\test_scenarios.py ...........                                      [ 86%]
-
 tests\test_source_audit.py ...........................................   [ 93%]
-
 tests\test_state.py .............                                        [ 95%]
-
 tests\test_trace_jsonl.py ....                                           [ 96%]
-
 tests\test_validation.py .................                               [ 99%]
-
 tests\test_validation_traces.py ...                                      [100%]
 
-
-
 =============================== tests coverage ================================
-
 _______________ coverage: platform win32, python 3.14.0-final-0 _______________
 
-
-
 Name                                  Stmts   Miss  Cover   Missing
-
 -------------------------------------------------------------------
-
 src\__init__.py                           0      0   100%
-
 src\agent\__init__.py                     0      0   100%
-
 src\agent\hybrid_planner.py              30      0   100%
-
 src\agent\loop.py                        98      0   100%
-
 src\agent\planner.py                     45      0   100%
-
 src\agent\reflector.py                   39      0   100%
-
-src\agent\runtime.py                    206      0   100%
-
+src\agent\runtime.py                    207      0   100%
 src\agent\state.py                       84      0   100%
-
 src\audit\__init__.py                     0      0   100%
-
 src\audit\logger.py                      95      0   100%
-
 src\cost\__init__.py                      0      0   100%
-
 src\cost\tracker.py                     110      0   100%
-
 src\knowledge\__init__.py                 0      0   100%
-
 src\knowledge\case_library.py           131      0   100%
-
 src\knowledge\diagnostic_engine.py      205      0   100%
-
 src\knowledge\evidence_adapter.py        99      0   100%
-
 src\knowledge\runtime_grounding.py      102      0   100%
-
 src\knowledge\scenario_generator.py      47      0   100%
-
 src\knowledge\source_audit.py           140      0   100%
-
 src\llm\__init__.py                       2      0   100%
-
 src\llm\gemini_reasoner.py               84      0   100%
-
 src\mcp\__init__.py                       0      0   100%
-
 src\mcp\client.py                        21      0   100%
-
 src\mcp\server.py                        71      0   100%
-
 src\memory\__init__.py                    0      0   100%
-
 src\memory\sqlite_memory.py             122      0   100%
-
 src\safety\__init__.py                    0      0   100%
-
 src\safety\injection_guard.py            37      0   100%
-
 src\safety\permissions.py                50      0   100%
-
 src\tools\__init__.py                     0      0   100%
-
 src\tools\anomaly_detection.py           98      0   100%
-
 src\tools\data_loader.py                 49      0   100%
-
 src\tools\diagnosis.py                   87      0   100%
-
 src\tools\kpi_tools.py                  115      0   100%
-
 src\tools\reporting.py                   71      0   100%
-
 src\tools\validation.py                  80      0   100%
-
 src\tracing\__init__.py                   2      0   100%
-
 src\tracing\jsonl.py                    133      0   100%
-
 -------------------------------------------------------------------
-
-TOTAL                                  2453      0   100%
-
+TOTAL                                  2454      0   100%
 Required test coverage of 100% reached. Total coverage: 100.00%
-
-============================ 572 passed in 11.97s =============================
+============================ 572 passed in 11.55s =============================
