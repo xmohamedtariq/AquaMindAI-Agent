@@ -209,7 +209,9 @@ No unregistered operational tool may execute through the autonomous loop.
 
 ## 🔌 Model Context Protocol
 
-AquaMind includes a custom **Model Context Protocol server and client**.
+AquaMind implements its MCP server and client with the official **Model Context Protocol Python SDK (`mcp==2.3.0`)**.
+
+Runtime verification confirms that `MCPServer` resolves from the installed `site-packages` distribution rather than the local `src/mcp` package. An end-to-end client/server verification also successfully lists knowledge documents, calls `search_operational_knowledge`, and reads a `knowledge://` resource.
 
 The MCP layer exposes curated desalination engineering knowledge to the agent through resources and controlled retrieval.
 
@@ -225,7 +227,11 @@ The MCP implementation has been exercised through the actual client, returning r
 
 [Explore MCP implementation →](./src/mcp)
 
-[View MCP verification evidence →](./evidence/mcp_knowledge_search.txt)
+[View MCP retrieval evidence →](./evidence/mcp_knowledge_search.txt)
+
+[View official MCP SDK runtime resolution →](./evidence/mcp_runtime_resolution.txt)
+
+[View MCP protocol end-to-end verification →](./evidence/mcp_protocol_end_to_end.txt)
 
 ---
 
@@ -295,13 +301,13 @@ Termination: SAFETY_BLOCK
 Operational tool calls: 0
 ```
 
-The explicit-failure trace demonstrates that the unsafe request is blocked **before any operational tool executes**.
+The safety-block trace demonstrates that the unsafe request is blocked **before any operational tool executes**. This is successful safety enforcement, not the task-failure trace.
 
 [View hostile-input evidence →](./evidence/hostile_inputs_test.txt)
 
 [View prompt-injection evidence →](./evidence/prompt_injection_safety.txt)
 
-[Open explicit failure trace →](./traces/explicit_failure.jsonl)
+[Open safety-block trace →](./traces/explicit_failure.jsonl)
 
 ---
 
@@ -365,7 +371,7 @@ The latest trace also records real Gemini usage where provider availability allo
 
 ---
 
-### 🛡️ 3. Explicit Safety Failure
+### 🛡️ 3. Safety Block
 
 [`explicit_failure.jsonl`](./traces/explicit_failure.jsonl)
 
@@ -386,7 +392,46 @@ tool_call_count    = 0
 LLM calls          = 0
 ```
 
-The request is rejected before entering the operational tool workflow.
+The request is rejected before entering the operational tool workflow. This trace verifies successful safety enforcement and is intentionally distinct from the task-failure trace below.
+
+---
+
+### ❌ 4. Task Failure — MAX_TURNS_REACHED
+
+[`max_turns_failure.jsonl`](./traces/max_turns_failure.jsonl)
+
+This reproducible scenario runs the AquaMind runtime with `max_turns=2` on an investigation that requires additional steps.
+
+LLM assistance is intentionally disabled for this termination-control test so the failure condition remains deterministic and reproducible. Real Gemini participation is demonstrated separately by the successful execution trace.
+
+Verified result:
+
+```text
+status             = failed
+termination_reason = MAX_TURNS_REACHED
+turn_count         = 2
+tool_call_count    = 2
+audit_integrity    = valid
+```
+
+Two approved operational tools execute successfully:
+
+```text
+validate_sensor_data
+calculate_plant_kpis
+```
+
+The runtime then terminates before a third turn because the configured maximum-turn limit has been exhausted.
+
+The accompanying append-only audit log contains **7 hash-chained runtime events** and passes `AuditLogger.verify_integrity()`.
+
+[Open MAX_TURNS task-failure trace →](./traces/max_turns_failure.jsonl)
+
+[Open hash-chained task-failure audit →](./evidence/max_turns_failure_audit.jsonl)
+
+[Open failure-generation evidence →](./evidence/max_turns_failure_generation.txt)
+
+[Open reproducible generator script →](./scripts/generate_max_turns_failure_trace.py)
 
 ---
 
@@ -434,15 +479,19 @@ Free-tier quotas and rate limits may prevent all workloads from remaining free.
 |---|---:|
 | Automated Tests | **572 / 572 Passed** ✅ |
 | Source Coverage | **100.00%** ✅ |
-| Statements | **2,453** |
+| Statements | **2,454** |
 | Missing Statements | **0** |
 | Hostile Inputs | **3 / 3 Blocked** ✅ |
 | MCP Search | **Verified** ✅ |
+| Official MCP SDK Resolution | **mcp 2.3.0 Verified** ✅ |
+| MCP Protocol End-to-End | **Verified** ✅ |
 | Memory After Restart | **Verified** ✅ |
 | Permission Enforcement | **Verified** ✅ |
 | Successful JSONL Trace | **Verified** ✅ |
 | Near-Failure Recovery Trace | **Verified** ✅ |
-| Explicit Safety Failure Trace | **Verified** ✅ |
+| Safety Block Trace | **Verified** ✅ |
+| MAX_TURNS Task Failure Trace | **Verified** ✅ |
+| Failure Audit Integrity | **7 Hash-Chained Events — Valid** ✅ |
 | Real Gemini Agent-Loop Usage | **Verified** ✅ |
 
 [Open test and coverage evidence →](./evidence/tests_coverage.txt)
@@ -552,13 +601,18 @@ The project does not present synthetic scenarios as real plant incidents.
 | Agent goal, tools, limits, permissions | [agent_spec.md](./agent_spec.md) |
 | Successful real-Gemini execution | [success_1.jsonl](./traces/success_1.jsonl) |
 | Recovery behavior | [near_failure_recovery.jsonl](./traces/near_failure_recovery.jsonl) |
-| Explicit safety failure | [explicit_failure.jsonl](./traces/explicit_failure.jsonl) |
+| Safety-block behavior | [explicit_failure.jsonl](./traces/explicit_failure.jsonl) |
+| Task failure — MAX_TURNS exhausted | [max_turns_failure.jsonl](./traces/max_turns_failure.jsonl) |
+| Task-failure hash-chained audit | [max_turns_failure_audit.jsonl](./evidence/max_turns_failure_audit.jsonl) |
+| Reproducible task-failure generator | [generate_max_turns_failure_trace.py](./scripts/generate_max_turns_failure_trace.py) |
 | Cost methodology | [cost_analysis.md](./cost_analysis.md) |
 | Diagnostic quality | [diagnostic_quality_evaluation.txt](./evidence/diagnostic_quality_evaluation.txt) |
 | End-to-end scenarios | [diagnostic_scenario_evaluation.txt](./evidence/diagnostic_scenario_evaluation.txt) |
 | 572 tests / 100% coverage | [tests_coverage.txt](./evidence/tests_coverage.txt) |
 | Production smoke test | [production_smoke_test.txt](./evidence/production_smoke_test.txt) |
 | MCP retrieval | [mcp_knowledge_search.txt](./evidence/mcp_knowledge_search.txt) |
+| Official MCP SDK runtime resolution | [mcp_runtime_resolution.txt](./evidence/mcp_runtime_resolution.txt) |
+| MCP protocol end-to-end verification | [mcp_protocol_end_to_end.txt](./evidence/mcp_protocol_end_to_end.txt) |
 | Persistent-memory restart | [memory_restart_verify.txt](./evidence/memory_restart_verify.txt) |
 | Permission enforcement | [permission_layer.txt](./evidence/permission_layer.txt) |
 | Prompt-injection defense | [prompt_injection_safety.txt](./evidence/prompt_injection_safety.txt) |
@@ -586,7 +640,7 @@ AquaMindAI-Agent/
 ├── data/                     # Controlled synthetic RO datasets
 ├── knowledge/                # Source-grounded engineering knowledge
 ├── tests/                    # 572 automated tests
-├── traces/                   # Successful, recovery, and failure traces
+├── traces/                   # Successful, recovery, safety-block, and task-failure traces
 ├── evidence/                 # Verification outputs
 ├── scripts/                  # Trace generation and evaluation utilities
 ├── frontend/                 # Production UI assets
@@ -612,6 +666,7 @@ AquaMindAI-Agent/
 | Maximum task budget | `$0.10` |
 | Successful termination | `FINAL_ANSWER` |
 | Safety termination | `SAFETY_BLOCK` |
+| Task-failure example | `MAX_TURNS_REACHED` |
 | Persistent write policy | `ASK_ON_WRITE` |
 | High-impact permission | `ALWAYS_ASK` |
 
@@ -678,14 +733,14 @@ A production smoke test verifies:
 Run the automated suite:
 
 ```bash
-pytest --cov=src --cov-report=term-missing --cov-fail-under=100
+pytest tests --cov=src --cov-report=term-missing --cov-fail-under=100
 ```
 
 Verified result:
 
 ```text
 572 passed
-TOTAL 2453 0 100%
+TOTAL 2454 0 100%
 Required test coverage of 100% reached.
 ```
 
@@ -760,6 +815,23 @@ traces/explicit_failure.jsonl
 ```
 
 The successful trace is generated directly from the successful source-grounded Agent Loop execution.
+
+The `explicit_failure.jsonl` filename is retained for compatibility, but its outcome is a successful `SAFETY_BLOCK`; it is not used as the rubric task-failure case.
+
+Generate the reproducible task-failure scenario separately:
+
+```bash
+python -m scripts.generate_max_turns_failure_trace
+```
+
+This produces:
+
+```text
+traces/max_turns_failure.jsonl
+evidence/max_turns_failure_audit.jsonl
+```
+
+Its verified outcome is `status=failed` with `termination_reason=MAX_TURNS_REACHED` after two successful operational tool calls.
 
 ---
 
@@ -838,7 +910,11 @@ Final physical operational decisions remain under qualified human supervision.
 - [🌐 Production Smoke Test](./evidence/production_smoke_test.txt)
 - [🧾 Successful Gemini Trace](./traces/success_1.jsonl)
 - [🔄 Recovery Trace](./traces/near_failure_recovery.jsonl)
-- [🛡️ Explicit Failure Trace](./traces/explicit_failure.jsonl)
+- [🛡️ Safety Block Trace](./traces/explicit_failure.jsonl)
+- [❌ MAX_TURNS Task Failure Trace](./traces/max_turns_failure.jsonl)
+- [🔐 Task Failure Audit](./evidence/max_turns_failure_audit.jsonl)
+- [🔌 MCP Runtime Resolution](./evidence/mcp_runtime_resolution.txt)
+- [🔗 MCP End-to-End Verification](./evidence/mcp_protocol_end_to_end.txt)
 - [🔌 MCP Implementation](./src/mcp)
 - [🗂️ Persistent Memory](./src/memory)
 - [💻 Source Code](./src)
