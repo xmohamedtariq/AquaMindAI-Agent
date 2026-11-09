@@ -41,9 +41,10 @@ Given RO plant CSV data, the agent can:
 - retrieve approved engineering knowledge through MCP,
 - search persistent incident memory,
 - build source-grounded diagnostic hypotheses,
-- reflect on the collected evidence,
+- reflect on collected evidence,
 - generate safe verification recommendations,
-- track model usage and task cost,
+- track live model usage and task cost,
+- enforce explicit runtime termination conditions,
 - and produce auditable JSONL execution traces.
 
 Physical plant-control decisions remain outside the autonomous execution boundary.
@@ -140,6 +141,7 @@ flowchart LR
 
     DEC -- Final Answer --> RESULT["✅ Evidence-Grounded Recommendation"]
     DEC -- Safety Block --> BLOCK["🛡️ Safe Termination"]
+    DEC -- Runtime Limit --> FAIL["❌ Explicit Task Failure"]
 
     AGENT -.-> AUDIT
     AGENT -.-> COST
@@ -159,11 +161,13 @@ gemini-3.5-flash-lite
 
 The architecture deliberately keeps operational action selection safety-constrained.
 
-The deterministic planner selects an approved candidate action, while Gemini may provide a concise reasoning summary for that already-approved action.
+The deterministic planner selects an approved candidate action, while Gemini provides a concise reasoning summary for that already-approved action.
 
 This means the model does **not** receive unrestricted authority to invent or execute arbitrary operational tools.
 
-If Gemini is unavailable, rate-limited, or cannot be used within the configured budget, AquaMind can fall back to its deterministic planner without disabling the investigation workflow.
+For normal runtime operation, AquaMind can fall back to its deterministic planner if Gemini is unavailable, rate-limited, or cannot be used within the configured budget.
+
+For the dedicated **live MAX_TURNS failure-evidence scenario**, fallback is explicitly rejected. The evidence generator accepts the run only when real Gemini participation, provider-reported token usage, non-zero task cost, the expected tool sequence, and audit integrity are all verified.
 
 ---
 
@@ -179,10 +183,10 @@ If Gemini is unavailable, rate-limited, or cannot be used within the configured 
 | 🗂️ **Persistent Incident Memory** | Searches approved historical incidents in SQLite | [Memory](./src/memory) |
 | 🧠 **Diagnostic Reasoning** | Produces evidence-grounded hypotheses | [Diagnosis](./src/tools/diagnosis.py) |
 | 🔄 **Reflection** | Reassesses results before continuation or termination | [Reflector](./src/agent/reflector.py) |
-| ✨ **Gemini Assistance** | Adds model-assisted reasoning summaries to approved actions | [LLM](./src/llm) |
+| ✨ **Gemini Assistance** | Adds live model-assisted reasoning summaries to approved actions | [LLM](./src/llm) |
 | 🛡️ **Safety Enforcement** | Blocks injected and prohibited physical-control requests | [Safety](./src/safety) |
 | 🧾 **Auditability** | Records operational decisions and execution events | [Audit](./src/audit) |
-| 💰 **Cost Control** | Tracks tokens, reference cost, and task budget | [Cost Analysis](./cost_analysis.md) |
+| 💰 **Cost Control** | Tracks provider-reported tokens, reference cost, and task budget | [Cost Analysis](./cost_analysis.md) |
 | 🧾 **JSONL Tracing** | Exports audit-safe execution traces | [Tracing](./src/tracing) |
 
 ---
@@ -211,7 +215,15 @@ No unregistered operational tool may execute through the autonomous loop.
 
 AquaMind implements its MCP server and client with the official **Model Context Protocol Python SDK (`mcp==2.3.0`)**.
 
-Runtime verification confirms that `MCPServer` resolves from the installed `site-packages` distribution rather than the local `src/mcp` package. An end-to-end client/server verification also successfully lists knowledge documents, calls `search_operational_knowledge`, and reads a `knowledge://` resource.
+Runtime verification confirms that `MCPServer` resolves from the installed `site-packages` distribution rather than the local `src/mcp` package.
+
+An end-to-end client/server verification also successfully:
+
+- resolves the official SDK at runtime,
+- establishes the MCP client/server path,
+- lists available knowledge documents,
+- calls `search_operational_knowledge`,
+- and reads a `knowledge://` resource.
 
 The MCP layer exposes curated desalination engineering knowledge to the agent through resources and controlled retrieval.
 
@@ -222,8 +234,6 @@ search_operational_knowledge
 ```
 
 Knowledge resources use `knowledge://` URIs.
-
-The MCP implementation has been exercised through the actual client, returning relevant engineering matches from the project knowledge base.
 
 [Explore MCP implementation →](./src/mcp)
 
@@ -301,7 +311,9 @@ Termination: SAFETY_BLOCK
 Operational tool calls: 0
 ```
 
-The safety-block trace demonstrates that the unsafe request is blocked **before any operational tool executes**. This is successful safety enforcement, not the task-failure trace.
+The safety-block trace demonstrates that the unsafe request is blocked **before any operational tool executes**.
+
+This is successful safety enforcement and is intentionally separate from the required task-failure trace.
 
 [View hostile-input evidence →](./evidence/hostile_inputs_test.txt)
 
@@ -313,7 +325,7 @@ The safety-block trace demonstrates that the unsafe request is blocked **before 
 
 ## 🧾 Execution Traces
 
-AquaMind exports audit-safe JSONL traces containing concise decision summaries, tool events, observations, termination information, cost summaries, and audit-integrity results.
+AquaMind exports audit-safe JSONL traces containing concise decision summaries, tool events, observations, explicit termination information, model-usage summaries, task cost, and audit-integrity results.
 
 The traces do **not** expose private chain-of-thought reasoning.
 
@@ -329,7 +341,7 @@ turn_count         = 7
 tool_call_count    = 7
 ```
 
-The latest verified trace includes real Gemini usage:
+The latest verified successful trace includes real Gemini usage:
 
 | Metric | Verified Value |
 |---|---:|
@@ -392,29 +404,50 @@ tool_call_count    = 0
 LLM calls          = 0
 ```
 
-The request is rejected before entering the operational tool workflow. This trace verifies successful safety enforcement and is intentionally distinct from the task-failure trace below.
+The request is rejected before entering the operational tool workflow.
+
+This trace verifies **successful safety enforcement** and is intentionally distinct from the required task-failure trace below.
 
 ---
 
-### ❌ 4. Task Failure — MAX_TURNS_REACHED
+### ❌ 4. Genuine Task Failure — Live Gemini MAX_TURNS_REACHED
 
 [`max_turns_failure.jsonl`](./traces/max_turns_failure.jsonl)
 
-This reproducible scenario runs the AquaMind runtime with `max_turns=2` on an investigation that requires additional steps.
+This reproducible scenario runs the real AquaMind runtime with:
 
-LLM assistance is intentionally disabled for this termination-control test so the failure condition remains deterministic and reproducible. Real Gemini participation is demonstrated separately by the successful execution trace.
+```text
+max_turns = 2
+llm_enabled = True
+```
+
+The investigation requires additional operational steps, but the configured hard turn limit terminates execution after two completed operational turns.
+
+Unlike the earlier deterministic termination-control version, this updated trace requires **real live Gemini participation**.
 
 Verified result:
 
-```text
-status             = failed
-termination_reason = MAX_TURNS_REACHED
-turn_count         = 2
-tool_call_count    = 2
-audit_integrity    = valid
-```
+| Metric | Verified Value |
+|---|---:|
+| Evidence classification | **GENUINE TASK FAILURE** |
+| Runtime mode | **LIVE** |
+| LLM provider | **Google Gemini** |
+| Status | **failed** |
+| Termination reason | **MAX_TURNS_REACHED** |
+| Turn count | **2** |
+| Operational tool calls | **2** |
+| Live Gemini calls | **2** |
+| Provider-reported input tokens | **469** |
+| Provider-reported output tokens | **97** |
+| Cached input tokens | **0** |
+| Total task cost | **$0.0003832** |
+| Task budget cap | **$0.10** |
+| Gemini fallback used | **False** |
+| Audit integrity | **Valid** |
+| Audit events | **9** |
+| Metadata status | **CONSISTENT_VERIFIED** |
 
-Two approved operational tools execute successfully:
+Two approved operational tools execute successfully before termination:
 
 ```text
 validate_sensor_data
@@ -423,15 +456,35 @@ calculate_plant_kpis
 
 The runtime then terminates before a third turn because the configured maximum-turn limit has been exhausted.
 
-The accompanying append-only audit log contains **7 hash-chained runtime events** and passes `AuditLogger.verify_integrity()`.
+The resulting termination message is:
 
-[Open MAX_TURNS task-failure trace →](./traces/max_turns_failure.jsonl)
+```text
+The maximum number of agent turns has been reached.
+```
 
-[Open hash-chained task-failure audit →](./evidence/max_turns_failure_audit.jsonl)
+This message describes the runtime termination condition; it is not a completed engineering answer to the investigation.
 
-[Open failure-generation evidence →](./evidence/max_turns_failure_generation.txt)
+The live evidence generator explicitly rejects the run if any of the following occur:
 
-[Open reproducible generator script →](./scripts/generate_max_turns_failure_trace.py)
+- the final runtime status is not `failed`,
+- termination is not `MAX_TURNS_REACHED`,
+- turn count is not exactly `2`,
+- tool-call count is not exactly `2`,
+- Gemini call count is not exactly `2`,
+- provider-reported input tokens are zero,
+- provider-reported output tokens are zero,
+- task cost is zero,
+- the expected operational tool sequence is not executed,
+- Gemini falls back to deterministic reasoning,
+- or audit integrity verification fails.
+
+This makes the trace both **reproducible and fail-closed as evidence**: it cannot report a passing live-failure demonstration unless the expected runtime, model, tool, usage, cost, and integrity conditions are all satisfied.
+
+[Open live MAX_TURNS task-failure trace →](./traces/max_turns_failure.jsonl)
+
+[Open live failure-generation evidence →](./evidence/max_turns_failure_generation.txt)
+
+[Open reproducible live failure generator →](./scripts/generate_max_turns_failure_trace.py)
 
 ---
 
@@ -447,9 +500,12 @@ AquaMind includes task-level usage and cost accounting around **Google Gemini**.
 | Model | `gemini-3.5-flash-lite` |
 | Task budget cap | `$0.10` |
 | Usage tracking | Provider-reported token metadata |
-| Fallback | Deterministic safety-constrained planner |
+| General runtime fallback | Deterministic safety-constrained planner |
+| Live failure-evidence fallback | **Rejected** |
 
 AquaMind does not fabricate token counts for completed Gemini calls.
+
+The dedicated live MAX_TURNS failure generator requires non-zero provider-reported token usage and non-zero cost before accepting the evidence run.
 
 ---
 
@@ -490,11 +546,18 @@ Free-tier quotas and rate limits may prevent all workloads from remaining free.
 | Successful JSONL Trace | **Verified** ✅ |
 | Near-Failure Recovery Trace | **Verified** ✅ |
 | Safety Block Trace | **Verified** ✅ |
-| MAX_TURNS Task Failure Trace | **Verified** ✅ |
-| Failure Audit Integrity | **7 Hash-Chained Events — Valid** ✅ |
+| Live MAX_TURNS Task Failure Trace | **Verified** ✅ |
+| Live Failure Gemini Calls | **2** ✅ |
+| Failure Provider Tokens | **469 in / 97 out** ✅ |
+| Failure Task Cost | **$0.0003832** ✅ |
+| Failure Audit Integrity | **9 Events — Valid** ✅ |
+| Failure Gemini Fallback | **False** ✅ |
+| Failure Metadata | **CONSISTENT_VERIFIED** ✅ |
 | Real Gemini Agent-Loop Usage | **Verified** ✅ |
 
 [Open test and coverage evidence →](./evidence/tests_coverage.txt)
+
+[Open live task-failure evidence →](./evidence/max_turns_failure_generation.txt)
 
 [Open production smoke-test evidence →](./evidence/production_smoke_test.txt)
 
@@ -602,9 +665,9 @@ The project does not present synthetic scenarios as real plant incidents.
 | Successful real-Gemini execution | [success_1.jsonl](./traces/success_1.jsonl) |
 | Recovery behavior | [near_failure_recovery.jsonl](./traces/near_failure_recovery.jsonl) |
 | Safety-block behavior | [explicit_failure.jsonl](./traces/explicit_failure.jsonl) |
-| Task failure — MAX_TURNS exhausted | [max_turns_failure.jsonl](./traces/max_turns_failure.jsonl) |
-| Task-failure hash-chained audit | [max_turns_failure_audit.jsonl](./evidence/max_turns_failure_audit.jsonl) |
-| Reproducible task-failure generator | [generate_max_turns_failure_trace.py](./scripts/generate_max_turns_failure_trace.py) |
+| Live task failure — MAX_TURNS exhausted | [max_turns_failure.jsonl](./traces/max_turns_failure.jsonl) |
+| Live task-failure evidence summary | [max_turns_failure_generation.txt](./evidence/max_turns_failure_generation.txt) |
+| Reproducible live task-failure generator | [generate_max_turns_failure_trace.py](./scripts/generate_max_turns_failure_trace.py) |
 | Cost methodology | [cost_analysis.md](./cost_analysis.md) |
 | Diagnostic quality | [diagnostic_quality_evaluation.txt](./evidence/diagnostic_quality_evaluation.txt) |
 | End-to-end scenarios | [diagnostic_scenario_evaluation.txt](./evidence/diagnostic_scenario_evaluation.txt) |
@@ -640,8 +703,8 @@ AquaMindAI-Agent/
 ├── data/                     # Controlled synthetic RO datasets
 ├── knowledge/                # Source-grounded engineering knowledge
 ├── tests/                    # 572 automated tests
-├── traces/                   # Successful, recovery, safety-block, and task-failure traces
-├── evidence/                 # Verification outputs
+├── traces/                   # Success, recovery, safety, and failure traces
+├── evidence/                 # Verification outputs and reviewer evidence
 ├── scripts/                  # Trace generation and evaluation utilities
 ├── frontend/                 # Production UI assets
 │
@@ -662,15 +725,18 @@ AquaMindAI-Agent/
 
 | Control | Configuration |
 |---|---|
-| Maximum turns | `12` |
+| Default maximum turns | `12` |
+| Failure-evidence maximum turns | `2` |
 | Maximum task budget | `$0.10` |
 | Successful termination | `FINAL_ANSWER` |
 | Safety termination | `SAFETY_BLOCK` |
-| Task-failure example | `MAX_TURNS_REACHED` |
+| Verified task-failure termination | `MAX_TURNS_REACHED` |
 | Persistent write policy | `ASK_ON_WRITE` |
 | High-impact permission | `ALWAYS_ASK` |
 
 A valid task terminates through explicit runtime conditions rather than an open-ended conversation loop.
+
+The dedicated task-failure evidence deliberately lowers `max_turns` to `2` so that exhaustion can be reproduced and verified without changing the normal runtime default.
 
 [Read the full specification →](./agent_spec.md)
 
@@ -697,7 +763,7 @@ GEMINI_API_KEY=<deployment secret>
 
 The API key is supplied as a deployment secret and is never committed to the repository.
 
-If a valid Gemini key is unavailable, AquaMind can use its deterministic fallback path.
+If a valid Gemini key is unavailable during normal operation, AquaMind can use its deterministic fallback path.
 
 [Open Streamlit Demo →](https://aquamindai-agent.onrender.com/)
 
@@ -744,6 +810,14 @@ TOTAL 2454 0 100%
 Required test coverage of 100% reached.
 ```
 
+The latest complete verification run produced:
+
+```text
+572 passed in 25.75s
+Required test coverage of 100% reached.
+Total coverage: 100.00%
+```
+
 ---
 
 ## 💻 Run Locally
@@ -773,34 +847,36 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-### Run with deterministic fallback
+### Run with deterministic fallback available
 
 ```bash
 streamlit run streamlit_app.py
 ```
 
-### Enable Gemini-assisted Agent Loop
+### Enable Gemini-Assisted Agent Loop
 
-Set environment variables without committing the API key:
+Windows PowerShell:
 
-```text
-AQUAMIND_LLM_ENABLED=true
-AQUAMIND_LLM_MODEL=gemini-3.5-flash-lite
-AQUAMIND_TASK_BUDGET_USD=0.10
-GEMINI_API_KEY=<your secret>
+```powershell
+$env:AQUAMIND_LLM_ENABLED="true"
+$env:AQUAMIND_LLM_MODEL="gemini-3.5-flash-lite"
+$env:AQUAMIND_TASK_BUDGET_USD="0.10"
+$env:GEMINI_API_KEY="<your secret>"
 ```
 
 Then run:
 
-```bash
+```powershell
 streamlit run streamlit_app.py
 ```
+
+Never commit the API key to the repository.
 
 ---
 
 ## 🧾 Generate Validation Traces
 
-The trace-generation script runs the actual AquaMind runtime against the official validation scenarios.
+The validation-trace script runs the actual AquaMind runtime against the core validation scenarios.
 
 ```bash
 python -m scripts.generate_validation_traces
@@ -814,30 +890,74 @@ traces/near_failure_recovery.jsonl
 traces/explicit_failure.jsonl
 ```
 
-The successful trace is generated directly from the successful source-grounded Agent Loop execution.
+The successful trace is generated directly from the source-grounded Agent Loop execution.
 
-The `explicit_failure.jsonl` filename is retained for compatibility, but its outcome is a successful `SAFETY_BLOCK`; it is not used as the rubric task-failure case.
+The `explicit_failure.jsonl` filename is retained for compatibility, but its outcome is a successful `SAFETY_BLOCK`.
 
-Generate the reproducible task-failure scenario separately:
+It is **not** used as the rubric task-failure case.
 
-```bash
+---
+
+### Generate the Live Gemini MAX_TURNS Task Failure
+
+The dedicated task-failure generator requires a valid Gemini API key because this evidence scenario explicitly verifies live model participation.
+
+Windows PowerShell:
+
+```powershell
+$env:GEMINI_API_KEY="<your secret>"
 python -m scripts.generate_max_turns_failure_trace
 ```
 
-Running this reproducible scenario generates:
+A valid evidence run must finish with values equivalent to:
+
+```text
+PASS: LIVE GEMINI MAX_TURNS_REACHED
+
+status=failed
+termination_reason=MAX_TURNS_REACHED
+turns=2
+tool_calls=2
+llm_calls=2
+input_tokens>0
+output_tokens>0
+total_cost_usd>0
+audit_integrity=True
+llm_fallback=False
+metadata_status=CONSISTENT_VERIFIED
+```
+
+The latest verified run produced:
+
+```text
+status=failed
+termination_reason=MAX_TURNS_REACHED
+turns=2
+tool_calls=2
+llm_calls=2
+input_tokens=469
+output_tokens=97
+total_cost_usd=0.0003832000
+audit_integrity=True
+llm_fallback=False
+metadata_status=CONSISTENT_VERIFIED
+```
+
+Generated evidence includes:
 
 ```text
 traces/max_turns_failure.jsonl
 traces/.runtime/max-turns-failure/audit.jsonl
+evidence/max_turns_failure_generation.txt
 ```
 
-A verified snapshot of the hash-chained runtime audit is committed for reviewer inspection at:
+The runtime audit for the verified execution contains **9 events**, and audit-chain integrity verification returns:
 
 ```text
-evidence/max_turns_failure_audit.jsonl
+valid = True
 ```
 
-Its verified outcome is `status=failed` with `termination_reason=MAX_TURNS_REACHED` after two successful operational tool calls.
+The evidence script intentionally fails instead of producing a passing result if Gemini does not participate or if fallback is detected.
 
 ---
 
@@ -871,6 +991,26 @@ Reflection
 Safety & Permission Checks
     ↓
 Final Recommendation
+```
+
+For failure-evidence review:
+
+```text
+RO Plant Data
+    ↓
+Live Gemini-Assisted Planning
+    ↓
+validate_sensor_data
+    ↓
+Live Gemini-Assisted Planning
+    ↓
+calculate_plant_kpis
+    ↓
+Configured max_turns = 2 exhausted
+    ↓
+MAX_TURNS_REACHED
+    ↓
+status = failed
 ```
 
 ---
@@ -917,8 +1057,9 @@ Final physical operational decisions remain under qualified human supervision.
 - [🧾 Successful Gemini Trace](./traces/success_1.jsonl)
 - [🔄 Recovery Trace](./traces/near_failure_recovery.jsonl)
 - [🛡️ Safety Block Trace](./traces/explicit_failure.jsonl)
-- [❌ MAX_TURNS Task Failure Trace](./traces/max_turns_failure.jsonl)
-- [🔐 Task Failure Audit](./evidence/max_turns_failure_audit.jsonl)
+- [❌ Live MAX_TURNS Task Failure Trace](./traces/max_turns_failure.jsonl)
+- [🔬 Live Failure Evidence](./evidence/max_turns_failure_generation.txt)
+- [🧪 Live Failure Generator](./scripts/generate_max_turns_failure_trace.py)
 - [🔌 MCP Runtime Resolution](./evidence/mcp_runtime_resolution.txt)
 - [🔗 MCP End-to-End Verification](./evidence/mcp_protocol_end_to_end.txt)
 - [🔌 MCP Implementation](./src/mcp)
