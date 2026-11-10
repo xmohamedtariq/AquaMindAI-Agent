@@ -398,7 +398,13 @@ status             = failed
 termination_reason = MAX_TURNS_REACHED
 turn_count         = 2
 tool_call_count    = 2
+llm_call_count     = 2
+input_tokens       > 0
+output_tokens      > 0
+total_cost_usd     > 0
+llm_fallback       = false
 audit_integrity    = valid
+audit_events       = 9
 ```
 
 Two approved operational tools execute successfully before termination:
