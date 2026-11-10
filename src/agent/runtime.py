@@ -22,10 +22,10 @@ from src.knowledge.diagnostic_engine import (
 from src.knowledge.runtime_grounding import (
     make_source_grounded_diagnosis,
 )
-from src.mcp.client import (
+from src.mcp_integration.client import (
     OperationalKnowledgeClient,
 )
-from src.mcp.server import create_mcp_server
+from src.mcp_integration.server import create_mcp_server
 from src.llm.gemini_reasoner import GeminiReasoner
 from src.memory.sqlite_memory import (
     IncidentMemory,

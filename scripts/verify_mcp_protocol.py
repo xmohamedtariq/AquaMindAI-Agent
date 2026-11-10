@@ -1,4 +1,4 @@
-﻿import asyncio
+import asyncio
 import inspect
 import importlib.metadata as metadata
 from pathlib import Path
@@ -6,8 +6,8 @@ from pathlib import Path
 import mcp
 from mcp.server import MCPServer
 
-from src.mcp.client import OperationalKnowledgeClient
-from src.mcp.server import create_mcp_server
+from src.mcp_integration.client import OperationalKnowledgeClient
+from src.mcp_integration.server import create_mcp_server
 
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -179,7 +179,7 @@ For the dedicated **live MAX_TURNS failure-evidence scenario**, fallback is expl
 | 📊 **Data Validation** | Checks and repairs recoverable plant-data quality issues | [Validation](./src/tools/validation.py) |
 | 📈 **KPI Analysis** | Calculates relevant RO performance indicators | [KPI Tools](./src/tools/kpi_tools.py) |
 | 🚨 **Anomaly Detection** | Identifies abnormal operating patterns | [Anomaly Detection](./src/tools/anomaly_detection.py) |
-| 📚 **MCP Knowledge Retrieval** | Retrieves curated engineering evidence | [MCP](./src/mcp) |
+| 📚 **MCP Knowledge Retrieval** | Retrieves curated engineering evidence | [MCP](./src/mcp_integration) |
 | 🗂️ **Persistent Incident Memory** | Searches approved historical incidents in SQLite | [Memory](./src/memory) |
 | 🧠 **Diagnostic Reasoning** | Produces evidence-grounded hypotheses | [Diagnosis](./src/tools/diagnosis.py) |
 | 🔄 **Reflection** | Reassesses results before continuation or termination | [Reflector](./src/agent/reflector.py) |
@@ -215,7 +215,7 @@ No unregistered operational tool may execute through the autonomous loop.
 
 AquaMind implements its MCP server and client with the official **Model Context Protocol Python SDK (`mcp==2.3.0`)**.
 
-Runtime verification confirms that `MCPServer` resolves from the installed `site-packages` distribution rather than the local `src/mcp` package.
+Runtime verification confirms that `MCPServer` resolves from the installed official `mcp==2.3.0` distribution in `site-packages`. The AquaMind integration code now lives under `src/mcp_integration`, eliminating the previous local namespace-collision concern entirely.
 
 An end-to-end client/server verification also successfully:
 
@@ -235,7 +235,7 @@ search_operational_knowledge
 
 Knowledge resources use `knowledge://` URIs.
 
-[Explore MCP implementation →](./src/mcp)
+[Explore MCP implementation →](./src/mcp_integration)
 
 [View MCP retrieval evidence →](./evidence/mcp_knowledge_search.txt)
 
@@ -694,7 +694,7 @@ AquaMindAI-Agent/
 │   ├── cost/                 # Token, cost, and budget tracking
 │   ├── knowledge/            # Diagnostic knowledge services
 │   ├── llm/                  # Gemini reasoner
-│   ├── mcp/                  # MCP server and client
+│   ├── mcp_integration/      # MCP server and client
 │   ├── memory/               # Persistent SQLite incident memory
 │   ├── safety/               # Injection guard and permissions
 │   ├── tools/                # Approved operational tools
@@ -1062,7 +1062,7 @@ Final physical operational decisions remain under qualified human supervision.
 - [🧪 Live Failure Generator](./scripts/generate_max_turns_failure_trace.py)
 - [🔌 MCP Runtime Resolution](./evidence/mcp_runtime_resolution.txt)
 - [🔗 MCP End-to-End Verification](./evidence/mcp_protocol_end_to_end.txt)
-- [🔌 MCP Implementation](./src/mcp)
+- [🔌 MCP Implementation](./src/mcp_integration)
 - [🗂️ Persistent Memory](./src/memory)
 - [💻 Source Code](./src)
 - [🧪 Automated Tests](./tests)

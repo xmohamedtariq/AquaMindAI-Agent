@@ -69,9 +69,9 @@ src\knowledge\scenario_generator.py      47      0   100%
 src\knowledge\source_audit.py           140      0   100%
 src\llm\__init__.py                       2      0   100%
 src\llm\gemini_reasoner.py               84      0   100%
-src\mcp\__init__.py                       0      0   100%
-src\mcp\client.py                        21      0   100%
-src\mcp\server.py                        71      0   100%
+src\mcp_integration\__init__.py           0      0   100%
+src\mcp_integration\client.py            21      0   100%
+src\mcp_integration\server.py            71      0   100%
 src\memory\__init__.py                    0      0   100%
 src\memory\sqlite_memory.py             122      0   100%
 src\safety\__init__.py                    0      0   100%
@@ -89,4 +89,4 @@ src\tracing\jsonl.py                    133      0   100%
 -------------------------------------------------------------------
 TOTAL                                  2454      0   100%
 Required test coverage of 100% reached. Total coverage: 100.00%
-============================ 572 passed in 25.75s =============================
+============================ 572 passed in 26.18s =============================

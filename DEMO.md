@@ -143,7 +143,7 @@ The recorded verification demonstrates:
 
 Implementation:
 
-[MCP Client and Server](./src/mcp)
+[MCP Client and Server](./src/mcp_integration)
 
 ---
 

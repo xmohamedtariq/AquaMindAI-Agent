@@ -3,10 +3,10 @@ from pathlib import Path
 import pytest
 from mcp import Client
 
-from src.mcp.client import (
+from src.mcp_integration.client import (
     OperationalKnowledgeClient,
 )
-from src.mcp.server import (
+from src.mcp_integration.server import (
     _iter_documents,
     _list_documents,
     _query_terms,
