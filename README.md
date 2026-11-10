@@ -11,6 +11,7 @@
 [![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Tests](https://img.shields.io/badge/Tests-572%2F572-16A34A?style=for-the-badge&logo=pytest&logoColor=white)](./evidence/tests_coverage.txt)
 [![Coverage](https://img.shields.io/badge/Coverage-100%25-22C55E?style=for-the-badge)](./evidence/tests_coverage.txt)
+[![M8ven Score](https://m8ven.ai/badge/mcp/xmohamedtariq-aquamindai-agent-1sd5gh?v=21599490f7c87638b13555e4bc6dfd84)](https://m8ven.ai/mcp/xmohamedtariq-aquamindai-agent-1sd5gh?s=readme)
 
 **Evidence-Grounded · Gemini-Assisted · MCP-Enabled · Safety-Constrained · Traceable**
 
