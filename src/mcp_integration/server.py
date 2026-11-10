@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Any
 
 from mcp.server import MCPServer
+from mcp.types import ToolAnnotations
 
 
 SUPPORTED_EXTENSIONS = {
@@ -13,6 +14,14 @@ SUPPORTED_EXTENSIONS = {
 
 DEFAULT_KNOWLEDGE_ROOT = Path(
     "knowledge"
+)
+
+
+READ_ONLY_KNOWLEDGE_ANNOTATIONS = ToolAnnotations(
+    read_only_hint=True,
+    destructive_hint=False,
+    idempotent_hint=True,
+    open_world_hint=False,
 )
 
 
@@ -336,7 +345,9 @@ def create_mcp_server(
         "AquaMind Operational Knowledge"
     )
 
-    @server.tool()
+    @server.tool(
+        annotations=READ_ONLY_KNOWLEDGE_ANNOTATIONS,
+    )
     def list_knowledge_documents(
     ) -> dict[str, Any]:
         """
@@ -348,7 +359,9 @@ def create_mcp_server(
             root
         )
 
-    @server.tool()
+    @server.tool(
+        annotations=READ_ONLY_KNOWLEDGE_ANNOTATIONS,
+    )
     def search_operational_knowledge(
         query: str,
         limit: int = 5,
@@ -391,3 +404,14 @@ def create_mcp_server(
 
 
 mcp = create_mcp_server()
+
+
+def main() -> None:  # pragma: no cover
+    """Run AquaMind MCP over stdio."""
+    mcp.run(
+        transport="stdio",
+    )
+
+
+if __name__ == "__main__":  # pragma: no cover
+    main()
