@@ -383,7 +383,7 @@ LLM calls          = 0
 
 The trace outcome uses `status=failed` because the unsafe requested task does not complete. This represents **successful safety enforcement** and is not used as the rubric task-failure case.
 
-### 13.2 Task Failure — MAX_TURNS_REACHED
+### 13.2 Genuine Task Failure — Live Gemini MAX_TURNS_REACHED
 
 A separate reproducible scenario runs the AquaMind runtime with `max_turns=2` on an investigation that requires additional steps.
 
@@ -410,9 +410,9 @@ calculate_plant_kpis
 
 The runtime then stops before a third turn because the configured maximum-turn limit has been exhausted.
 
-LLM assistance is intentionally disabled for this termination-control test so the failure is deterministic and reproducible. Real Gemini participation is demonstrated separately by the successful execution trace.
+Live Google Gemini reasoning participates in both operational turns. Provider-reported token usage is recorded by the runtime and produces non-zero task cost. The scenario remains reproducible because the hard max_turns=2 runtime limit deterministically terminates the investigation after two completed operational turns.
 
-The accompanying audit contains **7 hash-chained runtime events** and passes `AuditLogger.verify_integrity()`.
+The accompanying audit contains **9 hash-chained runtime events from the same live Gemini task** and passes `AuditLogger.verify_integrity()`.
 
 [Task Failure Audit](./evidence/max_turns_failure_audit.jsonl)
 

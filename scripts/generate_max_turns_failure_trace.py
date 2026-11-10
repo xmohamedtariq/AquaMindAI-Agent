@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 
 from src.agent.runtime import AquaMindRuntime, RuntimeConfig
@@ -20,6 +21,7 @@ AUDIT_LOG = RUNTIME_DIR / "audit.jsonl"
 
 TRACE_PATH = TRACES / "max_turns_failure.jsonl"
 EVIDENCE_PATH = EVIDENCE / "max_turns_failure_generation.txt"
+AUDIT_EVIDENCE_PATH = EVIDENCE / "max_turns_failure_audit.jsonl"
 
 TASK_ID = "validation-live-max-turns-failure"
 DATASET = "scaling_colloidal_fouling.csv"
@@ -391,6 +393,16 @@ def main() -> None:
         audit_events=audit_events,
         audit_integrity=result["audit_integrity"],
     )
+
+    shutil.copy2(
+        AUDIT_LOG,
+        AUDIT_EVIDENCE_PATH,
+    )
+
+    if AUDIT_EVIDENCE_PATH.read_bytes() != AUDIT_LOG.read_bytes():
+        raise RuntimeError(
+            "Persisted audit evidence differs from verified runtime audit."
+        )
 
     print("")
     print("=" * 64)
