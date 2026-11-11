@@ -11,7 +11,7 @@
 [![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Tests](https://img.shields.io/badge/Tests-572%2F572-16A34A?style=for-the-badge&logo=pytest&logoColor=white)](./evidence/tests_coverage.txt)
 [![Coverage](https://img.shields.io/badge/Coverage-100%25-22C55E?style=for-the-badge)](./evidence/tests_coverage.txt)
-[![M8ven Score](https://m8ven.ai/badge/mcp/xmohamedtariq-aquamindai-agent-1sd5gh)](https://m8ven.ai/mcp/xmohamedtariq-aquamindai-agent-1sd5gh?s=readme)
+[![M8ven Score](https://m8ven.ai/badge/mcp/xmohamedtariq/aquamindai-agent)](https://m8ven.ai/mcp/xmohamedtariq/aquamindai-agent?s=readme)
 
 **Evidence-Grounded · Gemini-Assisted · MCP-Enabled · Safety-Constrained · Traceable**
 
@@ -243,6 +243,32 @@ Knowledge resources use `knowledge://` URIs.
 [View official MCP SDK runtime resolution →](./evidence/mcp_runtime_resolution.txt)
 
 [View MCP protocol end-to-end verification →](./evidence/mcp_protocol_end_to_end.txt)
+
+### 🔐 External MCP Trust Verification
+
+AquaMindAI-Agent is listed on the **M8ven Trust Index** as a **Verified Publisher** and **Live Monitored** MCP project.
+
+M8ven's latest verification confirms:
+
+- **2 MCP tools verified** — handlers match their declared behavior,
+- both exposed MCP tools are verified as **read-only**,
+- no findings of **credential exfiltration**,
+- no findings of **sensitive-file access**,
+- no findings of **code obfuscation**,
+- and the repository is recognized as **open source with a declared license and README**.
+
+The two MCP tools explicitly declare all four behavior hints:
+
+```text
+readOnlyHint     = true
+destructiveHint  = false
+idempotentHint   = true
+openWorldHint    = false
+```
+
+This external verification complements AquaMind's internal safety controls, automated test suite, audit logging, permission model, and prompt-injection defenses.
+
+[View AquaMindAI-Agent on the M8ven Trust Index →](https://m8ven.ai/mcp/xmohamedtariq/aquamindai-agent)
 
 ---
 
@@ -536,12 +562,13 @@ Free-tier quotas and rate limits may prevent all workloads from remaining free.
 |---|---:|
 | Automated Tests | **572 / 572 Passed** ✅ |
 | Source Coverage | **100.00%** ✅ |
-| Statements | **2,454** |
+| Statements | **2,456** |
 | Missing Statements | **0** |
 | Hostile Inputs | **3 / 3 Blocked** ✅ |
 | MCP Search | **Verified** ✅ |
 | Official MCP SDK Resolution | **mcp 2.3.0 Verified** ✅ |
 | MCP Protocol End-to-End | **Verified** ✅ |
+| M8ven MCP Trust Verification | **Verified Publisher · Live Monitored · 2 Read-Only Tools Verified** ✅ |
 | Memory After Restart | **Verified** ✅ |
 | Permission Enforcement | **Verified** ✅ |
 | Successful JSONL Trace | **Verified** ✅ |
@@ -717,6 +744,7 @@ AquaMindAI-Agent/
 ├── DEMO.md                   # Demo walkthrough
 ├── requirements.txt
 ├── requirements-web.txt
+├── LICENSE                    # MIT License
 └── README.md
 ```
 
@@ -807,7 +835,7 @@ Verified result:
 
 ```text
 572 passed
-TOTAL 2454 0 100%
+TOTAL 2456 0 100%
 Required test coverage of 100% reached.
 ```
 
@@ -1064,6 +1092,7 @@ Final physical operational decisions remain under qualified human supervision.
 - [🔌 MCP Runtime Resolution](./evidence/mcp_runtime_resolution.txt)
 - [🔗 MCP End-to-End Verification](./evidence/mcp_protocol_end_to_end.txt)
 - [🔌 MCP Implementation](./src/mcp_integration)
+- [🔐 M8ven Trust Verification](https://m8ven.ai/mcp/xmohamedtariq/aquamindai-agent)
 - [🗂️ Persistent Memory](./src/memory)
 - [💻 Source Code](./src)
 - [🧪 Automated Tests](./tests)
